@@ -1,11 +1,8 @@
 package org.simo.medita.extras;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,11 +18,13 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
-import org.simo.medita.Config;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HttpConnection {
 	
@@ -43,11 +42,15 @@ public class HttpConnection {
 		 DefaultHttpClient httpclient = new DefaultHttpClient();
 	    HttpPost httppost = new HttpPost(url);
 
+		Log.i("medita_url",url);
+
 	    try {
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 	        nameValuePairs.add(new BasicNameValuePair("params", params));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+	        Log.i("medita_params",params);
 	        
 	      //Set timeout
 	        HttpParams httpParameters = new BasicHttpParams();
@@ -58,7 +61,7 @@ public class HttpConnection {
 	        
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
-        	Log.i("medita",response.getStatusLine().toString());
+        	Log.i("medita_response",response.getStatusLine().toString());
 	        
 	       // Get hold of the response entity
             HttpEntity entity = response.getEntity();

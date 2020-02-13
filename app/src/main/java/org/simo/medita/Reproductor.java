@@ -880,7 +880,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
         	  	
                }
         		
-        	}
+        	}else{
+			introduccion.performClick();
+		}
     }
     
     @Override

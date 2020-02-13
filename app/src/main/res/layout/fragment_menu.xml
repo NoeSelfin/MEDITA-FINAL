@@ -276,6 +276,35 @@
 				 android:gravity="center"/>
 		 </LinearLayout>
 		 <LinearLayout
+			 android:id="@+id/id_menu_contact_ll"
+			 android:layout_width="match_parent"
+			 android:layout_height="wrap_content"
+			 android:background="#293c4f"
+			 android:layout_marginTop="20dp"
+			 android:orientation="horizontal">
+			 <View
+				 android:id="@+id/id_menu_view_contact"
+				 android:layout_width="5dp"
+				 android:layout_height="match_parent"
+				 android:background="#f8d593"
+				 android:visibility="invisible"/>
+			 <ImageView
+				 android:layout_width="wrap_content"
+				 android:layout_height="40dp"
+				 android:layout_marginLeft="15dp"
+				 android:visibility="invisible"
+				 android:src="@drawable/sincornizar"/>
+			 <TextView
+				 android:id="@+id/id_menu_contact"
+				 android:layout_width="wrap_content"
+				 android:layout_height="40dp"
+				 android:textSize="19sp"
+				 android:text="CONTACTO"
+				 android:layout_marginLeft="15dp"
+				 android:textColor="#ffffff"
+				 android:gravity="center"/>
+		 </LinearLayout>
+		 <LinearLayout
 			 android:id="@+id/id_menu_legal_ll"
 			 android:layout_width="match_parent"
 			 android:layout_height="match_parent"

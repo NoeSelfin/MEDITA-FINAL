@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
 	package
-		ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:3:5-50
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:3:5-50
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:5:5-30
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:11-69
+		ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:4:5-28
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
 uses-sdk
-ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
 	android:targetSdkVersion
-		ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:8:9-38
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:8:9-38
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-		INJECTED from C:\Users\Igna\Desktop\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+		INJECTED from H:\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml

@@ -188,6 +188,7 @@ public class Favoritos extends Activity{
 		((TextView) menu_lateral.findViewById(R.id.id_menu_sincro)).setTypeface(font);
 		((TextView) menu_lateral.findViewById(R.id.id_menu_compras)).setTypeface(font);
 		((TextView) menu_lateral.findViewById(R.id.id_menu_suscription)).setTypeface(font);
+		((TextView) menu_lateral.findViewById(R.id.id_menu_contact)).setTypeface(font);
 
 		((View) menu_lateral.findViewById(R.id.id_menu_view_ini)).setVisibility(View.INVISIBLE);
 		((View) menu_lateral.findViewById(R.id.id_menu_view_fav)).setVisibility(View.VISIBLE);
@@ -198,8 +199,17 @@ public class Favoritos extends Activity{
 		((View) menu_lateral.findViewById(R.id.id_menu_view_sincro)).setVisibility(View.INVISIBLE);
 		((View) menu_lateral.findViewById(R.id.id_menu_view_sincro)).setVisibility(View.INVISIBLE);
 		((View) menu_lateral.findViewById(R.id.id_menu_view_suscription)).setVisibility(View.INVISIBLE);
+		((View) menu_lateral.findViewById(R.id.id_menu_view_contact)).setVisibility(View.INVISIBLE);
 
-
+		LinearLayout contacto = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_contact_ll);
+		contacto.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent i = new Intent(Favoritos.this, Contacto.class);
+				startActivity(i);
+				finish();
+			}
+		});
 		LinearLayout acercade = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_acercade_ll);
 		acercade.setOnClickListener(new OnClickListener() {
 			@Override

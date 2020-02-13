@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="265dp"
+    android:layout_height="300dp"
+    android:orientation="vertical"
+    android:background="@drawable/alert_bg" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal" >
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:visibility="gone"
+            android:background="@drawable/alerta" />
+        <TextView
+            android:id="@+id/id_alert_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginTop="16dp"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:textColor="#0c465e"
+            android:text = "SELECCIONA UNA OPCIÓN:"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d5d5d5"/>
+
+    <TextView
+        android:id="@+id/id_alert_help_uno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:lines="3"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:textColor="#0c465e"
+        android:text = "Quiero volver a descargarme la meditación en mi teléfono para escucharla correctamente."/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="16dp"
+        android:background="#d5d5d5"/>
+
+    <TextView
+        android:id="@+id/id_alert_help_dos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:lines="3"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:textColor="#0c465e"
+        android:visibility="gone"
+        android:text = "Quiero reproducir la meditación en streaming sin que se descargue en el teléfono."/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:background="#d5d5d5"/>
+
+    <TextView
+        android:id="@+id/id_alert_btn"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:textSize="19sp"
+        android:gravity="center"
+        android:textColor="#0c465e"
+        android:text = "CANCELAR"/>
+
+</LinearLayout>

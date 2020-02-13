@@ -1,0 +1,116 @@
+package org.simo.medita;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.simo.medita.extras.FilterData;
+
+public class AdapterMeditaciones extends BaseAdapter{	
+	private Activity activity;
+	private JSONArray data;
+	private LayoutInflater inflater=null;	    
+	protected Typeface font;
+	AssetManager assetManager;
+	JSONObject pack;
+
+	public AdapterMeditaciones(Activity a, JSONArray d, JSONObject pack) {
+		 activity = a;
+	     data = d;
+	     this.pack = pack;
+	     inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		 font = Typeface.createFromAsset(activity.getAssets(), "tipo/Dosis-Regular.otf");
+	}
+
+	 public class Holder
+	    {
+		 	ImageView img;
+	        TextView nombre;	
+	        LinearLayout corta;
+	        LinearLayout media;
+	    	LinearLayout larga;
+	    }
+
+	public View getView(final int position, View convertView, ViewGroup parent) { 
+		Holder holder=new Holder();
+		View listView = convertView; 
+		if (convertView == null) {
+			listView = new View(activity); 						
+			listView = inflater.inflate(R.layout.row_meditaciones, null);	
+			holder.img =(ImageView)listView.findViewById(R.id.id_row_med_img);
+			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);			
+			listView.setTag(holder);	
+		} 
+		else {
+			holder = (Holder) listView.getTag();
+		}
+		
+		try {
+			
+			int aux = Integer.valueOf(data.getJSONObject(position).getString("med_dia"));	
+			
+			if (aux == 0){
+	        	holder.nombre.setText(data.getJSONObject(position).getString("med_titulo").trim());	        	
+
+			}
+			else{
+	        	holder.nombre.setText("DÍA " + data.getJSONObject(position).getString("med_dia")+ " - " + data.getJSONObject(position).getString("med_titulo").trim());
+
+			}		
+			
+			if (pack.optInt("continuo") == 1){
+
+				if (new FilterData().isPrevCompleted(data, data.getJSONObject(position))){	
+					holder.nombre.setTextColor(Color.parseColor("#0c465e"));
+
+				 }
+				 else{
+						holder.nombre.setTextColor(Color.parseColor("#bbbaba"));
+				 }
+					
+			}
+			else{
+					holder.nombre.setTextColor(Color.parseColor("#0c465e"));
+				
+			}
+				
+			
+			
+			
+        	holder.nombre.setTypeface(font);        
+        		        	
+		} catch (JSONException e) {
+		}
+				
+	
+		return listView;
+	}
+
+	@Override
+	public int getCount() {
+		return data.length();
+	}
+	
+	@Override
+	public Object getItem(int position) {
+		return null;
+	}
+	
+	@Override
+	public long getItemId(int position) {
+		return 0;
+	} 
+	
+}

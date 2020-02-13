@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- sharedpref -->
+    <string name="sharedpref_name">Preferencias</string>
+    <!-- sharedpref key: registrado? -->
+    <string name="registrado">registrado</string>
+    <!-- clave general para el usuario-->
+    <string name="user_info">user_info</string>
+    <!-- resto claves para formar el json con la info de la clave user_info-->
+    <string name="email_usuario">email_usuario</string>
+    <string name="pass_usuario">pass_usuario</string>
+    <string name="id_usuario">id_usuario</string>
+    <string name="plataforma">plataforma</string>
+    <!-- sharedpref key -->
+    <string name="suscrito">suscrito</string>
+    <string name="skus_activos">skus_activos</string> <!--lista de items comprados/suscritos en play store-->
+    <!-- string key -->
+    <string name="ya_suscrito">SUSCRITO</string>
+    <string name="suscribirse">SUSCRIBIRSE</string>
+    <string name="subscribe_not_now">Más tarde</string>
+    <string name="subscribe_now">Suscribirse</string>
+
+    <string name="last_check_date_millis">last_check_date_millis</string>
+
+    <!-- login/registro -->
+    <string name="email">Email usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="repeat_password">Repetir contraseña</string>
+    <string name="bt_iniciar_sesion">Iniciar sesión</string>
+    <string name="bt_recuperar_cuenta">Recuperar</string>
+    <string name="sin_cuenta">¿No dispones de una cuenta?</string>
+    <string name="bt_crear_cuenta">Crear cuenta</string>
+    <string name="bt_crear">Crear</string>
+    <string name="cancel_suscription">Si deseas cancelar una suscripción puedes hacerlo desde <a href="https://play.google.com/store/account/subscriptions">Google Play</a>.</string>
+    <string name="suscripcion_activa">Actualmente tienes activa la suscripción de tipo </string>
+    <string name="suscripcion_no_activa">Actualmente no tienes ninguna suscripción activa.</string>
+    <string name="text_recuperar_cuenta">Introduce el correo electrónico de la cuenta. Se te mandará un email donde podrás gestionar tu contraseña.</string>
+    <string name="subscription_bad_account">Esta cuenta de usuario ya esta vinculada con otra cuenta de Google Play.</string>
+
+    <string name="popup_nuevo_titulo">Nuevo!!</string>
+    <string name="popup_nuevo_text">A partir de ahora podrás acceder a todo el contenido de MEDITA mediante suscripción.</string>
+
+    <string name="popup_primera_semana">Enhorabuena! Has completado la primera semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para acceder a la biblioteca completa de contenidos.</string>
+    <string name="popup_segunda_semana">Enhorabuena! Has completado la segunda semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para acceder a la biblioteca completa de contenidos.</string>
+    <string name="popup_tercera_semana">Enhorabuena! Has completado el plan de 21 días. Para seguir aprendiendo y progresando, te invitamos a suscribirte para acceder a la biblioteca completa de contenidos.</string>
+
+    <string name="suscripcion_text_01">Disfruta de más de 100 meditaciones guiadas</string>
+    <string name="suscripcion_text_02">Escucha música para relajarte y meditar sin comentarios</string>
+    <string name="suscripcion_text_03">Programas para mejorar la autoestima, dormir mejor, descubrir tu propósito, crear una visión inspiradora, y muchos más.</string>
+    <string name="suscripcion_text_04">Nuevos contenidos periódicamente</string>
+
+    <string name="alert_dias_tutorial">Recuerda que puedes suscribirte para acceder a la biblioteca completa de contenidos.</string>
+    <string name="alert_saltar_tutorial">Está seguro que quiere saltarse el tutorial? Desplace hacia la derecha la imagen para continuar con el tutorial.</string>
+    <string name="recovery_pass_peticion">Petición realizada correctamente. Revise su correo para continuar con el proceso.</string>
+    <string name="recovery_pass_wrong_email">No se ha encontrado el usuario.</string>
+    <string name="error_respuesta_servidor">Error en la respuesta del servidor. Inténtelo mas tarde.</string>
+
+    <string-array name="suscriptions_sku">
+        <item>id_suscripcion_mensual</item>
+        <item>id_suscripcion_semestral</item>
+        <item>id_suscripcion_anual</item>
+    </string-array>
+
+    <string-array name="suscriptions_type">
+        <item>mensual</item>
+        <item>semestral</item>
+        <item>anual</item>
+    </string-array>
+
+    <string name="app_name">Medita</string>
+    <string name="action_settings">Settings</string>
+    <string name="inicio">INICIO</string>
+    <string name="opciones">OPCIONES</string>
+    <string name="acercade">ACERCA DE MEDITA</string>
+    <string name="continuar">CONTINUAR ESCUCHANDO:</string>
+    <string name="favoritos">FAVORITOS</string>
+    <string name="sinfavoritos">SIN FAVORITOS</string>
+    <string name="vision">NUESTRO PROPÓSITO</string>
+    <string name="login">INICIAR SESIÓN</string>
+    <string name="registrarse">REGISTRARSE</string>
+    <string name="recovery_pass">RECUPERAR CONTRASEÑA</string>
+    <string name="nota_legal_titulo">Nota legal</string>
+    <!--<string name="condiciones_uso">Al registrarte aceptas las <u>condiciones de uso</u>.</string>-->
+    <string name="condiciones_uso1">He leído y acepto la <u><a href="http://medita.atentamente.net/condiciones_y_politica.html">Política de Privacidad</a></u>.</string>
+    <string name="check_newsletter">Deseo recibir información comercial de <u><a href="http://medita.atentamente.net/nota_legal.html">Medita</a></u>.</string>
+
+    <string name="splash1">PARA</string>
+    <string name="splash2">·</string>
+    <string name="splash3">RESPIRA</string>
+    <string name="splash4">·</string>
+    <string name="splash5">MEDITA</string>
+
+    <string name="acercade_texto1">Hola, un saludo afectuoso. Somos Enrique y Guillermo, practicamos y enseñamos meditación desde hace más de 30 años. La meditación se ha convertido en una parte esencial de nuestra vida.</string>
+    <string name="acercade_texto2">Habiendo experimentado los beneficios de la meditación, nuestro deseo es que muchas personas puedan beneficiarse de esta práctica milenaria y mejorar la calidad de sus vidas, y como consecuencia que el mundo sea un lugar ​mejor para todos. </string>
+    <string name="acercade_texto3">Este es el propósito de "Medita", una app que te acompaña allí donde la necesites, para hacerte la vida más fácil.</string>
+    <string name="acercade_texto4">También nos dedicamos al coaching, damos conferencias, talleres y hemos colaborado con muchas empresas aportando nuestra experiencia en temas de liderazgo, comunicación, mindfulness, inteligencia emocional, entre otros.</string>
+    <string name="acercade_texto5"><![CDATA[Si quieres conocer más sobre nosotros visita nuestra web <a href=\"http://www.atentamente.net\" target=\"_blank\"><b>www.atentamente.net</b></a> donde puedes descargarte de forma gratuita una guía práctica para entrenar tu atención, así como​ ​encontrar ​videos e información sobre nuestros procesos de coaching, talleres y conferencias.]]></string>
+    <string name="acercade_nuestrolibro">·NUESTRO LIBRO·</string>
+    <string name="acercade_texto6">Si quieres saber más sobre cómo desarrollar y fortalecer la calma en tu vida, puedes adquirir el libro de Guillermo Simó y Vicenç Alujas "La arquitectura de la calma"</string>
+    <string name="acercade_siguenos">· SÍGUENOS ·</string>
+    <string name="acercade_texto7">También puedes seguirnos e indicar Me gusta en Facebook Puedes encontrar nuestros últimos videos y actualizaciones en Youtube.</string>
+    <string name="acercade_web">www.atentamente.net</string>
+    <string name="acercade_mail">medita@atentamente.net</string>
+    <string name="acercade_newsletter">· MANTENTE INFORMADO ·</string>
+    <string name="acercade_newsletter_text">Déjanos tu correo electrónico y te enviaremos las últimas novedades y eventos de Atentamente.</string>
+    <string name="acercade_newsletter_btn"><i>Suscribirse al boletín</i></string>
+
+    <string name="opciones_1">No molestar cuando se medita</string>
+    <string name="opciones_2">Reproducir introducciones</string>
+    <string name="opciones_3">Recordatorio para meditar</string>
+
+    <string name="vision_texto1">Nuestro propósito es promover la práctica de la meditación para llenar el mundo de luz y de paz y hacer que sea un lugar mejor para todos.</string>
+    <string name="vision_texto2">Te invitamos a unirte a nuestro propósito compartiendo Medita con tus amigos y amigas.</string>
+
+    <string name="favoritos_1">No hay ninguna meditación favorita todavía.</string>
+    <string name="favoritos_2">Pulsa en el botón favorito en la esquina superior derecha del reproductor para guardar las que más te gusten.</string>
+
+    <string name="alerta_1">Ha ocurrido un error y la aplicación se ha cerrado de forma inesperada.Por favor, vuelva a intentarlo de nuevo.</string>
+    <string name="alerta_2">Has subido de nivel, por ello te obsequiamos con un regalo muy especial.</string>
+
+
+    <!--  <string name="progreso_text1">Hola, acabas de dar el primer paso empezar un camino.</string> -->
+    <string name="progreso_text2">Hola, acabas de dar el primer paso empezar un camino.¿Quieres visitar Acerca de Medita y sumar <b>100 pts</b>?</string>
+    <string name="progreso_text3">Si te gusta Medita, comparte nuestro propósito y suma  <b>100 pts más.</b></string>
+    <string name="progreso_text4">¿Todavía no tienes ninguna meditación favorita? Guarda la que más te guste y ganarás  <b>100 pts.</b></string>
+    <string name="progreso_text5">Un secreto, si completas la primera semana del plan de 21 días conseguirás  <b>100 pts.</b></string>
+    <string name="progreso_text6">Puedes ganar  <b>100</b> pts si completas la segunda semana del plan de 21 días.</string>
+    <string name="progreso_text7">Lo estás haciendo muy bien. Completa la tercera semana del plan de 21 días y obtendrás  <b>100 pts</b> más.</string>
+    <string name="progreso_text8">Compra el pack [nombre del pack] y te recompensaremos con 100 pts.</string>
+    <string name="progreso_text9">Ya queda poco para el final. Si compras el pack [nombre del pack] ganarás  <b>100 pts.</b></string>
+    <string name="progreso_text10">¿Quieres ganar  <b>100 pts</b>? Lo puedes hacer comprando el pack [nombre del pack]</string>
+    <string name="progreso_text11">¿Quieres ganar  <b>100 pts</b>? Lo puedes hacer comprando el pack [nombre del pack]</string>
+
+    <string name="sinc_text1">Quiero generar un código que me permita vincular mi progreso de este dispositivo con otros dispositivos.</string>
+    <string name="sinc_text2">Quiero utilizar el código que tengo para obtener en este dispositivo mi progreso realizado en los otros dispositivos.</string>
+    <string name="sinc2_text1">Quiero enviar mi progreso actualizado a mis otros dispositivos.</string>
+    <string name="sinc2_text2">Quiero recibir en este dispositivo mi progreso realizado en otros dispositivos.</string>
+    <string name="sinc2_text3">Haz click aquí para recuperar el código perdido.</string>
+
+    <string name="susc_text1">Suscríbase en Medita y podrá gozar de &#8230;</string>
+
+    <string name="compras_texto1">	Descripción del pack Natura. Lo que incluye, los beneficios que se obtienen. También puede explicar para qué usuarios está indicado, etc. Con tres iconos representativos de los puntos clave de la meditación.</string>
+
+    <string name="newsletter">Felicidades por haber terminado tu segunda semana de entrenamiento, si quieres ser el primero en recibir las últimas novedades, meditaciones gratuitas y nuestra news letter, déjanos tu correo, gracias.</string>
+
+    <!-- Toast registro -->
+    <string name="faltan_datos">Faltan datos por completar.</string>
+    <string name="invalid_email">Email no válido.</string>
+    <string name="faltan_condiciones">Debes aceptar las condiciones de uso.</string>
+    <string name="short_pass">La contraseña debe contener 4 carácteres como mínimo.</string>
+    <string name="long_pass">La contraseña no debe contener más de 20 carácteres.</string>
+    <string name="different_pass">La contraseña debe ser la misma en los 2 campos.</string>
+
+    <string name="leido_y_acepto_politica">He leído y acepto la
+        <a href="http://medita.atentamente.net/condiciones_y_politica.html">Política de Privacidad</a></string>
+    <string name="info_prot_datos">INFORMACIÓN PROTECCIÓN DE DATOS DE MEDITA. <b>Finalidades</b>:
+        Formalizar su alta como usuario registrado y, enviarle comunicaciones informativas de nuestros
+        productos y/o servicios. <b>Derechos</b>: Puede retirar su consentimiento en cualquier momento,
+        así como acceder, rectificar, suprimir sus datos y demás derechos en
+        <a href="mailto:medita@atentamente.net">medita@atentamente.net</a>.
+        <b>Información Adicional</b>:
+        <a href="http://medita.atentamente.net/condiciones_y_politica.html">Política de Privacidad</a>.</string>
+
+</resources>

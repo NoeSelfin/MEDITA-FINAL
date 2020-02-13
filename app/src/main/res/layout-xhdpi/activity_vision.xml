@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+  
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"   
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/vision_bg"
+    android:orientation="vertical" >    
+     <LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		     android:paddingLeft="@dimen/activity_horizontal_margin"
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+		    android:orientation="horizontal">
+		     <LinearLayout
+			    android:layout_width="57dp"
+			    android:layout_height="25dp"
+	    	    android:id="@+id/id_vision_atras"
+	    	    android:layout_marginLeft="-16dp"
+	    	    android:gravity="center"    	    	    
+			    android:orientation="horizontal">
+		    	 <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="19dp"
+			        android:src="@drawable/hamburguesa_vision"/>
+	    	 </LinearLayout>
+	        <TextView
+	            android:id="@+id/id_vision_inicio"
+		        android:layout_width="wrap_content"
+		        android:layout_height="25dp"
+		        android:gravity="center"
+		        android:textSize="19sp"
+		        android:textColor="#b5eaff"
+		        android:text="@string/vision" />
+	    
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:scrollbarThumbVertical="@drawable/scrollbar">
+	    <LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		     android:paddingLeft="@dimen/activity_horizontal_margin"
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+		    android:orientation="vertical">
+		     <TextView
+			            android:id="@+id/id_vision_texto1"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="center"
+				        android:gravity="center"
+				        android:textSize="16sp"
+				        android:paddingLeft="15dp"
+				        android:paddingRight="15dp"
+				         android:layout_marginTop="5dp"
+				        android:textColor="#b5eaff"
+				        android:text="@string/vision_texto1" />
+		       <TextView
+			            android:id="@+id/id_vision_texto2"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="center"
+				        android:gravity="center"
+				         android:paddingLeft="15dp"
+				        android:paddingRight="15dp"
+				        android:textSize="16sp"
+				         android:layout_marginTop="5dp"
+				        android:textColor="#b5eaff"
+				        android:text="@string/vision_texto2" />
+		      <!-- <ImageView
+				        android:layout_width="285dp"
+				        android:layout_height="285dp"
+				        android:src="@drawable/vision_world"
+				        android:layout_marginTop="15dp"
+				         android:paddingLeft="15dp"
+				        android:paddingRight="15dp"
+				        android:paddingBottom="15dp"
+				        android:layout_gravity="center"/> -->
+		      <RelativeLayout
+		        	 android:layout_width="280dp"
+					 android:layout_height="280dp"
+				     android:layout_gravity="center">
+				
+			      <VideoView android:id="@+id/your_video_view"
+				         android:layout_width="280dp"
+					     android:layout_height="280dp"
+					     android:visibility="visible"/>			      
+			       <ImageView
+				        android:layout_width="280dp"
+				        android:layout_height="280dp"
+				        android:src="@drawable/world_layer"/> 
+			        <ImageView
+			            android:id="@+id/id_image_video"
+			        android:layout_width="280dp"
+			        android:layout_height="280dp"
+			        android:src="@drawable/world_layer_rear"
+			        android:visibility="invisible"/> 
+				       
+			      
+		      </RelativeLayout>
+		      
+		      <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="center"
+			    android:orientation="horizontal">
+			     <ImageView
+			         android:id="@+id/id_vision_whatsapp"
+			        android:layout_width="70dp"
+			        android:layout_height="70dp"
+			        android:layout_weight="0.33"
+			        android:src="@drawable/btn_whatsapp"
+			        android:paddingBottom="10dp"
+			        android:layout_gravity="center"/>
+			      <ImageView
+			          android:id="@+id/id_vision_facebook"
+			        android:layout_width="70dp"
+			        android:layout_height="70dp"
+			        android:layout_weight="0.33"
+			        android:src="@drawable/btn_facebook"
+			        android:paddingBottom="10dp"
+			        android:layout_gravity="center"/>
+			      <ImageView
+			          android:id="@+id/id_vision_twitter"
+			        android:layout_width="70dp"
+			        android:layout_height="70dp"
+			        android:layout_weight="0.33"
+			        android:src="@drawable/btn_twitter"
+			        android:paddingBottom="10dp"
+			        android:layout_gravity="center"/>
+			 </LinearLayout>
+		      
+    	</LinearLayout>
+	</ScrollView>
+    
+</LinearLayout>
+
+  <RelativeLayout
+      android:id="@+id/id_vision_fundido"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#293c4f"
+    android:visibility="invisible" />
+</RelativeLayout>

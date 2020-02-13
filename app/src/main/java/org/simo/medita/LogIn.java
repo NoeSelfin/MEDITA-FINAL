@@ -1,0 +1,278 @@
+package org.simo.medita;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.simo.medita.extras.Basics;
+
+public class LogIn extends Activity {
+
+    protected SharedPreferences prefs;
+    protected SlidingMenu menu_lateral;
+    protected Typeface font;
+    protected LinearLayout menu;
+    private Button btCrearCuenta;
+    private Button btIniciarSesion;
+    private EditText etEmail;
+    private EditText etPassword;
+    private TextView tvRecoverPass;
+    private TextView tvTitulo;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_log_in);
+
+        prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
+        font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
+        menu = findViewById(R.id.id_login_menu);
+        btCrearCuenta = findViewById(R.id.bt_crear_cuenta);
+        btIniciarSesion = findViewById(R.id.bt_iniciar);
+        etEmail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_password);
+        tvRecoverPass = findViewById(R.id.tv_recovery_pass);
+        tvTitulo = findViewById(R.id.id_titulo_acercade);
+        tvTitulo.setTypeface(font);
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                menu_lateral.showMenu(true);
+            }
+        });
+        btCrearCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LogIn.this, Registro.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        btIniciarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Downloader(LogIn.this, prefs)
+                        .login(Basics.checkConn(LogIn.this), etEmail.getText().toString(),
+                                etPassword.getText().toString(), new Downloader.Login.AsyncResponse() {
+                            @Override
+                            public void processFinish(String respuesta) {
+                                if (respuesta!=null){
+                                    Log.i("medita", "login respuesta: " + respuesta);
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(respuesta);
+                                        if (jsonObject.optBoolean("registrado")){
+                                            JSONObject usuario = new JSONObject();
+                                            // {"registrado":true,"id_usuario":"8","plataforma":"android"}
+                                            usuario.put(getString(R.string.email_usuario), etEmail.getText().toString());
+                                            usuario.put(getString(R.string.id_usuario), jsonObject.optString("id_usuario"));
+                                            usuario.put(getString(R.string.plataforma), jsonObject.optString("plataforma"));
+
+                                            prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
+                                            Log.i(Config.tag,"usuario guardado en sharedpref: " + usuario.toString());
+                                            prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
+                                            menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                                        }else{
+                                            Basics.toastCentered(LogIn.this, "Error en el usuario o contraseña.", Toast.LENGTH_LONG);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }else{
+                                    Basics.toastCentered(LogIn.this, "Error en la respuesta del servidor.", Toast.LENGTH_LONG);
+                                }
+                            }
+                        });
+            }
+        });
+
+        tvRecoverPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LogIn.this, RecoveryPass.class);
+                startActivity(i);
+//                finish();
+            }
+        });
+
+        setMenu();
+    }
+
+    public void setMenu(){
+        menu_lateral = new SlidingMenu(LogIn.this);
+        menu_lateral.setMode(SlidingMenu.LEFT);
+        menu_lateral.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu_lateral.setShadowWidthRes(R.dimen.shadow_width);
+        menu_lateral.setShadowDrawable(R.drawable.shadow);
+        menu_lateral.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu_lateral.setFadeDegree(0.35f);
+        menu_lateral.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu_lateral.setMenu(R.layout.fragment_menu);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_titulo)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_inicio)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_fav)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_progreso)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_acerca)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_vision)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_opciones)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_sincro)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_compras)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_suscription)).setTypeface(font);
+
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_ini)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_fav)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_progreso)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_acercade)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_vision)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_opciones)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_sincro)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_compras)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_suscription)).setVisibility(View.VISIBLE);
+
+
+        LinearLayout inicio = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_inicio_ll);
+        inicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(LogIn.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout acercade = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_acercade_ll);
+        acercade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(LogIn.this, Acercade.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout opciones = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_opciones_ll);
+        opciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(LogIn.this, Opciones.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout vision = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_vision_ll);
+        vision.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(LogIn.this, Vision.class);
+                i.setAction("fromMenu");
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout favoritos = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_fav_ll);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(LogIn.this, Favoritos.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout progreso = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_progreso_ll);
+        progreso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(LogIn.this, Progreso.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);
+        sincro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (prefs.contains("sincronizado")){
+                    if (prefs.getBoolean("sincronizado", false)){
+                        Intent i = new Intent(LogIn.this, Sincro2.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    else{
+                        Intent i = new Intent(LogIn.this, Sincro.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }
+                else{
+                    Intent i = new Intent(LogIn.this, Sincro.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        });
+        LinearLayout compras = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_compras_ll);
+        compras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                new RecargarCompras(LogIn.this);
+            }
+        });
+
+        LinearLayout suscripcion = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_suscription_ll);
+        suscripcion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // si esta registrado, va a la suscripcion. En caso contrario al login
+                if (prefs.getBoolean(getString(R.string.registrado),false)){
+                    Intent i = new Intent(LogIn.this, Suscripcion.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Intent i = new Intent(LogIn.this, LogIn.class);
+                    startActivity(i);
+                    finish();
+                }
+
+            }
+        });
+
+        LinearLayout notalegal = menu_lateral.findViewById(R.id.id_menu_legal_ll);
+        notalegal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // si esta registrado, va a la suscripcion. En caso contrario al login
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(Config.url_nota_legal));
+                startActivity(i);
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent i = new Intent(LogIn.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        startActivity(i);
+        finish();
+    }
+}

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="vertical" >
+    <RelativeLayout 
+    	     android:id="@+id/id_meditaciones_rl_selector"
+		    android:layout_width="match_parent"
+		    android:layout_height="45dp"
+		    android:visibility="visible">   	
+     	  <LinearLayout         
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation = "horizontal"
+	         android:layout_centerInParent="true">	        
+    		<LinearLayout
+    		    android:id="@+id/id_meditaciones_sel_corta"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		         android:layout_weight="0.33" 
+		         android:gravity="center"
+		        android:orientation = "vertical">
+		        <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#0c465e"
+			        android:text="CORTA"/>
+		        <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#098eaf"
+			        android:text="2 min"/>
+         	</LinearLayout>
+         	<View
+	        android:layout_width="1px"
+	        android:layout_height="match_parent"
+	        android:background="#000000"/>
+         	<LinearLayout
+         	     android:id="@+id/id_meditaciones_sel_media"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		         android:layout_weight="0.33" 
+		          android:gravity="center"
+		        android:orientation = "vertical">
+		         <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#0c465e"
+			        android:text="MEDIA"/>
+		        <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#098eaf"
+			        android:text="7 min"/>
+         	</LinearLayout>
+         	<View
+	        android:layout_width="1px"
+	        android:layout_height="match_parent"
+	        android:background="#000000"/>
+         	<LinearLayout
+         	     android:id="@+id/id_meditaciones_sel_larga"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		         android:layout_weight="0.33" 
+		          android:gravity="center"
+		        android:orientation = "vertical">
+		         <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#0c465e"
+			        android:text="LARGA"/>
+		        <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#098eaf"
+			        android:text="10 min"/>
+         	</LinearLayout>
+         	
+     </LinearLayout>
+     
+   	    </RelativeLayout>  
+    
+
+</LinearLayout>

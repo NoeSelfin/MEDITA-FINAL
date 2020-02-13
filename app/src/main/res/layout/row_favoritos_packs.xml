@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="175dp" 
+     android:id="@+id/id_fav_pack_bg">
+    
+ 
+    	<ImageView
+    	     android:id="@+id/id_fav_pack_ico"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/play_button"
+	        android:layout_centerInParent="true"/>
+    	<TextView
+    	    android:id="@+id/id_fav_pack_titulo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Título"
+	        android:layout_marginTop="16dp"
+	        android:textSize="18sp"
+	        android:textColor="#ffffff"
+	        android:layout_centerHorizontal="true"/>
+    
+
+</RelativeLayout>

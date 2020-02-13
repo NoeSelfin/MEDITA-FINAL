@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+            <TextView
+            android:id="@+id/id_main_tiempo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="40dp"
+	        android:gravity="center"
+	        android:textSize="10sp"
+	        android:layout_marginLeft="25dp"
+	        android:text="3:02"
+	        android:textColor="#098eaf"
+	        android:layout_below="@+id/id_main_text" />
+                <SeekBar
+        
+            android:id="@+id/songProgressBar"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginRight="20dp"
+             android:layout_marginLeft="20dp"
+             android:layout_marginBottom="20dp"
+             android:thumb="@drawable/seekbar_control"
+             android:progressDrawable="@drawable/seekbar_progress"
+             android:paddingLeft="6dp"
+             android:paddingRight="6dp"
+             android:layout_below="@+id/id_main_reproducir"/>
+    
+
+</LinearLayout>

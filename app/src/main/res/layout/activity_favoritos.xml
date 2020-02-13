@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2">
+  
+  
+	<RelativeLayout
+        android:id="@+id/id_fav_confavoritos"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:visibility="invisible">
+	     <ListView
+		      android:id="@+id/id_favoritos_listview"
+		      android:layout_width="match_parent"
+		      android:layout_height="match_parent"
+		      android:layout_marginBottom="15dp" >
+	    </ListView>
+	     
+	</RelativeLayout>
+	  <RelativeLayout
+        android:id="@+id/id_fav_sinfavoritos"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:visibility="visible">
+	    <LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:gravity="center"
+		    android:orientation="vertical">
+	        <TextView
+	            android:id="@+id/id_fav_text1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center"
+		        android:layout_marginLeft="45dp"
+		        android:layout_marginRight="45dp"
+		        android:textSize="18sp"
+		        android:textColor="#0c465e"
+		        android:text="@string/favoritos_1" />
+	    	 <ImageView
+	    	    android:id="@+id/id_fav_img"
+		        android:layout_width="47dp"
+		        android:layout_height="47dp"
+		        android:layout_marginTop="25dp"
+		        android:layout_marginBottom="25dp"
+		        android:src="@drawable/ico_fav_grey"
+		        android:scaleType="center"/>
+	        <TextView
+	            android:id="@+id/id_fav_text2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="45dp"
+		        android:layout_marginRight="45dp"
+		        android:gravity="center"
+		        android:textSize="18sp"
+		        android:textColor="#0c465e"
+		        android:text="@string/favoritos_2" />
+	    
+	    </LinearLayout>
+	     <TextView
+	            android:id="@+id/id_fav_btn"
+		        android:layout_width="match_parent"
+		        android:layout_height="75dp"
+		        android:layout_alignParentBottom="true"
+		        android:gravity="center"
+		        android:textSize="18sp"
+		        android:textColor="#0c465e"
+		        android:background="#ffffff"
+		        android:text="DE ACUERDO" />
+	</RelativeLayout>
+	  <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_marginTop="16dp"
+	    android:orientation="horizontal">
+	    <LinearLayout
+		    android:layout_width="57dp"
+		    android:layout_height="25dp"
+    	    android:id="@+id/id_fav_atras"	
+    	    android:gravity="center"    	    	    
+		    android:orientation="horizontal">
+	    	 <ImageView
+	    	     android:id="@+id/id_fav_back_img"
+		        android:layout_width="wrap_content"
+		        android:layout_height="19dp"
+		        android:src="@drawable/hamburguesa"/>
+    	 </LinearLayout>
+        <TextView
+            android:id="@+id/id_main_inicio"
+	        android:layout_width="wrap_content"
+	        android:layout_height="25dp"
+	        android:gravity="center"
+	        android:textSize="19sp"
+	        android:textColor="#0c465e"
+	        android:text="@string/sinfavoritos" />
+    
+    </LinearLayout>
+</RelativeLayout>

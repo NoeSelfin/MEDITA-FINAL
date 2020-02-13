@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Registro"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/id_registro_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:src="@drawable/hamburguesa" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/id_titulo_registro"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="@string/registrarse"
+            android:textColor="#0c465e"
+            android:textSize="19sp"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:gravity="center_vertical"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/email" />
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:background="@drawable/bt_crear_cuenta_background"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:gravity="center_vertical"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/password" />
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:background="@drawable/bt_crear_cuenta_background"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:gravity="center_vertical"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@string/repeat_password" />
+
+            <EditText
+                android:id="@+id/et_repeat_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:background="@drawable/bt_crear_cuenta_background"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp">
+
+                <CheckBox
+                    android:id="@+id/cb_condiciones"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/checkbox_selector"
+                    android:button="@null"
+                    android:text="@null" />
+
+                <TextView
+                    android:id="@+id/tv_condiciones"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/condiciones_uso1"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp">
+
+                <CheckBox
+                    android:id="@+id/cb_newsletter"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/checkbox_selector"
+                    android:button="@null"
+                    android:text="@null" />
+
+                <TextView
+                    android:id="@+id/tv_newsletter"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/check_newsletter"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_politica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/info_prot_datos"
+                android:gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:textSize="13sp"
+                android:textColor="#0c465e"
+                android:lineSpacingMultiplier="1.1"/>
+
+            <Button
+                android:id="@+id/bt_registrar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_tv_height"
+                android:background="@drawable/btn_sinc"
+                android:text="@string/bt_crear"
+                android:textColor="#ffffff"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

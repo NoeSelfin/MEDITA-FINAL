@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+	    android:layout_height="50dp"
+	    android:orientation="horizontal" >
+        
+    </LinearLayout>   
+     <RelativeLayout 
+         android:layout_width="match_parent"
+	    android:layout_height="250dp"
+	    android:background="#f2f2f2" >
+	    <ImageView 
+	        android:layout_width="225dp"
+		    android:layout_height="225dp"
+		    android:layout_centerInParent="true"
+		    android:background="@drawable/clock"/>
+	     <ImageView 
+	        android:layout_width="30dp"
+		    android:layout_height="30dp"
+		    android:layout_marginLeft="140dp"
+		    android:layout_marginTop="15dp"
+		    android:background="@drawable/clock_selected"/>	     
+	     <ImageView 
+	        android:layout_width="30dp"
+		    android:layout_height="30dp"
+		    android:layout_marginLeft="100dp"
+		    android:layout_marginTop="30dp"
+		    android:background="@drawable/clock_selected"/>
+	     <ImageView 
+	        android:layout_width="30dp"
+		    android:layout_height="30dp"
+		    android:layout_marginLeft="60dp"
+		    android:layout_marginTop="60dp"
+		    android:background="@drawable/clock_selected"/>
+	    
+         
+    </RelativeLayout>
+      <LinearLayout 
+         android:layout_width="match_parent"
+	    android:layout_height="50dp"
+	    android:orientation="horizontal"  >
+        
+    </LinearLayout>
+    
+</LinearLayout>

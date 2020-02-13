@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_row_main_bg"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:background="#0c465e"
+    android:orientation="horizontal" >
+    <LinearLayout
+	    android:layout_width="160dp"
+	    android:layout_height="wrap_content"
+	     android:gravity="center"
+	    android:orientation="vertical">
+    	<ImageView
+    	    android:id="@+id/id_row_main_img"
+		    android:layout_width="80dp"
+		    android:layout_height="80dp"
+		    android:src="@drawable/ejemplo_ico"/>
+        
+	</LinearLayout>
+     <View
+	    android:layout_width="1px"
+	    android:layout_height="match_parent"
+	    android:background="#ffffff"
+	    android:layout_marginTop="20dp"
+	     android:layout_marginBottom="20dp"/>
+	 <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:gravity="center"
+	    android:layout_gravity="center" >
+    	<TextView
+    	    android:id="@+id/id_row_main_nombre"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="·BUENAS NOCHES·"
+		    android:textColor="#ffffff"/>
+    	
+    	<RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content">
+    	<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/id_row_main_nuevo"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:background="@drawable/nuevo_borde"
+				android:gravity="center"
+				android:padding="5dp"
+				android:text="NUEVO"
+				android:textColor="#ffffff"
+				android:visibility="gone" />
+
+			<TextView
+				android:id="@+id/id_row_main_precio"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginTop="5dp"
+				android:background="@drawable/nuevo_borde"
+				android:gravity="center"
+				android:padding="5dp"
+				android:text="@string/suscribirse"
+				android:textColor="#ffffff"
+				android:visibility="gone" />
+        </LinearLayout>
+        <TextView
+			        android:id="@+id/id_row_main_proximamente"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_marginTop="5dp"
+				    android:layout_marginLeft="5dp"
+				    android:textSize="16sp"
+				    android:gravity="center"
+				    android:paddingTop="2dp"
+				      android:paddingBottom="2dp"
+				     android:paddingLeft="5dp"
+				     android:paddingRight="5dp"
+				    android:text="PRÓXIMAMENTE"
+				    android:visibility="gone"
+				    android:background="@drawable/nuevo_borde"
+				     android:textColor="#ffffff"/>
+        </RelativeLayout>
+	</LinearLayout>
+        
+</LinearLayout>

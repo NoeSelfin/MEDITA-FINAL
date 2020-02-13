@@ -1,14 +1,17 @@
 package org.simo.medita;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.CheckBox;
@@ -16,9 +19,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import org.simo.medita.extras.Basics;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +63,78 @@ public class Contacto extends Activity {
         titulo.setTypeface(font);
         check_text.setTypeface(font);
         tvPolitica.setTypeface(font);
+
+        check_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AssetManager assetManager = getAssets();
+
+                InputStream in = null;
+                OutputStream out = null;
+                File file = new File( getFilesDir(), "abc.pdf");
+                try
+                {
+                    in = assetManager.open("pdf/privacidad.pdf");
+                    out =  openFileOutput(file.getName(), Context.MODE_WORLD_READABLE);
+
+                    copyFile(in, out);
+                    in.close();
+                    in = null;
+                    out.flush();
+                    out.close();
+                    out = null;
+                } catch (Exception e)
+                {
+                    Log.e("tag", e.getMessage());
+                }
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+/*		        String filePath = "";
+		        String type = "application/pdf";
+				if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.N) {
+					filePath = "content://" +  getFilesDir() + "/abc.pdf";
+					intent.setDataAndType(Uri.parse(filePath), type);
+				} else {
+					filePath = "file://" +  getFilesDir() + "/abc.pdf";
+					intent.setDataAndType(Uri.fromFile(new File(filePath)), type);
+				}
+				intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);*/
+                intent.setData(Uri.parse(Config.url_nota_legal));
+                startActivity(intent);
+            }
+        });
+
+        // if button is clicked, close the custom dialog
+        ver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (check.isChecked()){
+                    if (isEmailValid(email.getText().toString())){
+                        if (Basics.checkConn(Contacto.this)){
+                            new Downloader.setNewsletter(Basics.checkConn(Contacto.this),
+                                    email.getText().toString(),
+                                    Basics.getWifiMac(Contacto.this),
+                                    new Downloader.setNewsletter.AsyncResponse() {
+                                        @Override
+                                        public void processFinish(String respuesta) {
+                                            if (respuesta!=null){
+                                                alert("Se ha dado de alta correctamente.", "Información");
+                                            }
+                                        }
+                                    }).execute();
+                        } else {
+                            alert("No hay conexión a Internet.", null);
+                        }
+                    }
+                    else{
+                        alert("Dirección de email incorrecta.", null);
+                    }
+                }
+                else{
+                    Toast.makeText(Contacto.this, "Ha de aceptar la política de privacidad", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         setMenu();
@@ -218,6 +300,41 @@ public class Contacto extends Activity {
         });
 
     }
+    protected void alert(String mens, String tit){
+
+        final Dialog dialog = new Dialog(Contacto.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_generico);
+        dialog.setCancelable(false);
+
+        // set the custom dialog components - text, image and button
+        TextView close = (TextView) dialog.findViewById(R.id.id_alert_btn);
+        TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
+        TextView titulo = (TextView) dialog.findViewById(R.id.id_alert_titulo);
+
+
+        if (titulo!=null)
+            titulo.setText(tit);
+
+        if (mens != null)
+            text.setText(mens);
+
+        text.setTypeface(font);
+        close.setTypeface(font);
+        titulo.setTypeface(font);
+
+        // if button is clicked, close the custom dialog
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
+    }
+
 
     public boolean isEmailValid(String email)
     {
@@ -238,5 +355,14 @@ public class Contacto extends Activity {
             return true;
         else
             return false;
+    }
+    private void copyFile(InputStream in, OutputStream out) throws IOException
+    {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1)
+        {
+            out.write(buffer, 0, read);
+        }
     }
 }

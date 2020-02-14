@@ -102,7 +102,7 @@
     <string name="acercade_web">www.atentamente.net</string>
     <string name="acercade_mail">medita@atentamente.net</string>
     <string name="acercade_newsletter">· MANTENTE INFORMADO ·</string>
-    <string name="acercade_newsletter_text">Déjanos tu correo electrónico y te enviaremos las últimas novedades y eventos de Atentamente.</string>
+    <string name="acercade_newsletter_text">Si quieres formar parte de la comunidad Medita y estar al corriente de los nuevos contenidos déjanos tu nombre y correo.</string>
     <string name="acercade_newsletter_btn"><i>Suscribirse al boletín</i></string>
 
     <string name="opciones_1">No molestar cuando se medita</string>

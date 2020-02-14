@@ -15,11 +15,10 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="27dp"
 		    android:layout_marginTop="16dp"
-			android:layout_marginLeft="10dp"
-		    android:textSize="19sp"
+		    android:textSize="17sp"
 		    android:gravity="center"
 		    android:textColor="#0c465e"
-		    android:text = "¡RECIBIR NOTICIAS!"/>
+		    android:text = "¡INSCRÍBETE EN LA COMUNIDAD!"/>
     </LinearLayout>
     
     <TextView
@@ -32,7 +31,24 @@
 	    android:textSize="15sp"
 	    android:gravity="left"
 	    android:textColor="#0c465e"
-	    android:text = "Envíenos su correo electrónico para que podamos mantenerle informado desde Atentamente."/>
+	    android:text = "¿Quieres ser parte de la comunidad de Medita Y Recibir las últimas novedades y ofrecernos tus sugerencias? Déjanos tu correo electrónico."/>
+	<EditText
+		android:id="@+id/id_alert_editext_name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:maxLines="1"
+		android:maxLength="100"
+		android:layout_marginTop="20dp"
+		android:layout_marginBottom="5dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:hint="Nombre"
+		android:textSize="15sp"
+		android:textColor="#0c465e"
+		android:paddingLeft="10dp"
+		android:inputType="textEmailAddress"
+		android:background="@drawable/et_border"/>
 
     <EditText 
         android:id="@+id/id_alert_editext"
@@ -45,6 +61,7 @@
 	  	android:layout_marginBottom="5dp"
 	  	android:layout_marginLeft="20dp"
 	  	android:layout_marginRight="20dp"
+		android:hint="Email"
 	  	android:textSize="15sp"
 	  	android:textColor="#0c465e"
 	  	android:paddingLeft="10dp"

@@ -13,8 +13,8 @@ public class Config {
 	protected final static String url_get_packs = "http://medita.atentamente.net/get_packs.php";
 	protected final static String url_get_meditaciones  = "http://medita.atentamente.net/get_meditaciones.php";
 	protected final static String url_get_updates  = "http://medita.atentamente.net/get_updates.php";
-	//protected final static String url_set_newsletter  = "http://medita.atentamente.net/set_newsletter.php";
-	protected final static String url_set_newsletter  = "http://dashboard.atentamente.net/index.php/api/setNewsletter";
+	protected final static String url_set_newsletter  = "http://medita.atentamente.net/set_newsletter.php";
+	//protected final static String url_set_newsletter  = "http://dashboard.atentamente.net/index.php/api/setNewsletter";
 	protected final static String url_set_registro  = "http://medita.atentamente.net/set_registro_sincro.php";
 	protected final static String url_set_code  = "http://medita.atentamente.net/set_codigo_sincro.php";
 	protected final static String url_set_sync  = "http://medita.atentamente.net/set_sync.php";

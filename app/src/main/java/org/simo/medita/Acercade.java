@@ -335,6 +335,7 @@ public class Acercade extends Activity{
 		TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
 		TextView titulo = (TextView) dialog.findViewById(R.id.id_alert_titulo);
 		final EditText email = (EditText) dialog.findViewById(R.id.id_alert_editext);
+		final EditText name = (EditText) dialog.findViewById(R.id.id_alert_editext_name);
 		final CheckBox  check = (CheckBox) dialog.findViewById(R.id.checkBoxCustomized);
 		TextView check_text = (TextView) dialog.findViewById(R.id.checkBoxCustomized_text);
 		  check_text.setMovementMethod(LinkMovementMethod.getInstance());
@@ -393,20 +394,25 @@ public class Acercade extends Activity{
 			public void onClick(View v) {
 				if (check.isChecked()){
 					if (isEmailValid(email.getText().toString())){
-						if (Basics.checkConn(Acercade.this)){
-							new Downloader.setNewsletter(Basics.checkConn(Acercade.this),
-									email.getText().toString(),
-									Basics.getWifiMac(Acercade.this),
-									new Downloader.setNewsletter.AsyncResponse() {
-										@Override
-										public void processFinish(String respuesta) {
-											if (respuesta!=null){
-												alert("Se ha dado de alta correctamente.", "Información");
+						if (isNameValid(name.getText().toString())){
+							if (Basics.checkConn(Acercade.this)){
+								new Downloader.setNewsletter(Basics.checkConn(Acercade.this),
+										email.getText().toString(),
+										email.getText().toString(),
+										Basics.getWifiMac(Acercade.this),
+										new Downloader.setNewsletter.AsyncResponse() {
+											@Override
+											public void processFinish(String respuesta) {
+												if (respuesta!=null){
+													alert("Se ha dado de alta correctamente.", "Información");
+												}
 											}
-										}
-									}).execute();
-						} else {
-							 alert("No hay conexión a Internet.", null);
+										}).execute();
+							} else {
+								alert("No hay conexión a Internet.", null);
+							}
+						}else{
+							alert("Debes indicarnos tu nombre.", null);
 						}
 					}
 					else{
@@ -421,6 +427,14 @@ public class Acercade extends Activity{
 
 		dialog.show();
 	  }
+	public boolean isNameValid(String name)
+	{
+		if (name.length() < 3){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	  
 	  public boolean isEmailValid(String email)
 	    {

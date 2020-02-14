@@ -126,6 +126,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity android:name=".Contacto"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 

@@ -61,8 +61,9 @@ public class HttpConnection {
 	        
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
-        	Log.i("medita_response",response.getStatusLine().toString());
-	        
+        	//Log.i("medita_response",response.getStatusLine().toString());
+			//Log.i("medita_response", EntityUtils.toString(response.getEntity()));
+
 	       // Get hold of the response entity
             HttpEntity entity = response.getEntity();
             // If the response does not enclose an entity, there is no need
@@ -76,10 +77,13 @@ public class HttpConnection {
             }
 	        
 	    } catch (ClientProtocolException e) {
+			Log.i("medita_result","Error 1");
 	    	return null;
 	    } catch (IOException e) {
+			Log.i("medita_result","Error 2");
 	    	return null;
-	    } catch (Exception e){	  
+	    } catch (Exception e){
+			Log.i("medita_result",e.getMessage());
 	    	return null;
 	    }
 	    

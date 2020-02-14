@@ -419,11 +419,14 @@ public class Downloader {
 	           		prefs.edit().putBoolean("firstTime", true).commit();
 	           		// marcamos que se ha mostrado el tutorial acutalizado (solo pasara en nuevas instalaciones)
 					prefs.edit().putBoolean("updated_tutorial", true).commit();
-	           	}
+	           	}else{
+					((MainActivity)ctx).alert_meditaciones_nuevas();
+				}
 	           	
 	           	if (!prefs.contains("disclaimer")){
 					((MainActivity)ctx).disclaimer();
 				}
+
 				Log.i("medita_downloader","Terminando de  descargar Backgrounds.");
 
 	        	
@@ -571,8 +574,8 @@ public class Downloader {
 					   jo.put("mac",mac);
 					   
 					   http = new HttpConnection();
-			           result = http.postData(Config.url_get_updates, jo.toString());			           
-			           
+			           result = http.postData(Config.url_get_updates, jo.toString());
+
 			           if (Config.log){
 			        	   if (result != null)
 			        		   Log.i("medita",result);		        	   
@@ -593,9 +596,14 @@ public class Downloader {
 	        	
 	        	if ((result != null) && (result.compareTo("") != 0)){	
 	        		int version;
+					String version_desc ;
 					try {
 						version = new JSONArray(result).optJSONObject(0).optInt("version");
-		        		prefs.edit().putInt("server_version", version).commit();	 
+						version_desc = new JSONArray(result).optJSONObject(0).optString("notas");
+						Log.i("medita_result",String.valueOf(version));
+						Log.i("medita_result",version_desc);
+		        		prefs.edit().putInt("server_version", version).commit();
+						prefs.edit().putString("version_desc", version_desc).commit();
 
 					} catch (JSONException e) {
 					}
@@ -1015,6 +1023,7 @@ public class Downloader {
 
 		private boolean conection;
 		private String email;
+		private String name;
 		private String mac;
 		private AsyncResponse response;
 
@@ -1022,9 +1031,10 @@ public class Downloader {
 			void processFinish(String respuesta);
 		}
 
-		public setNewsletter(boolean conection, String email, String mac, AsyncResponse response) {
+		public setNewsletter(boolean conection, String email, String name, String mac, AsyncResponse response) {
 			this.conection = conection;
 			this.email = email;
+			this.name = name;
 			this.mac = mac;
 			this.response = response;
 		}
@@ -1042,6 +1052,7 @@ public class Downloader {
 					jsonObject.put("mac",mac);
 					jsonObject.put("plataforma","Android");
 					jsonObject.put("email",email);
+					jsonObject.put("name",name);
 
 					http = new HttpConnection();
 

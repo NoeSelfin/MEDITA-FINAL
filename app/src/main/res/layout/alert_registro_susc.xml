@@ -35,6 +35,23 @@
         android:text = "¿Quieres ser parte de la comunidad de Medita Y Recibir las últimas novedades y ofrecernos tus sugerencias? Déjanos tu correo electrónico."/>
 
     <EditText
+        android:id="@+id/id_alert_editext_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:maxLines="1"
+        android:maxLength="100"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Nombre"
+        android:textSize="15sp"
+        android:textColor="#0c465e"
+        android:paddingLeft="10dp"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/et_border"/>
+    <EditText
         android:id="@+id/id_alert_editext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -335,6 +335,7 @@ public class Registro extends Activity {
     public void setNewsletter(){
         new Downloader.setNewsletter(Basics.checkConn(Registro.this),
                 etEmail.getText().toString(),
+                etEmail.getText().toString(),
                 Basics.getWifiMac(Registro.this),
                 new Downloader.setNewsletter.AsyncResponse() {
                     @Override

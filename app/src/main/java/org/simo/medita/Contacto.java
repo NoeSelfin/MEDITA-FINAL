@@ -10,7 +10,9 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -52,17 +54,55 @@ public class Contacto extends Activity {
         TextView text = (TextView) findViewById(R.id.id_alert_text);
         TextView titulo = (TextView) findViewById(R.id.id_alert_titulo);
         final EditText email = (EditText) findViewById(R.id.id_alert_editext);
+        final EditText name = (EditText) findViewById(R.id.id_alert_editext_name);
         final CheckBox check = (CheckBox) findViewById(R.id.checkBoxCustomized);
         TextView check_text = (TextView) findViewById(R.id.checkBoxCustomized_text);
         check_text.setMovementMethod(LinkMovementMethod.getInstance());
         TextView tvPolitica = findViewById(R.id.tv_politica);
         tvPolitica.setMovementMethod(LinkMovementMethod.getInstance());
+        LinearLayout atras = (LinearLayout)findViewById(R.id.id_contacto_atras);
+
+        TextView web = (TextView) findViewById(R.id.id_alert_web);
+        TextView contact = (TextView) findViewById(R.id.id_alert_contact);
+
+        SpannableString content = new SpannableString("VISITA NUESTRA WEB");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        web.setText(content);
+
+         content = new SpannableString("CONTÁCTANOS");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        contact.setText(content);
+
+        web.setMovementMethod(LinkMovementMethod.getInstance());
+        web.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                browserIntent.setData(Uri.parse("https://www.atentamente.net/"));
+                startActivity(browserIntent);
+            }
+        });
+        contact.setMovementMethod(LinkMovementMethod.getInstance());
+        contact.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setType("text/plain");
+                intent.setData(Uri.parse("mailto:medita@atentamente.net"));
+                //intent.putExtra(Intent.EXTRA_EMAIL, "medita@atentamente.net");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "App Medita");
+
+                startActivity(Intent.createChooser(intent, "Send Email to Medita"));
+            }
+        });
 
         text.setTypeface(font);
         ver.setTypeface(font);
         titulo.setTypeface(font);
         check_text.setTypeface(font);
         tvPolitica.setTypeface(font);
+        web.setTypeface(font);
+        contact.setTypeface(font);
+
 
         check_text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,25 +150,33 @@ public class Contacto extends Activity {
             public void onClick(View v) {
                 if (check.isChecked()){
                     if (isEmailValid(email.getText().toString())){
-                        if (Basics.checkConn(Contacto.this)){
-                            new Downloader.setNewsletter(Basics.checkConn(Contacto.this),
-                                    email.getText().toString(),
-                                    Basics.getWifiMac(Contacto.this),
-                                    new Downloader.setNewsletter.AsyncResponse() {
-                                        @Override
-                                        public void processFinish(String respuesta) {
-                                            if (respuesta!=null){
-                                                alert("Se ha dado de alta correctamente.", "Información");
+                        if (isNameValid(name.getText().toString())){
+                            if (Basics.checkConn(Contacto.this)){
+                                new Downloader.setNewsletter(Basics.checkConn(Contacto.this),
+                                        email.getText().toString(),
+                                        name.getText().toString(),
+                                        Basics.getWifiMac(Contacto.this),
+                                        new Downloader.setNewsletter.AsyncResponse() {
+                                            @Override
+                                            public void processFinish(String respuesta) {
+                                                if (respuesta!=null){
+                                                    alert("Se ha dado de alta correctamente.", "Información");
+                                                    email.setText("");
+                                                    name.setText("");
+                                                }
                                             }
-                                        }
-                                    }).execute();
-                        } else {
-                            alert("No hay conexión a Internet.", null);
+                                        }).execute();
+                            } else {
+                                alert("No hay conexión a Internet.", null);
+                            }
                         }
-                    }
-                    else{
-                        alert("Dirección de email incorrecta.", null);
-                    }
+                        else{
+                            alert("Debes indicarnos tu nombre.", null);
+                        }
+                        }else{
+                            alert("Dirección de email incorrecta.", null);
+                        }
+
                 }
                 else{
                     Toast.makeText(Contacto.this, "Ha de aceptar la política de privacidad", Toast.LENGTH_SHORT).show();
@@ -136,6 +184,12 @@ public class Contacto extends Activity {
             }
         });
 
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                menu_lateral.showMenu(true);
+            }
+        });
 
         setMenu();
     }
@@ -174,13 +228,22 @@ public class Contacto extends Activity {
         ((View) menu_lateral.findViewById(R.id.id_menu_view_ini)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_fav)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_progreso)).setVisibility(View.INVISIBLE);
-        ((View) menu_lateral.findViewById(R.id.id_menu_view_acercade)).setVisibility(View.VISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_acercade)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_vision)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_opciones)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_sincro)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_suscription)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_contact)).setVisibility(View.INVISIBLE);
 
+        LinearLayout acercade = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_acercade_ll);
+        acercade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(Contacto.this, Acercade.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         LinearLayout opciones = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_opciones_ll);
         opciones.setOnClickListener(new View.OnClickListener() {
@@ -335,7 +398,14 @@ public class Contacto extends Activity {
         dialog.show();
     }
 
-
+    public boolean isNameValid(String name)
+    {
+        if (name.length() < 3){
+            return false;
+        }else{
+            return true;
+        }
+    }
     public boolean isEmailValid(String email)
     {
         String regExpn =
@@ -365,4 +435,5 @@ public class Contacto extends Activity {
             out.write(buffer, 0, read);
         }
     }
+
 }

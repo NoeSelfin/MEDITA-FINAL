@@ -155,6 +155,8 @@ public class MainActivity extends Activity {
 							}
 						}
 					}
+                    //printLog("Server version: "+prefs.getInt("server_version",0));
+                    //printLog("Server version: "+prefs.getInt("version",0));
 					if (prefs.getInt("server_version",0) > prefs.getInt("version",0)){
 						//if (prefs.contains("isNoFirstTime")){
 
@@ -164,6 +166,8 @@ public class MainActivity extends Activity {
 						//else{
 							prefs.edit().putInt("version", prefs.getInt("server_version",0)).commit();
 							prefs.edit().putBoolean("isNoFirstTime", true).commit();
+							prefs.edit().putBoolean("showNewContent", true).commit();
+
 						//}
 					}
 					else{
@@ -185,6 +189,16 @@ public class MainActivity extends Activity {
 									checkDay();
 								}
 							}
+
+							/*if (!prefs.contains("showNewContent")){
+							} else {
+								if (prefs.getBoolean("showNewContent",false)){
+									alert_meditaciones_nuevas();
+								}
+							}*/
+
+
+
 						} catch (JSONException e) {
 							new Downloader(this,prefs,loading,1).downloadData(reproducir, adapterpacks, listview);
 							printLog("update 2");
@@ -880,6 +894,7 @@ public class MainActivity extends Activity {
 		TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
 		TextView titulo = (TextView) dialog.findViewById(R.id.id_alert_titulo);
 		final EditText email = (EditText) dialog.findViewById(R.id.id_alert_editext);
+		final EditText name = (EditText) findViewById(R.id.id_alert_editext_name);
 		final CheckBox check = (CheckBox) dialog.findViewById(R.id.checkBoxCustomized);
 		TextView check_text = (TextView) dialog.findViewById(R.id.checkBoxCustomized_text);
 		check_text.setMovementMethod(LinkMovementMethod.getInstance());
@@ -946,22 +961,28 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				if (check.isChecked()){
 					if (isEmailValid(email.getText().toString())){
-						if (Basics.checkConn(MainActivity.this)){
-							new Downloader.setNewsletter(Basics.checkConn(MainActivity.this),
-									email.getText().toString(),
-									Basics.getWifiMac(MainActivity.this),
-									new Downloader.setNewsletter.AsyncResponse() {
-										@Override
-										public void processFinish(String respuesta) {
-											if (respuesta!=null){
-												alert("Se ha dado de alta correctamente.", "Información");
-												alertFinish("Se ha dado de alta correctamente.", "Información",dialog);
+						if (isNameValid(name.getText().toString())){
+							if (Basics.checkConn(MainActivity.this)){
+								new Downloader.setNewsletter(Basics.checkConn(MainActivity.this),
+										email.getText().toString(),
+										name.getText().toString(),
+										Basics.getWifiMac(MainActivity.this),
+										new Downloader.setNewsletter.AsyncResponse() {
+											@Override
+											public void processFinish(String respuesta) {
+												if (respuesta!=null){
+													alert("Se ha dado de alta correctamente.", "Información");
+													alertFinish("Se ha dado de alta correctamente.", "Información",dialog);
+												}
 											}
-										}
-									}).execute();
-						} else {
-							alert("No hay conexión a Internet.", null);
+										}).execute();
+							} else {
+								alert("No hay conexión a Internet.", null);
+							}
+						}else{
+							alert("Debes indicarnos tu nombre.", null);
 						}
+
 					}
 					else{
 						alert("Dirección de email incorrecta.", null);
@@ -1021,7 +1042,13 @@ public class MainActivity extends Activity {
 		// set the custom dialog components - text, image and button
 		TextView close = (TextView) dialog.findViewById(R.id.id_alert_btn);
 		TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
+
+		String version_desc = prefs.getString("version_desc","");
 		TextView titulo = (TextView) dialog.findViewById(R.id.id_alert_titulo);
+
+		if (version_desc.compareTo("")!=0){
+			text.setText(version_desc);
+		}
 
 		text.setTypeface(font);
 		close.setTypeface(font);
@@ -1037,6 +1064,8 @@ public class MainActivity extends Activity {
 		});
 
 		dialog.show();
+
+		prefs.edit().putBoolean("showNewContent", false).commit();
 	}
 
 	protected void alertFinish(String mens, String tit, final Dialog d){
@@ -1074,6 +1103,14 @@ public class MainActivity extends Activity {
 		dialog.show();
 	}
 
+	public boolean isNameValid(String name)
+	{
+		if (name.length() < 3){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	public boolean isEmailValid(String email)
 	{
 		String regExpn =

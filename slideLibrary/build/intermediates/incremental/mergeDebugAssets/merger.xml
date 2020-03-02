@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="H:\MEDITA FINAL\slideLibrary\src\main\assets"/><source path="H:\MEDITA FINAL\slideLibrary\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="H:\MEDITA FINAL\slideLibrary\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\assets"/><source path="H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\debug\assets"/></dataSet></merger>

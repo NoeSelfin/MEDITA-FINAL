@@ -177,8 +177,8 @@
 		    android:orientation="horizontal">
 		     <ImageView
 		         android:id="@+id/id_acercade_youtube"
-		        android:layout_width="85dp"
-		        android:layout_height="85dp"
+		        android:layout_width="75dp"
+		        android:layout_height="75dp"
 		        android:layout_weight="0.5"
 		        android:src="@drawable/btn_youtube"
 		        android:layout_marginTop="15dp"
@@ -186,13 +186,22 @@
 		        android:layout_gravity="center"/>
 		      <ImageView
 		          android:id="@+id/id_acercade_facebook"
-		        android:layout_width="85dp"
-		        android:layout_height="85dp"
+		        android:layout_width="75dp"
+		        android:layout_height="75dp"
 		        android:layout_weight="0.5"
 		        android:src="@drawable/btn_facebook"
 		        android:layout_marginTop="15dp"
 		        android:paddingBottom="15dp"
 		        android:layout_gravity="center"/>
+			   <ImageView
+				   android:id="@+id/id_acercade_instagram"
+				   android:layout_width="85dp"
+				   android:layout_height="85dp"
+				   android:layout_weight="0.5"
+				   android:src="@drawable/btn_instagram"
+				   android:layout_marginTop="15dp"
+				   android:paddingBottom="15dp"
+				   android:layout_gravity="center"/>
 		 </LinearLayout>
 		 <TextView
 	            android:id="@+id/id_acercade_web"

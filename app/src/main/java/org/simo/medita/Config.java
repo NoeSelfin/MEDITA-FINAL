@@ -10,11 +10,14 @@ public class Config {
 	protected final static String url_iconos = "http://medita.atentamente.net/iconos/";
 	protected final static String url_fondos = "http://medita.atentamente.net/fondos/";
 	protected final static String url_meditaciones = "http://medita.atentamente.net/meditaciones/";
-	protected final static String url_get_packs = "http://medita.atentamente.net/get_packs.php";
-	protected final static String url_get_meditaciones  = "http://medita.atentamente.net/get_meditaciones.php";
-	protected final static String url_get_updates  = "http://medita.atentamente.net/get_updates.php";
-	protected final static String url_set_newsletter  = "http://medita.atentamente.net/set_newsletter.php";
-	//protected final static String url_set_newsletter  = "http://dashboard.atentamente.net/index.php/api/setNewsletter";
+	//protected final static String url_get_packs = "http://medita.atentamente.net/get_packs.php";
+	protected final static String url_get_packs = "https://dashboard.atentamente.net/index.php/api/getPacks";
+	//protected final static String url_get_meditaciones  = "http://medita.atentamente.net/get_meditaciones.php";
+	protected final static String url_get_meditaciones  = "https://dashboard.atentamente.net/index.php/api/getMeditations";
+	//protected final static String url_get_updates  = "http://medita.atentamente.net/get_updates.php";
+	protected final static String url_get_updates  = "https://dashboard.atentamente.net/index.php/api/getUpdates";
+	//protected final static String url_set_newsletter  = "http://medita.atentamente.net/set_newsletter.php";
+	protected final static String url_set_newsletter  = "https://dashboard.atentamente.net/index.php/api/setNewsletter";
 	protected final static String url_set_registro  = "http://medita.atentamente.net/set_registro_sincro.php";
 	protected final static String url_set_code  = "http://medita.atentamente.net/set_codigo_sincro.php";
 	protected final static String url_set_sync  = "http://medita.atentamente.net/set_sync.php";
@@ -39,7 +42,11 @@ public class Config {
 	protected final static String url_atentamente = "http://www.atentamente.net";
 	protected final static String mail_atentamente = "info@medita.com";
 	protected final static String youtube_atentamente = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
-	protected final static String facebook_atentamente = "https://www.facebook.com/atentamentecoaching2016";
+	//protected final static String facebook_atentamente = "https://www.facebook.com/atentamentecoaching2016";
+	protected final static String facebook_atentamente = "https://www.facebook.com/enriquemindful";
+	protected final static String instagram_atentamente = "https://www.instagram.com/enrique.mindful";
+
+
 	protected final static String whatsapp_atentamente = "http://www.atentamente.net";
 	protected final static String twitter_atentamente = "http://www.atentamente.net";
 

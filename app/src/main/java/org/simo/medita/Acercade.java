@@ -70,6 +70,7 @@ public class Acercade extends Activity{
 		web.setTypeface(font);
 		ImageView youtube = (ImageView)findViewById(R.id.id_acercade_youtube);
 		ImageView facebook = (ImageView)findViewById(R.id.id_acercade_facebook);
+		ImageView instagram = (ImageView)findViewById(R.id.id_acercade_instagram);
 		LinearLayout atras = (LinearLayout)findViewById(R.id.id_acercade_atras);
 		
 		TextView newsletter_btn = (TextView)findViewById(R.id.id_acercade_newsletter_btn);
@@ -131,6 +132,13 @@ public class Acercade extends Activity{
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.facebook_atentamente)));
 			}
 		});
+		instagram.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.instagram_atentamente)));
+			}
+		});
+
 		atras.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

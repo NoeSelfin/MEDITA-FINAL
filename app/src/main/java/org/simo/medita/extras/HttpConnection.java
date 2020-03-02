@@ -48,7 +48,9 @@ public class HttpConnection {
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 	        nameValuePairs.add(new BasicNameValuePair("params", params));
-	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			httppost.setHeader("User-Agent", "Chrome/23.0.1271.95");
 
 	        Log.i("medita_params",params);
 	        
@@ -56,7 +58,9 @@ public class HttpConnection {
 	        HttpParams httpParameters = new BasicHttpParams();
 	        HttpConnectionParams.setConnectionTimeout(httpParameters, CONN_TIMEOUT);
 	        HttpConnectionParams.setSoTimeout(httpParameters, SO_TIMEOUT);
-	        
+            //httppost.setHeader("Content-Type", "application/json");
+            httppost.setHeader("Accept", "application/json");
+
 	        httpclient.setParams(httpParameters);
 	        
 	        // Execute HTTP Post Request

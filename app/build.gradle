@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "org.simo.medita"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 54
-        versionName "5.03"
+        targetSdkVersion 28
+        versionCode 56
+        versionName "5.06"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,6 +27,13 @@ android {
         exclude 'META-INF/ASL2.0'
     }
     useLibrary  'org.apache.http.legacy'
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
 }
 
 dependencies {

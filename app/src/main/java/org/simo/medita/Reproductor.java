@@ -88,8 +88,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected static boolean play_block = true;
 	protected boolean back = false;
 	protected boolean fromMain = false;
-	
+
 	FileInputStream fileInputStream;
+
+	protected boolean introActivated = false;
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -572,6 +574,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 			        File file=new File(directory,song);
 					if(file.exists())   {
+
 						currentTime = 0;
 						prepareSong(file.getAbsolutePath());
 						mp.start();
@@ -592,8 +595,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						if (Basics.checkConn(Reproductor.this)){
 							time.setText("0:00");
 					        time_left.setText("0:00");
+
 							Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-							downloader.downloadMp3(song,time_left,mp,pack.toString(),play);	
+							downloader.downloadMp3(song,time_left,mp,pack.toString(),play);
 							play.setBackgroundResource(R.drawable.play_button);
 						}
 						else{
@@ -678,7 +682,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					 time.setText("0:00");
 				     time_left.setText("0:00");
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-					downloader.downloadMp3(song,time_left,mp,pack.toString(), play);	
+					downloader.downloadMp3(song,time_left,mp,pack.toString(), play);
 				}
 				else{
 					alert("No hay conexión a Internet.");
@@ -778,6 +782,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
      * */
     private Runnable mUpdateTimeTask = new Runnable() {
            public void run() {
+
                long totalDuration = mp.getDuration();
                long currentDuration = mp.getCurrentPosition();
                currentTime = currentDuration;
@@ -790,6 +795,12 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
                int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
                //Log.d("Progress", ""+progress);
                songProgressBar.setProgress(progress);
+
+               if (currentDuration>15.0){
+				   introActivated = true;
+			   }else{
+				   introActivated = false;
+			   }
  
                // Running this thread after 100 milliseconds
                mHandler.postDelayed(this, 100);
@@ -833,6 +844,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
     public void onCompletion(MediaPlayer arg0) {
         Log.i(Config.tag,"onCompletion");
     	//if(arg0.getDuration() == arg0.getCurrentPosition()){
+		Log.i(Config.tag+"duration",String.valueOf(arg0.getDuration()));
     	play.setBackgroundResource(R.drawable.play_button);
     		if (!isIntro){
 
@@ -881,7 +893,11 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
                }
         		
         	}else{
-			introduccion.performClick();
+    			if(introActivated){
+					introduccion.performClick();
+				}
+
+
 		}
     }
     
@@ -892,7 +908,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
     	
     	if (percent == 100){
     		
-    	}   	
+    	}
     }  
     
     protected void saveState(){

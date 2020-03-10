@@ -56,7 +56,7 @@ public class Downloader {
 	protected  MediaPlayer mp;
 	protected boolean error = false;
 	protected ImageView play;
-	
+
 	public Downloader(Context ctx, SharedPreferences prefs,ImageView loading, int type){
 		this.ctx = ctx;
 		this.prefs = prefs;
@@ -121,10 +121,11 @@ public class Downloader {
 		Log.i("medita_memory", Formatter.formatFileSize(ctx, 361078784));
 		
 		if (total > 361078784){
+			Log.i("medita_intros", "1");
 			time_left = time;
 			this.mp = mp;
-	        this.play = play;	       
-			new downloadSaveMp3().execute(mp3);		
+	        this.play = play;
+			new downloadSaveMp3().execute(mp3);
 		}
 		else{
 			/*final Dialog dialog = new Dialog(ctx);
@@ -157,6 +158,7 @@ public class Downloader {
 		
 		    
         	try {
+				Log.i("medita_intros", "1");
         		mp.reset();
               	mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 				mp.setDataSource(Config.url_meditaciones + mp3);
@@ -463,8 +465,7 @@ public class Downloader {
 				        mypath=new File(directory,params[0]);
 					
 						output = new FileOutputStream(mypath);
-					
-	
+
 			            byte data[] = new byte[1024];
 			            long total = 0;
 			            int count=0;
@@ -480,9 +481,9 @@ public class Downloader {
 			            input.close();
 			            			            
 	        	   } catch (FileNotFoundException e) {
-	        		   Log.i("medita", "Error");	        		   
+	        		   Log.i("medita", "Error FileNotFoundException");
 					} catch (IOException e) {
-						 Log.i("medita", "Error");
+						 Log.i("medita", "Error IOException");
 						 if (mypath != null){
 							 mypath.delete();
 						 }
@@ -501,18 +502,20 @@ public class Downloader {
 	             File file=new File(directory,song);
 	     		 if(file.exists())   {
 	     			try {
+	     				Log.i("medita_intro","3");
 	     				FileInputStream fileInputStream = new FileInputStream(file.getAbsolutePath());
 	     				mp.reset();
 	     		        mp.setDataSource(fileInputStream.getFD());
 	     		        mp.prepare();
 	     		        time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
 	     		        Reproductor.play_block = false;
-	     		        play.performClick();   
+	     		        play.performClick();
+
 	     		        
 	     			} catch (IOException e) {	
 	     				Log.i("medita","Error playing audio");
 	     				file.delete();
-	     				Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.",Toast.LENGTH_LONG).show();
+	     				Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde 1.",Toast.LENGTH_LONG).show();
 	     				 Intent i = new Intent(ctx, MainActivity.class);   
 						 //i.setAction(Config.from_Meditaciones);
 						 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -523,6 +526,8 @@ public class Downloader {
 	     		 else{
 	     			 if (Basics.checkConn(ctx)){
 	     				try {
+
+							Log.i("medita_intro","4");
 		            		mp.reset();
 		                  	mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		    				mp.setDataSource(Config.url_meditaciones + song);
@@ -530,7 +535,7 @@ public class Downloader {
 		    		        Reproductor.play_block = false;
 		    			    play.performClick();  
 		    			} catch (Exception e) {
-		    				Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.",Toast.LENGTH_LONG).show();
+		    				Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde 2.",Toast.LENGTH_LONG).show();
 		     				 Intent i = new Intent(ctx, MainActivity.class);   
 							 //i.setAction(Config.from_Meditaciones);
 							 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -539,7 +544,7 @@ public class Downloader {
 		    			} 
 	     			 }
 	     			 else{
-	     				 Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.",Toast.LENGTH_LONG).show();
+	     				 Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde 3.",Toast.LENGTH_LONG).show();
 	     				 Intent i = new Intent(ctx, MainActivity.class);   
 						 //i.setAction(Config.from_Meditaciones);
 						 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

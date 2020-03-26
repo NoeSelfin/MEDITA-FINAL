@@ -189,7 +189,7 @@ public class MainActivity extends Activity {
 									checkDay();
 								}
 
-								if(prefs.getBoolean("Premios_6", false)){
+								/*if(prefs.getBoolean("Premios_6", false)){
 									//Lanzamos popup de finalización
 									if(prefs.getBoolean("day_21_show_msg", false)){
 									}else{
@@ -224,7 +224,7 @@ public class MainActivity extends Activity {
 										prefs.edit().putBoolean("day_7_show_msg", true).commit();
 									}
 
-								}
+								}*/
 							}
 
 							/*if (!prefs.contains("showNewContent")){

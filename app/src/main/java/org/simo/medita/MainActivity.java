@@ -188,6 +188,43 @@ public class MainActivity extends Activity {
 									// comprobamos la fecha de hoy y mostramos popup informando de las suscripciones
 									checkDay();
 								}
+
+								if(prefs.getBoolean("Premios_6", false)){
+									//Lanzamos popup de finalización
+									if(prefs.getBoolean("day_21_show_msg", false)){
+									}else{
+										String tit = "Medita";
+										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Te invitamos a suscribirte para cceder a la biblioteca completa de contenidos si no lo has hecho ya.";
+										alertFinishFirstPack(mens, tit);
+										//Ya no lo volvemos a poner
+										prefs.edit().putBoolean("day_21_show_msg", true).commit();
+									}
+
+								}else if(prefs.getBoolean("Premios_5", false)){
+									//Lanzamos popup de finalización
+									if(prefs.getBoolean("day_14_show_msg", false)){
+
+									}else{
+										String tit = "Medita";
+										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para cceder a la biblioteca completa de contenidos si no lo has hecho ya.";
+										alertFinishFirstPack(mens, tit);
+										//Ya no lo volvemos a poner
+										prefs.edit().putBoolean("day_14_show_msg", true).commit();
+									}
+
+								}else if(prefs.getBoolean("Premios_4", false)){
+									//Lanzamos popup de finalización
+									if(prefs.getBoolean("day_7_show_msg", false)){
+
+									}else{
+										String tit = "Medita";
+										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para cceder a la biblioteca completa de contenidos si no lo has hecho ya.";
+										alertFinishFirstPack(mens, tit);
+										//Ya no lo volvemos a poner
+										prefs.edit().putBoolean("day_7_show_msg", true).commit();
+									}
+
+								}
 							}
 
 							/*if (!prefs.contains("showNewContent")){
@@ -1066,6 +1103,40 @@ public class MainActivity extends Activity {
 		dialog.show();
 
 		prefs.edit().putBoolean("showNewContent", false).commit();
+	}
+
+	protected void alertFinishFirstPack(String mens, String tit){
+
+		final Dialog dialog = new Dialog(MainActivity.this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.alert_generico);
+		dialog.setCancelable(false);
+
+		// set the custom dialog components - text, image and button
+		TextView close = (TextView) dialog.findViewById(R.id.id_alert_btn);
+		TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
+		TextView titulo = (TextView) dialog.findViewById(R.id.id_alert_titulo);
+
+
+		if (titulo!=null)
+			titulo.setText(tit);
+
+		if (mens != null)
+			text.setText(mens);
+
+		text.setTypeface(font);
+		close.setTypeface(font);
+		titulo.setTypeface(font);
+
+		// if button is clicked, close the custom dialog
+		close.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
 	}
 
 	protected void alertFinish(String mens, String tit, final Dialog d){

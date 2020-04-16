@@ -500,7 +500,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					if (mp.isPlaying()){
 						mp.pause();
 						play.setBackgroundResource(R.drawable.play_button);
-						audio.setStreamMute(AudioManager.STREAM_RING,  false);	 			
+
+						//Lo desactivo porqué en versiones nuevas da error
+						//audio.setStreamMute(AudioManager.STREAM_RING,  false);
 
 					}
 					else{
@@ -508,8 +510,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						play.setBackgroundResource(R.drawable.pause_button);
 						updateProgressBar();						
 						if (prefs.contains("opciones_nomolestar")){
-							if (prefs.getBoolean("opciones_nomolestar", true)){				        
-			 					audio.setStreamMute(AudioManager.STREAM_RING,  true);			 			
+							if (prefs.getBoolean("opciones_nomolestar", true)){
+								//Lo desactivo porqué en versiones nuevas da error
+			 					//audio.setStreamMute(AudioManager.STREAM_RING,  true);
 							}    
 						}
 						JSONArray meditaciones_aux = new JSONArray();
@@ -925,7 +928,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	{
     	back = true;
     	AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-    	audio.setStreamMute(AudioManager.STREAM_RING,  false);	
+
+    	//Lo desactivo porqué en versiones nuevas da error
+    	//audio.setStreamMute(AudioManager.STREAM_RING,  false);
     	if (mp.isPlaying())
 			mp.stop();
 		

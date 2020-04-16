@@ -189,13 +189,16 @@ public class MainActivity extends Activity {
 									checkDay();
 								}
 
-								/*if(prefs.getBoolean("Premios_6", false)){
+								if(prefs.getBoolean("Premios_6", false)){
 									//Lanzamos popup de finalización
 									if(prefs.getBoolean("day_21_show_msg", false)){
 									}else{
-										String tit = "Medita";
-										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Te invitamos a suscribirte para cceder a la biblioteca completa de contenidos si no lo has hecho ya.";
-										alertFinishFirstPack(mens, tit);
+										/*String tit = "Medita";
+										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Te invitamos a suscribirte para acceder a la biblioteca completa de contenidos si no lo has hecho ya.";
+										alertFinishFirstPack(mens, tit);*/
+										popup2Btn(getString(R.string.popup_primera_semana),
+												getString(R.string.subscribe_now),
+												getString(R.string.subscribe_not_now));
 										//Ya no lo volvemos a poner
 										prefs.edit().putBoolean("day_21_show_msg", true).commit();
 									}
@@ -205,9 +208,12 @@ public class MainActivity extends Activity {
 									if(prefs.getBoolean("day_14_show_msg", false)){
 
 									}else{
-										String tit = "Medita";
-										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para cceder a la biblioteca completa de contenidos si no lo has hecho ya.";
-										alertFinishFirstPack(mens, tit);
+										/*String tit = "Medita";
+										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para acceder a la biblioteca completa de contenidos si no lo has hecho ya.";
+										alertFinishFirstPack(mens, tit);*/
+										popup2Btn(getString(R.string.popup_segunda_semana),
+												getString(R.string.subscribe_now),
+												getString(R.string.subscribe_not_now));
 										//Ya no lo volvemos a poner
 										prefs.edit().putBoolean("day_14_show_msg", true).commit();
 									}
@@ -217,14 +223,17 @@ public class MainActivity extends Activity {
 									if(prefs.getBoolean("day_7_show_msg", false)){
 
 									}else{
-										String tit = "Medita";
-										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para cceder a la biblioteca completa de contenidos si no lo has hecho ya.";
-										alertFinishFirstPack(mens, tit);
+										/*String tit = "Medita";
+										String mens = "Enhorabuena! has completado la última semana del plan de 21 días. Puedes seguir con la siguiente semana. Te invitamos a suscribirte para acceder a la biblioteca completa de contenidos si no lo has hecho ya.";
+										alertFinishFirstPack(mens, tit);*/
+										popup2Btn(getString(R.string.popup_tercera_semana),
+												getString(R.string.subscribe_now),
+												getString(R.string.subscribe_not_now));
 										//Ya no lo volvemos a poner
 										prefs.edit().putBoolean("day_7_show_msg", true).commit();
 									}
 
-								}*/
+								}
 							}
 
 							/*if (!prefs.contains("showNewContent")){
@@ -306,16 +315,16 @@ public class MainActivity extends Activity {
 						int tmp = Integer.parseInt(med.getString("med_dia"));
 						int id_meditacion = Integer.parseInt(med.getString("id_meditacion"));
 
-						if (Config.log) {
+						/*if (Config.log) {
 							Log.i(Config.tag,"MainActivity");
 							Log.i(Config.tag,"med -> " + med);
 							Log.i(Config.tag,"tmp -> " + tmp);
 							Log.i(Config.tag,"contains popup_primera_semana -> " + prefs.contains("popup_primera_semana"));
 							Log.i(Config.tag,"contains popup_segunda_semana -> " + prefs.contains("popup_segunda_semana"));
 							Log.i(Config.tag,"contains popup_tercera_semana -> " + prefs.contains("popup_tercera_semana"));
-						}
+						}*/
 
-						if (id_meditacion == 46 && !prefs.contains("popup_primera_semana")){
+						/*if (id_meditacion == 46 && !prefs.contains("popup_primera_semana")){
 							prefs.edit().putBoolean("popup_primera_semana", true).commit();
 							popup2Btn(getString(R.string.popup_primera_semana),
 									getString(R.string.subscribe_now),
@@ -332,7 +341,7 @@ public class MainActivity extends Activity {
 							popup2Btn(getString(R.string.popup_tercera_semana),
 									getString(R.string.subscribe_now),
 									getString(R.string.subscribe_not_now));
-						}
+						}*/
 					}
 				} catch (JSONException e) {
 					song_name.setVisibility(View.INVISIBLE);
@@ -429,6 +438,9 @@ public class MainActivity extends Activity {
             e.printStackTrace();
 			printLog("Error en la función checkLoged!!!");
         }
+
+
+
 
     }
 	/** Comprueba la fecha actual y la fecha de última comprobación, en caso que sean distintas (1 vez al día),

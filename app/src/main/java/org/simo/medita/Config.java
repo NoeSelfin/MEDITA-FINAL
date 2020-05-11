@@ -24,6 +24,7 @@ public class Config {
 	protected final static String url_get_sync  = "http://medita.atentamente.net/get_sync.php";
 //	protected final static String url_nota_legal = "https://www.atentamente.net/aviso-legal/";
 	protected final static String url_recuperar_code  = "http://medita.atentamente.net/recuperar_codigo.php";
+	protected final static String url_get_promo  = "http://dashboard.atentamente.net/index.php/api/getPromo";
 	protected final static String token = "jh34k3jh5g35k52jh";
 	public final static boolean log = true;
 	protected final static String from_Meditaciones = "Meditaciones";

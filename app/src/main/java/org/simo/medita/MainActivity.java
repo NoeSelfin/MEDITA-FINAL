@@ -43,8 +43,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -374,8 +377,7 @@ public class MainActivity extends Activity {
 		    		 }
 		    		 else{
 
-	    			 	if (prefs.getBoolean(getString(R.string.suscrito), false) ||
-							checkComprado(String.valueOf(packs.optJSONObject(position).optInt("id_pack")))){
+	    			 	if (prefs.getBoolean(getString(R.string.suscrito), false) || checkComprado(String.valueOf(packs.optJSONObject(position).optInt("id_pack"))) || checkpromo()){
 							Intent i = new Intent(MainActivity.this, Meditaciones.class);
 							i.putExtra("pack", packs.optJSONObject(position).toString());
 							startActivity(i);
@@ -1222,6 +1224,35 @@ public class MainActivity extends Activity {
 		{
 			out.write(buffer, 0, read);
 		}
+	}
+
+	private boolean checkpromo(){
+		//[{"id_promo":"1","from":"2020-01-01 00:00:00","to":"2020","code":"abcd","type":"1","consumed":"0","deleted_at":null}]
+		try {
+			JSONObject jo = new JSONObject(prefs.getString("promo","{}"));
+			if (jo.length() > 3){
+				try {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Date to = formatter.parse(jo.optString("to","2040-01-01 00:00:00"));
+					Date from = formatter.parse(jo.optString("from","2010-01-01 00:00:00"));
+					Date now = new Date();
+
+					if (now.after(from) && now.before(to)){
+
+						if(jo.optInt("type") == 2){
+							return true;
+						}else if ((jo.optInt("type") == 1)&& (jo.optInt("consumed") == 0)){
+							return true;
+						}
+					}
+				} catch (ParseException e) {
+					printLog("ParseException:" + e.getMessage());
+				}
+			}
+		} catch (JSONException e) {
+		}
+
+		return false;
 	}
 
 

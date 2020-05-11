@@ -19,7 +19,12 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.simo.medita.extras.Basics;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AdapterPacks extends BaseAdapter {
@@ -98,7 +103,9 @@ public class AdapterPacks extends BaseAdapter {
 			        		 if(checkComprado(String.valueOf(data.getJSONObject(position).getInt("id_pack")))){
 			        		 	Log.i("medita_compras", "tiene comprado el pack -> " + String.valueOf(data.getJSONObject(position).getInt("id_pack")));
 								 holder.precio.setVisibility(View.GONE);
-							}else{
+							}else if (checkpromo()){
+								 holder.precio.setVisibility(View.GONE);
+							 }else{
 								 holder.precio.setVisibility(View.VISIBLE);
 							 }
 		        		} else {
@@ -175,5 +182,34 @@ public class AdapterPacks extends BaseAdapter {
         }
         return false;
     }
+
+	private boolean checkpromo(){
+		//[{"id_promo":"1","from":"2020-01-01 00:00:00","to":"2020","code":"abcd","type":"1","consumed":"0","deleted_at":null}]
+		try {
+			JSONObject jo = new JSONObject(prefs.getString("promo","{}"));
+			if (jo.length() > 3){
+				try {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Date to = formatter.parse(jo.optString("to","2040-01-01 00:00:00"));
+					Date from = formatter.parse(jo.optString("from","2010-01-01 00:00:00"));
+					Date now = new Date();
+
+					if (now.after(from) && now.before(to)){
+
+						if(jo.optInt("type") == 2){
+							return true;
+						}else if ((jo.optInt("type") == 1)&& (jo.optInt("consumed") == 0)){
+							return true;
+						}
+					}
+				} catch (ParseException e) {
+				}
+			}
+		} catch (JSONException e) {
+		}
+
+		return false;
+	}
+
 
 }

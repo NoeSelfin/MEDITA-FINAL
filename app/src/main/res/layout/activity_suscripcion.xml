@@ -55,9 +55,18 @@
             android:textColor="#0c465e"
             android:layout_marginEnd="16dp"/>
 
+        <TextView
+            android:id="@+id/id_codigo_suscripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Tengo un código!"
+            android:textColor="#0c465e"
+            android:layout_marginEnd="16dp"/>
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/id_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -219,6 +228,57 @@
                 android:layout_marginTop="32dp"
                 android:gravity="center"
                 android:text="@string/cancel_suscription" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="16dp"
+                android:background="#0c465e" />
+
+            <LinearLayout
+                android:id="@+id/ll_promos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/id_promo_tv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:text="Introduzca el código del cupón que ha obtenido."
+                    android:textColor="#0c465e"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/id_promo_et1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:textColor="#0c465e"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_chk_promo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/btn_sinc"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="VALIDAR CÓDIGO"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

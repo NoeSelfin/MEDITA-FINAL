@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +38,9 @@ import org.simo.medita.extras.Basics;
 import org.simo.medita.extras.HttpConnection;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishedListener, IabHelper.OnIabPurchaseFinishedListener{
@@ -69,6 +73,11 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
     private Button btMensual;
     private Button btSemestral;
     private Button btAnual;
+    private Button btnPromo;
+    private EditText et_promo;
+    protected boolean promo_block = false;
+    protected TextView id_codigo_suscripcion;
+    protected ScrollView scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +99,12 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         tvCerrarSesion = findViewById(R.id.id_cerrar_sesion);
         infoLinearLayout = findViewById(R.id.info_ll);
         linearListaSuscripciones = findViewById(R.id.ll_lista_suscripciones);
+        btnPromo = findViewById(R.id.btn_chk_promo);
+        et_promo = findViewById(R.id.id_promo_et1);
+        id_codigo_suscripcion = findViewById(R.id.id_codigo_suscripcion);
+        scroll = findViewById(R.id.id_scroll);
 
-        tvCerrarSesion.setVisibility(View.INVISIBLE);
+        tvCerrarSesion.setVisibility(View.GONE);
 
         setMenu();
 
@@ -104,7 +117,6 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         btn_suscripcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-
                 /*
                 if (!bloqueo){
                     alertSuscripcion();
@@ -126,6 +138,24 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
 
             }
         });
+        id_codigo_suscripcion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                scroll.scrollTo(0, scroll.getBottom());
+
+            }
+        });
+        btnPromo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_promo.getText().toString().length() > 2){
+                    if (promo_block == false){
+                        new getPromo().execute(et_promo.getText().toString());
+                    }
+                }
+            }
+        });
 
         setButtonsListListeners();
 
@@ -141,6 +171,8 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         //inicializamos el helper para obtener las suscripciones de GP
         billingHelper = new IabHelper(Suscripcion.this, Config.license_key);
         billingHelper.startSetup(this);
+
+
     }
 
     /*
@@ -812,6 +844,89 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
                 alert("Ha ocurrido un error. Int?ntelo m?s tarde.");
             }
         }
+    }
+
+    private class getPromo extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            promo_block = true;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            String mac = Basics.getWifiMac(Suscripcion.this);
+            HttpConnection http = null;
+            String result = null;
+            try {
+                JSONObject jo =  new JSONObject();
+                jo.put("token",Config.token);
+                jo.put("code",params[0]);
+
+                http = new HttpConnection();
+                result = http.postData(Config.url_get_promo, jo.toString());
+
+                if (result != null)
+                    printLog("Promo result: " + result);
+
+
+            } catch (JSONException e) {
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            boolean code = false;
+            if(result != null){
+                try {
+                    JSONArray ja = new JSONArray(result);
+                    JSONObject jo = ja.getJSONObject(0);
+                    if (validateCode(jo)){
+                        code = true;
+                        prefs.edit().putString("promo",jo.toString()).commit();
+                        //Intent Main
+                        Intent i = new Intent(Suscripcion.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+
+                } catch (JSONException e) {
+                    printLog("Error JSON parse.");
+                }
+            }
+
+            if (code){
+                alert("Hay código!!!");
+            }
+            else{
+                Toast.makeText(Suscripcion.this,"Código erróneo",Toast.LENGTH_LONG).show();
+                //alert("Código erróneo.");
+            }
+            promo_block = false;
+        }
+    }
+
+    private boolean validateCode(JSONObject jo){
+        //[{"id_promo":"1","from":"2020-01-01 00:00:00","to":"2020","code":"abcd","type":"1","consumed":"0","deleted_at":null}]
+        if (jo.length() > 3){
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date to = formatter.parse(jo.optString("to","2040-01-01 00:00:00"));
+                Date from = formatter.parse(jo.optString("from","2010-01-01 00:00:00"));
+                Date now = new Date();
+
+                if (now.after(from) && now.before(to)){
+
+                    if(jo.optInt("type") == 2){
+                        return true;
+                    }else if ((jo.optInt("type") == 1)&& (jo.optInt("consumed") == 0)){
+                        return true;
+                    }
+                }
+            } catch (ParseException e) {
+                printLog("ParseException:" + e.getMessage());
+            }
+        }
+        return false;
     }
 
     private void printLog(String text){

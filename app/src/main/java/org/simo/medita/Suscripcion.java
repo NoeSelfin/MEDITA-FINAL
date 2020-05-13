@@ -626,6 +626,40 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         billingHelper = null;
     }
 
+    protected void alertOk(String mensaje){
+
+        final Dialog dialog = new Dialog(Suscripcion.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_generico);
+        dialog.setCancelable(false);
+
+        // set the custom dialog components - text, image and button
+        TextView ver = (TextView) dialog.findViewById(R.id.id_alert_btn);
+        TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
+        TextView titulo = (TextView) dialog.findViewById(R.id.id_alert_titulo);
+
+        titulo.setText("Promociones");
+        text.setText(mensaje);
+        ver.setText("Cerrar");
+
+        text.setTypeface(font);
+        ver.setTypeface(font);
+        titulo.setTypeface(font);
+
+        // if button is clicked, close the custom dialog
+        ver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent i = new Intent(Suscripcion.this, MainActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        dialog.show();
+    }
     protected void alert(String mensaje){
 
         final Dialog dialog = new Dialog(Suscripcion.this);
@@ -884,9 +918,9 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
                         code = true;
                         prefs.edit().putString("promo",jo.toString()).commit();
                         //Intent Main
-                        Intent i = new Intent(Suscripcion.this, MainActivity.class);
+                        /*Intent i = new Intent(Suscripcion.this, MainActivity.class);
                         startActivity(i);
-                        finish();
+                        finish();*/
                     }
 
                 } catch (JSONException e) {
@@ -895,7 +929,7 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
             }
 
             if (code){
-                alert("Hay código!!!");
+                alertOk("Código correcto, podrás disfrutar de todas las meditaciones!");
             }
             else{
                 Toast.makeText(Suscripcion.this,"Código erróneo",Toast.LENGTH_LONG).show();

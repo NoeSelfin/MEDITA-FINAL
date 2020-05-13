@@ -29,6 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.simo.medita.extras.FilterData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Favoritos extends Activity{
 	protected AdapterFavoritos adapterfavoritos;
 	protected SlidingMenu menu_lateral;
@@ -68,28 +72,62 @@ public class Favoritos extends Activity{
 			try {
 				favoritos = new JSONArray (prefs.getString("favoritos", ""));
 				if (Config.log)
-					Log.i("medita",favoritos.toString());
-				
-				if (favoritos.length() > 0){
-					titulo.setVisibility(View.INVISIBLE);
-					confav.setVisibility(View.VISIBLE);
-					sinfav.setVisibility(View.INVISIBLE);
-					favoritos = new FilterData().prepareFavoritos(favoritos);
-					if (Config.log)
-						Log.i("medita",favoritos.toString());
-					adapterfavoritos = new AdapterFavoritos(this, favoritos);
-					listview.setAdapter(adapterfavoritos);
+					Log.i("medita_favoritos",favoritos.toString());
+
+				//En verdad tendirmaos que mirar que el pack estubiera también comprado o con suscripción.
+				if (checkpromo() || prefs.getBoolean(getString(R.string.suscrito), false)){
+					Log.i("medita_favoritos","Opción A;");
+					if (favoritos.length() > 0){
+						titulo.setVisibility(View.INVISIBLE);
+						confav.setVisibility(View.VISIBLE);
+						sinfav.setVisibility(View.INVISIBLE);
+						favoritos = new FilterData().prepareFavoritos(favoritos);
+						if (Config.log)
+							Log.i("medita",favoritos.toString());
+						adapterfavoritos = new AdapterFavoritos(this, favoritos);
+						listview.setAdapter(adapterfavoritos);
+					}
+					else{
+						titulo.setVisibility(View.VISIBLE);
+						confav.setVisibility(View.INVISIBLE);
+						sinfav.setVisibility(View.VISIBLE);
+					}
+				}else{
+					Log.i("medita_favoritos","Opción B;");
+					Log.i("medita_favoritos",String.valueOf(favoritos.length()));
+					JSONArray favoritos_aux = new JSONArray();
+					for (int i=0;i<favoritos.length();i++){
+						Log.i("medita_favoritos","In for loop;");
+                        Log.i("medita_favoritos_gratis",favoritos.getJSONObject(i).getJSONObject("pack").optString("pack_precio"));
+						if (favoritos.getJSONObject(i).getJSONObject("pack").optString("pack_precio").compareToIgnoreCase("0") == 0){
+							favoritos_aux.put(favoritos.getJSONObject(i));
+						}
+					}
+                    favoritos = favoritos_aux;
+                    if (favoritos.length() > 0){
+                        titulo.setVisibility(View.INVISIBLE);
+                        confav.setVisibility(View.VISIBLE);
+                        sinfav.setVisibility(View.INVISIBLE);
+                        favoritos = new FilterData().prepareFavoritos(favoritos);
+                        if (Config.log)
+                            Log.i("medita",favoritos.toString());
+                        adapterfavoritos = new AdapterFavoritos(this, favoritos);
+                        listview.setAdapter(adapterfavoritos);
+                    }
+                    else{
+                        titulo.setVisibility(View.VISIBLE);
+                        confav.setVisibility(View.INVISIBLE);
+                        sinfav.setVisibility(View.VISIBLE);
+                    }
 				}
-				else{
-					titulo.setVisibility(View.VISIBLE);
-					confav.setVisibility(View.INVISIBLE);
-					sinfav.setVisibility(View.VISIBLE);
-				}
+
+
 				
 			} catch (JSONException e) {
 				titulo.setVisibility(View.VISIBLE);
 				confav.setVisibility(View.INVISIBLE);
 				sinfav.setVisibility(View.VISIBLE);
+				Log.i("medita_favoritos",e.getMessage());
 			}
 		}
 		else{
@@ -318,5 +356,33 @@ public class Favoritos extends Activity{
 			}
 		});
 		
+	}
+	private boolean checkpromo(){
+		//[{"id_promo":"1","from":"2020-01-01 00:00:00","to":"2020","code":"abcd","type":"1","consumed":"0","deleted_at":null}]
+		try {
+			JSONObject jo = new JSONObject(prefs.getString("promo","{}"));
+			if (jo.length() > 3){
+				try {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Date to = formatter.parse(jo.optString("to","2040-01-01 00:00:00"));
+					Date from = formatter.parse(jo.optString("from","2010-01-01 00:00:00"));
+					Date now = new Date();
+
+					if (now.after(from) && now.before(to)){
+
+						if(jo.optInt("type") == 2){
+							return true;
+						}else if ((jo.optInt("type") == 1)&& (jo.optInt("consumed") == 0)){
+							return true;
+						}
+					}
+				} catch (ParseException e) {
+					//printLog("ParseException:" + e.getMessage());
+				}
+			}
+		} catch (JSONException e) {
+		}
+
+		return false;
 	}
 }

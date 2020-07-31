@@ -59,7 +59,8 @@ public class Acercade extends Activity{
 		TextView texto5 = ((TextView)findViewById(R.id.id_acercade_texto5));
 		texto5.setTypeface(font);
 		((TextView)findViewById(R.id.id_acercade_nuestrolibro)).setTypeface(font);
-		((TextView)findViewById(R.id.id_acercade_texto6)).setTypeface(font);
+		TextView texto6 = ((TextView)findViewById(R.id.id_acercade_texto6));
+		texto6.setTypeface(font);
 		((TextView)findViewById(R.id.id_acercade_siguenos)).setTypeface(font);
 		((TextView)findViewById(R.id.id_acercade_texto7)).setTypeface(font);
 		((TextView)findViewById(R.id.id_acercade_newsletter)).setTypeface(font);
@@ -81,6 +82,10 @@ public class Acercade extends Activity{
 		sp = Html.fromHtml(getResources().getString(R.string.acercade_texto5));
 		texto5.setText(sp);
 		texto5.setMovementMethod(LinkMovementMethod.getInstance());
+
+		sp = Html.fromHtml(getResources().getString(R.string.acercade_texto6));
+		texto6.setText(sp);
+		texto6.setMovementMethod(LinkMovementMethod.getInstance());
 
 		newsletter_btn.setOnClickListener(new OnClickListener() {
 			@Override

@@ -40,11 +40,11 @@ public class Config {
 	protected final static String url_get_suscripcion  = "http://medita.atentamente.net/get_suscripciones.php";
 	protected final static String url_update_suscripcion  = "http://medita.atentamente.net/update_suscripciones.php";
 
-	protected final static String url_atentamente = "http://www.atentamente.net";
+	protected final static String url_atentamente = "http://www.medita-app.com";
 	protected final static String mail_atentamente = "info@medita.com";
 	protected final static String youtube_atentamente = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
 	//protected final static String facebook_atentamente = "https://www.facebook.com/atentamentecoaching2016";
-	protected final static String facebook_atentamente = "https://www.facebook.com/enriquemindful";
+	protected final static String facebook_atentamente = "https://www.facebook.com/esimo8";
 	protected final static String instagram_atentamente = "https://www.instagram.com/enrique.mindful";
 
 

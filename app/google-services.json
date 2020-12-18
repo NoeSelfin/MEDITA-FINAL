@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "807858862246",
+    "firebase_url": "https://medita-3654e.firebaseio.com",
+    "project_id": "medita-3654e",
+    "storage_bucket": "medita-3654e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807858862246:android:cfdbe6de275f02da4adc67",
+        "android_client_info": {
+          "package_name": "org.simo.medita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807858862246-964gpbfo98jvbpeg9l9lrggdjt8f7m92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqnRcX9uBN-cP8_6cOGrySBapNFPa1rSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807858862246-964gpbfo98jvbpeg9l9lrggdjt8f7m92.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

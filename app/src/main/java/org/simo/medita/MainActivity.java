@@ -32,6 +32,7 @@ import com.android.vending.billing.util.IabHelper;
 import com.android.vending.billing.util.IabResult;
 import com.android.vending.billing.util.Inventory;
 import com.android.vending.billing.util.Purchase;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.json.JSONArray;
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class MainActivity extends Activity {
 	protected SharedPreferences prefs;
@@ -81,12 +83,21 @@ public class MainActivity extends Activity {
     private JSONObject userInfo = null;
     private boolean loged = false;
 
+	private FirebaseAnalytics firebaseAnalytics;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+
+		firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+		Bundle bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "MainActivity");
+		firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 		font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
 		prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);

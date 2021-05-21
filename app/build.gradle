@@ -33,6 +33,9 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+    dexOptions {
+        jumboMode true
+    }
 
 }
 

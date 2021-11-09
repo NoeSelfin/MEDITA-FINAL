@@ -1,5 +1,6 @@
 package org.simo.medita;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -7,35 +8,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-import org.simo.medita.extras.Basics;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class Contacto extends Activity {
+public class Novedades extends Activity{
     protected SharedPreferences prefs;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
@@ -46,166 +38,93 @@ public class Contacto extends Activity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_contacto);
+        setContentView(R.layout.activity_home);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
-        prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
+        prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
+        LinearLayout atras = (LinearLayout) findViewById(R.id.id_opciones_atras);
 
-        TextView ver = (TextView) findViewById(R.id.id_alert_btn);
-        TextView text = (TextView) findViewById(R.id.id_alert_text);
-        TextView titulo = (TextView) findViewById(R.id.id_alert_titulo);
-        final EditText email = (EditText) findViewById(R.id.id_alert_editext);
-        final EditText name = (EditText) findViewById(R.id.id_alert_editext_name);
-        final CheckBox check = (CheckBox) findViewById(R.id.checkBoxCustomized);
-        TextView check_text = (TextView) findViewById(R.id.checkBoxCustomized_text);
-        check_text.setMovementMethod(LinkMovementMethod.getInstance());
-        TextView tvPolitica = findViewById(R.id.tv_politica);
-        tvPolitica.setMovementMethod(LinkMovementMethod.getInstance());
-        LinearLayout atras = (LinearLayout)findViewById(R.id.id_contacto_atras);
-
-        TextView web = (TextView) findViewById(R.id.id_alert_web);
-        TextView contact = (TextView) findViewById(R.id.id_alert_contact);
-
-        SpannableString content = new SpannableString("VISITA NUESTRA WEB");
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        web.setText(content);
-
-         content = new SpannableString("CONTÁCTANOS");
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        contact.setText(content);
-
-        web.setMovementMethod(LinkMovementMethod.getInstance());
-        web.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("https://www.atentamente.net/"));
-                startActivity(browserIntent);
-            }
-        });
-        contact.setMovementMethod(LinkMovementMethod.getInstance());
-        contact.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setType("text/plain");
-                intent.setData(Uri.parse("mailto:medita@atentamente.net"));
-                //intent.putExtra(Intent.EXTRA_EMAIL, "medita@atentamente.net");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "App Medita");
-
-                startActivity(Intent.createChooser(intent, "Send Email to Medita"));
-            }
-        });
-
-        text.setTypeface(font);
-        ver.setTypeface(font);
-        titulo.setTypeface(font);
-        check_text.setTypeface(font);
-        tvPolitica.setTypeface(font);
-        web.setTypeface(font);
-        contact.setTypeface(font);
-
-
-        check_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AssetManager assetManager = getAssets();
-
-                InputStream in = null;
-                OutputStream out = null;
-                File file = new File( getFilesDir(), "abc.pdf");
-                try
-                {
-                    in = assetManager.open("pdf/privacidad.pdf");
-                    out =  openFileOutput(file.getName(), Context.MODE_WORLD_READABLE);
-
-                    copyFile(in, out);
-                    in.close();
-                    in = null;
-                    out.flush();
-                    out.close();
-                    out = null;
-                } catch (Exception e)
-                {
-                    Log.e("tag", e.getMessage());
-                }
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-/*		        String filePath = "";
-		        String type = "application/pdf";
-				if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.N) {
-					filePath = "content://" +  getFilesDir() + "/abc.pdf";
-					intent.setDataAndType(Uri.parse(filePath), type);
-				} else {
-					filePath = "file://" +  getFilesDir() + "/abc.pdf";
-					intent.setDataAndType(Uri.fromFile(new File(filePath)), type);
-				}
-				intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);*/
-                intent.setData(Uri.parse(Config.url_nota_legal));
-                startActivity(intent);
-            }
-        });
-
-        // if button is clicked, close the custom dialog
-        ver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (check.isChecked()){
-                    if (isEmailValid(email.getText().toString())){
-                        if (isNameValid(name.getText().toString())){
-                            if (Basics.checkConn(Contacto.this)){
-                                new Downloader.setNewsletter(Basics.checkConn(Contacto.this),
-                                        email.getText().toString(),
-                                        name.getText().toString(),
-                                        Basics.getWifiMac(Contacto.this),
-                                        new Downloader.setNewsletter.AsyncResponse() {
-                                            @Override
-                                            public void processFinish(String respuesta) {
-                                                if (respuesta!=null){
-                                                    alert("Se ha dado de alta correctamente.", "Información");
-                                                    email.setText("");
-                                                    name.setText("");
-                                                }
-                                            }
-                                        }).execute();
-                            } else {
-                                alert("No hay conexión a Internet.", null);
-                            }
-                        }
-                        else{
-                            alert("Debes indicarnos tu nombre.", null);
-                        }
-                        }else{
-                            alert("Dirección de email incorrecta.", null);
-                        }
-
-                }
-                else{
-                    Toast.makeText(Contacto.this, "Ha de aceptar la política de privacidad", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        atras.setOnClickListener(new View.OnClickListener() {
+        atras.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 menu_lateral.showMenu(true);
             }
         });
 
+
+        prefs.edit().putBoolean("Premios_1", true).commit();
         setMenu();
+
+        WebView mywebview = (WebView) findViewById(R.id.webViewNews);
+        WebSettings webSettings = mywebview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+
+        WebViewClient webViewClient = new WebViewClient()
+        {
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url)
+            {
+                Log.i("medita_override", Uri.parse(url).getHost());
+                if (Uri.parse(url).getHost().equals("https://news.atentamente.net")){
+                    view.loadUrl(url);
+                    return true;
+                }else{
+                    return false;
+               }
+            }
+
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)
+            {
+                Log.i("medita_override", Uri.parse(request.getUrl().toString()).getHost());
+                if (Uri.parse(request.getUrl().toString()).getHost().equals("news.atentamente.net")){
+                    view.loadUrl(request.getUrl().toString());
+                    return true;
+                }else if (Uri.parse(request.getUrl().toString()).getHost().equals("news.atentamente.net")){
+                    view.loadUrl(request.getUrl().toString());
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                super.onPageFinished(view, url);
+                //Toast.makeText(getApplicationContext(), "Page loaded!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLoadResource(WebView  view, String  url){
+                if( url.equals("") ){
+                    // do something
+                }
+            }
+        };
+
+        mywebview.setWebViewClient(webViewClient);
+        mywebview.loadUrl("https://news.atentamente.net/");
+
+
     }
 
     @Override
     public void onBackPressed()
     {
-        Intent i = new Intent(Contacto.this, MainActivity.class);
+        Intent i = new Intent(Novedades.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         startActivity(i);
         finish();
     }
 
     public void setMenu(){
-        menu_lateral = new SlidingMenu(Contacto.this);
+        menu_lateral = new SlidingMenu(Novedades.this);
         menu_lateral.setMode(SlidingMenu.LEFT);
         menu_lateral.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         menu_lateral.setShadowWidthRes(R.dimen.shadow_width);
@@ -227,7 +146,6 @@ public class Contacto extends Activity {
         ((TextView) menu_lateral.findViewById(R.id.id_menu_contact)).setTypeface(font);
         ((TextView) menu_lateral.findViewById(R.id.id_menu_news)).setTypeface(font);
 
-
         ((View) menu_lateral.findViewById(R.id.id_menu_view_ini)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_fav)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_progreso)).setVisibility(View.INVISIBLE);
@@ -237,101 +155,91 @@ public class Contacto extends Activity {
         ((View) menu_lateral.findViewById(R.id.id_menu_view_sincro)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_suscription)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_contact)).setVisibility(View.INVISIBLE);
-        ((View) menu_lateral.findViewById(R.id.id_menu_view_news)).setVisibility(View.INVISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_news)).setVisibility(View.VISIBLE);
 
-
-        LinearLayout acercade = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_acercade_ll);
-        acercade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Acercade.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         LinearLayout opciones = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_opciones_ll);
-        opciones.setOnClickListener(new View.OnClickListener() {
+        opciones.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Opciones.class);
+                Intent i = new Intent(Novedades.this, Opciones.class);
                 startActivity(i);
                 finish();
             }
         });
         LinearLayout vision = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_vision_ll);
-        vision.setOnClickListener(new View.OnClickListener() {
+        vision.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Vision.class);
+                Intent i = new Intent(Novedades.this, Vision.class);
                 i.setAction("fromMenu");
                 startActivity(i);
                 finish();
             }
         });
         LinearLayout favoritos = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_fav_ll);
-        favoritos.setOnClickListener(new View.OnClickListener() {
+        favoritos.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Favoritos.class);
+                Intent i = new Intent(Novedades.this, Favoritos.class);
                 startActivity(i);
                 finish();
             }
         });
         LinearLayout progreso = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_progreso_ll);
-        progreso.setOnClickListener(new View.OnClickListener() {
+        progreso.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Progreso.class);
+                Intent i = new Intent(Novedades.this, Progreso.class);
                 startActivity(i);
                 finish();
             }
         });
         LinearLayout inicio = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_inicio_ll);
-        inicio.setOnClickListener(new View.OnClickListener() {
+        inicio.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, MainActivity.class);
+                Intent i = new Intent(Novedades.this, MainActivity.class);
                 startActivity(i);
                 finish();
             }
         });
         LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);
-        sincro.setOnClickListener(new View.OnClickListener() {
+        sincro.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 if (prefs.contains("sincronizado")){
                     if (prefs.getBoolean("sincronizado", false)){
-                        Intent i = new Intent(Contacto.this, Sincro2.class);
+                        Intent i = new Intent(Novedades.this, Sincro2.class);
                         startActivity(i);
                         finish();
                     }
                     else{
-                        Intent i = new Intent(Contacto.this, Sincro.class);
+                        Intent i = new Intent(Novedades.this, Sincro.class);
                         startActivity(i);
                         finish();
                     }
                 }
                 else{
-                    Intent i = new Intent(Contacto.this, Sincro.class);
+                    Intent i = new Intent(Novedades.this, Sincro.class);
                     startActivity(i);
                     finish();
                 }
             }
         });
         LinearLayout compras = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_compras_ll);
-        compras.setOnClickListener(new View.OnClickListener() {
+        compras.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                new RecargarCompras(Contacto.this);
+                new RecargarCompras(Novedades.this);
             }
         });
 
         LinearLayout suscripcion = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_suscription_ll);
-        suscripcion.setOnClickListener(new View.OnClickListener() {
+        suscripcion.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Suscripcion.class);
+                Intent i = new Intent(Novedades.this, Suscripcion.class);
                 startActivity(i);
                 finish();
                 // si esta registrado, va a la suscripcion. En caso contrario al login
@@ -347,26 +255,26 @@ public class Contacto extends Activity {
             }
         });
         LinearLayout contacto = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_contact_ll);
-        contacto.setOnClickListener(new View.OnClickListener() {
+        contacto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Contacto.class);
+                Intent i = new Intent(Novedades.this, Contacto.class);
                 startActivity(i);
                 finish();
             }
         });
         LinearLayout news = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_news_ll);
-        news.setOnClickListener(new View.OnClickListener() {
+        news.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Novedades.class);
+                Intent i = new Intent(Novedades.this, Novedades.class);
                 startActivity(i);
                 finish();
             }
         });
 
         LinearLayout notalegal = menu_lateral.findViewById(R.id.id_menu_legal_ll);
-        notalegal.setOnClickListener(new View.OnClickListener() {
+        notalegal.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // si esta registrado, va a la suscripcion. En caso contrario al login
@@ -375,8 +283,9 @@ public class Contacto extends Activity {
                 startActivity(i);
             }
         });
+
         ImageView rs1 = menu_lateral.findViewById(R.id.id_rs1);
-        rs1.setOnClickListener(new View.OnClickListener() {
+        rs1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
@@ -384,7 +293,7 @@ public class Contacto extends Activity {
             }
         });
         ImageView rs2 = menu_lateral.findViewById(R.id.id_rs2);
-        rs2.setOnClickListener(new View.OnClickListener() {
+        rs2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
@@ -400,7 +309,7 @@ public class Contacto extends Activity {
             }
         });
         ImageView rs3 = menu_lateral.findViewById(R.id.id_rs3);
-        rs3.setOnClickListener(new View.OnClickListener() {
+        rs3.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = null;
@@ -417,7 +326,7 @@ public class Contacto extends Activity {
             }
         });
         ImageView rs4 = menu_lateral.findViewById(R.id.id_rs4);
-        rs4.setOnClickListener(new View.OnClickListener() {
+        rs4.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 String facebookId = "fb://page/appmedita";
@@ -433,9 +342,12 @@ public class Contacto extends Activity {
         });
 
     }
+
+
+
     protected void alert(String mens, String tit){
 
-        final Dialog dialog = new Dialog(Contacto.this);
+        final Dialog dialog = new Dialog(Novedades.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.alert_generico);
         dialog.setCancelable(false);
@@ -457,7 +369,7 @@ public class Contacto extends Activity {
         titulo.setTypeface(font);
 
         // if button is clicked, close the custom dialog
-        close.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -466,44 +378,6 @@ public class Contacto extends Activity {
         });
 
         dialog.show();
-    }
-
-    public boolean isNameValid(String name)
-    {
-        if (name.length() < 3){
-            return false;
-        }else{
-            return true;
-        }
-    }
-    public boolean isEmailValid(String email)
-    {
-        String regExpn =
-                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
-
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-
-        if(matcher.matches())
-            return true;
-        else
-            return false;
-    }
-    private void copyFile(InputStream in, OutputStream out) throws IOException
-    {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1)
-        {
-            out.write(buffer, 0, read);
-        }
     }
 
 }

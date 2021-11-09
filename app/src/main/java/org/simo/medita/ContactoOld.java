@@ -35,7 +35,7 @@ import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Contacto extends Activity {
+public class ContactoOld extends Activity {
     protected SharedPreferences prefs;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
@@ -70,7 +70,7 @@ public class Contacto extends Activity {
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         web.setText(content);
 
-         content = new SpannableString("CONTÁCTANOS");
+        content = new SpannableString("CONTÁCTANOS");
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         contact.setText(content);
 
@@ -152,11 +152,11 @@ public class Contacto extends Activity {
                 if (check.isChecked()){
                     if (isEmailValid(email.getText().toString())){
                         if (isNameValid(name.getText().toString())){
-                            if (Basics.checkConn(Contacto.this)){
-                                new Downloader.setNewsletter(Basics.checkConn(Contacto.this),
+                            if (Basics.checkConn(ContactoOld.this)){
+                                new Downloader.setNewsletter(Basics.checkConn(ContactoOld.this),
                                         email.getText().toString(),
                                         name.getText().toString(),
-                                        Basics.getWifiMac(Contacto.this),
+                                        Basics.getWifiMac(ContactoOld.this),
                                         new Downloader.setNewsletter.AsyncResponse() {
                                             @Override
                                             public void processFinish(String respuesta) {
@@ -174,13 +174,13 @@ public class Contacto extends Activity {
                         else{
                             alert("Debes indicarnos tu nombre.", null);
                         }
-                        }else{
-                            alert("Dirección de email incorrecta.", null);
-                        }
+                    }else{
+                        alert("Dirección de email incorrecta.", null);
+                    }
 
                 }
                 else{
-                    Toast.makeText(Contacto.this, "Ha de aceptar la política de privacidad", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ContactoOld.this, "Ha de aceptar la política de privacidad", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -198,14 +198,14 @@ public class Contacto extends Activity {
     @Override
     public void onBackPressed()
     {
-        Intent i = new Intent(Contacto.this, MainActivity.class);
+        Intent i = new Intent(ContactoOld.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         startActivity(i);
         finish();
     }
 
     public void setMenu(){
-        menu_lateral = new SlidingMenu(Contacto.this);
+        menu_lateral = new SlidingMenu(ContactoOld.this);
         menu_lateral.setMode(SlidingMenu.LEFT);
         menu_lateral.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         menu_lateral.setShadowWidthRes(R.dimen.shadow_width);
@@ -244,7 +244,7 @@ public class Contacto extends Activity {
         acercade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Acercade.class);
+                Intent i = new Intent(ContactoOld.this, Acercade.class);
                 startActivity(i);
                 finish();
             }
@@ -254,7 +254,7 @@ public class Contacto extends Activity {
         opciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Opciones.class);
+                Intent i = new Intent(ContactoOld.this, Opciones.class);
                 startActivity(i);
                 finish();
             }
@@ -263,7 +263,7 @@ public class Contacto extends Activity {
         vision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Vision.class);
+                Intent i = new Intent(ContactoOld.this, Vision.class);
                 i.setAction("fromMenu");
                 startActivity(i);
                 finish();
@@ -273,7 +273,7 @@ public class Contacto extends Activity {
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Favoritos.class);
+                Intent i = new Intent(ContactoOld.this, Favoritos.class);
                 startActivity(i);
                 finish();
             }
@@ -282,7 +282,7 @@ public class Contacto extends Activity {
         progreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Progreso.class);
+                Intent i = new Intent(ContactoOld.this, Progreso.class);
                 startActivity(i);
                 finish();
             }
@@ -291,7 +291,7 @@ public class Contacto extends Activity {
         inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, MainActivity.class);
+                Intent i = new Intent(ContactoOld.this, MainActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -302,18 +302,18 @@ public class Contacto extends Activity {
             public void onClick(View arg0) {
                 if (prefs.contains("sincronizado")){
                     if (prefs.getBoolean("sincronizado", false)){
-                        Intent i = new Intent(Contacto.this, Sincro2.class);
+                        Intent i = new Intent(ContactoOld.this, Sincro2.class);
                         startActivity(i);
                         finish();
                     }
                     else{
-                        Intent i = new Intent(Contacto.this, Sincro.class);
+                        Intent i = new Intent(ContactoOld.this, Sincro.class);
                         startActivity(i);
                         finish();
                     }
                 }
                 else{
-                    Intent i = new Intent(Contacto.this, Sincro.class);
+                    Intent i = new Intent(ContactoOld.this, Sincro.class);
                     startActivity(i);
                     finish();
                 }
@@ -323,7 +323,7 @@ public class Contacto extends Activity {
         compras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                new RecargarCompras(Contacto.this);
+                new RecargarCompras(ContactoOld.this);
             }
         });
 
@@ -331,7 +331,7 @@ public class Contacto extends Activity {
         suscripcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Suscripcion.class);
+                Intent i = new Intent(ContactoOld.this, Suscripcion.class);
                 startActivity(i);
                 finish();
                 // si esta registrado, va a la suscripcion. En caso contrario al login
@@ -350,7 +350,7 @@ public class Contacto extends Activity {
         contacto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Contacto.class);
+                Intent i = new Intent(ContactoOld.this, Contacto.class);
                 startActivity(i);
                 finish();
             }
@@ -359,7 +359,7 @@ public class Contacto extends Activity {
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Contacto.this, Novedades.class);
+                Intent i = new Intent(ContactoOld.this, Novedades.class);
                 startActivity(i);
                 finish();
             }
@@ -435,7 +435,7 @@ public class Contacto extends Activity {
     }
     protected void alert(String mens, String tit){
 
-        final Dialog dialog = new Dialog(Contacto.this);
+        final Dialog dialog = new Dialog(ContactoOld.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.alert_generico);
         dialog.setCancelable(false);

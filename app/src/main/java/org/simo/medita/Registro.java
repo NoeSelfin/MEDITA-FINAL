@@ -1,6 +1,7 @@
 package org.simo.medita;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -195,6 +197,8 @@ public class Registro extends Activity {
         ((TextView) menu_lateral.findViewById(R.id.id_menu_sincro)).setTypeface(font);
         ((TextView) menu_lateral.findViewById(R.id.id_menu_compras)).setTypeface(font);
         ((TextView) menu_lateral.findViewById(R.id.id_menu_suscription)).setTypeface(font);
+        ((TextView) menu_lateral.findViewById(R.id.id_menu_news)).setTypeface(font);
+
 
         ((View) menu_lateral.findViewById(R.id.id_menu_view_ini)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_fav)).setVisibility(View.INVISIBLE);
@@ -205,6 +209,8 @@ public class Registro extends Activity {
         ((View) menu_lateral.findViewById(R.id.id_menu_view_sincro)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_compras)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_suscription)).setVisibility(View.VISIBLE);
+        ((View) menu_lateral.findViewById(R.id.id_menu_view_news)).setVisibility(View.INVISIBLE);
+
 
 
         LinearLayout inicio = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_inicio_ll);
@@ -310,6 +316,24 @@ public class Registro extends Activity {
                 }
             }
         });
+        LinearLayout contacto = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_contact_ll);
+        contacto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(Registro.this, Contacto.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        LinearLayout news = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_news_ll);
+        news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(Registro.this, Novedades.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         LinearLayout notalegal = menu_lateral.findViewById(R.id.id_menu_legal_ll);
         notalegal.setOnClickListener(new View.OnClickListener() {
@@ -319,6 +343,63 @@ public class Registro extends Activity {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(Config.url_nota_legal));
                 startActivity(i);
+            }
+        });
+
+        ImageView rs1 = menu_lateral.findViewById(R.id.id_rs1);
+        rs1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
+            }
+        });
+        ImageView rs2 = menu_lateral.findViewById(R.id.id_rs2);
+        rs2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+                likeIng.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://instagram.com/medita_app")));
+                }
+            }
+        });
+        ImageView rs3 = menu_lateral.findViewById(R.id.id_rs3);
+        rs3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = null;
+                try {
+                    // get the Twitter app if possible
+                    getApplication().getPackageManager().getPackageInfo("com.twitter.android", 0);
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name=enriquesimo8"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                } catch (Exception e) {
+                    // no Twitter app, revert to browser
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/enriquesimo8"));
+                }
+                startActivity(intent);
+            }
+        });
+        ImageView rs4 = menu_lateral.findViewById(R.id.id_rs4);
+        rs4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                String facebookId = "fb://page/appmedita";
+                String urlPage = "https://www.facebook.com/appmedita";
+
+                try {
+                    getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/appmedita")));
+                } catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/appmedita")));
+                }
             }
         });
 

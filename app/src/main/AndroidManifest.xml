@@ -130,6 +130,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity android:name=".Novedades"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>

@@ -503,7 +503,7 @@ public class Progreso extends Activity{
 		contacto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(Progreso.this, Contacto.class);
+				Intent i = new Intent(Progreso.this, LogIn.class);
 				startActivity(i);
 				finish();
 			}

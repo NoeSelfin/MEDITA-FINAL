@@ -82,7 +82,8 @@
       android:id="@+id/id_listview"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginBottom="5dp"
+		android:layout_marginBottom="5dp"
+		android:layout_above="@+id/id_bottommenu"
       android:layout_marginTop="15dp"
       android:divider="@null"
       android:scrollbars="none"
@@ -96,6 +97,17 @@
 	    android:layout_centerInParent="true"
 		android:background="@drawable/loading"
 		android:visibility = "visible">    
-	</ImageView> 
+	</ImageView>
+	<LinearLayout
+		android:id="@+id/id_bottommenu"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:visibility="gone"
+		android:layout_alignParentBottom="true">
+		<fragment android:name="org.simo.medita.FragmentBottomMenu"
+			android:id="@+id/id_fragment_bottom_menu"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+	</LinearLayout>
 
 </RelativeLayout>

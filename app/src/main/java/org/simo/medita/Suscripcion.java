@@ -472,7 +472,7 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         contacto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Suscripcion.this, Contacto.class);
+                Intent i = new Intent(Suscripcion.this, LogIn.class);
                 startActivity(i);
                 finish();
             }

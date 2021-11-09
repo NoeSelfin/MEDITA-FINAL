@@ -319,7 +319,7 @@ public class Acercade extends Activity{
 		contacto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(Acercade.this, Contacto.class);
+				Intent i = new Intent(Acercade.this, LogIn.class);
 				startActivity(i);
 				finish();
 			}

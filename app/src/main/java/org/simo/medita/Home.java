@@ -10,6 +10,8 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -19,12 +21,18 @@ import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import java.util.ArrayList;
 
-public class Home extends Activity{
+
+public class Home extends Activity  implements AdapterHomeMoreContents.ItemClickListener,AdapterHomeNeeds.ItemClickListener{
     protected SharedPreferences prefs;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
     protected ImageView menu;
+
+    AdapterHomeMoreContents adapterHomeMoreContents;
+    AdapterHomeNeeds adapterHomeNeeds;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +43,33 @@ public class Home extends Activity{
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
+        ArrayList<String> animalNames = new ArrayList<>();
+        animalNames.add("Horse");
+        animalNames.add("Cow");
+        animalNames.add("Camel");
+        animalNames.add("Sheep");
+        animalNames.add("Goat");
 
+        // set up the RecyclerView
+        RecyclerView recyclerView_more_contents = findViewById(R.id.id_recycler_more_contents);
+        RecyclerView recyclerView_needs = findViewById(R.id.id_recycler_needs);
+        recyclerView_more_contents.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView_needs.setLayoutManager(new LinearLayoutManager(this));
+        adapterHomeMoreContents = new AdapterHomeMoreContents(this, animalNames);
+        adapterHomeNeeds = new AdapterHomeNeeds(this, animalNames);
+        adapterHomeMoreContents.setClickListener(this);
+        adapterHomeNeeds.setClickListener(this);
+
+        LinearLayoutManager horizontalLayoutManager1 = new LinearLayoutManager(Home.this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutManager2 = new LinearLayoutManager(Home.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_more_contents.setLayoutManager(horizontalLayoutManager1);
+        recyclerView_needs.setLayoutManager(horizontalLayoutManager2);
+
+        recyclerView_more_contents.addItemDecoration(new ItemOffsetDecoration(getApplicationContext(), R.dimen.grid_horizontal_spacing));
+        recyclerView_needs.addItemDecoration(new ItemOffsetDecoration(getApplicationContext(), R.dimen.grid_horizontal_spacing));
+
+        recyclerView_more_contents.setAdapter(adapterHomeMoreContents);
+        recyclerView_needs.setAdapter(adapterHomeNeeds);
 
 
     }
@@ -184,7 +218,7 @@ public class Home extends Activity{
         contacto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Home.this, Contacto.class);
+                Intent i = new Intent(Home.this, LogIn.class);
                 startActivity(i);
                 finish();
             }
@@ -306,4 +340,8 @@ public class Home extends Activity{
         dialog.show();
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
 }

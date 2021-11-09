@@ -273,7 +273,7 @@ public class Vision extends Activity{
 		contacto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(Vision.this, Contacto.class);
+				Intent i = new Intent(Vision.this, LogIn.class);
 				startActivity(i);
 				finish();
 			}

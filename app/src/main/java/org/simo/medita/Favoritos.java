@@ -248,7 +248,7 @@ public class Favoritos extends Activity{
 		contacto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(Favoritos.this, Contacto.class);
+				Intent i = new Intent(Favoritos.this, LogIn.class);
 				startActivity(i);
 				finish();
 			}

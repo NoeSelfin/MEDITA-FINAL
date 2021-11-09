@@ -35,14 +35,242 @@
                 android:gravity="center"
                 android:textSize="19sp"
                 android:textColor="#0c465e"
-                android:text="NOVEDADES" />
+                android:text="INICIO" />
 
         </LinearLayout>
-        <WebView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:id="@+id/webViewNews" />
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#0086b3 ">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Plan 21 días"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center_vertical"
+                            android:textColor="#ffffff"
+                            android:textSize="18sp"
+                            android:layout_alignParentStart="true"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/icono21"
+                            android:layout_marginRight="10dp"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/id_two_text_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hola,"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="16sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Te recomendamos para esta semana..."
+                            android:layout_below="@+id/id_two_text_1"
+                            android:textColor="#36757a"
+                            android:textSize="14sp"
+                            android:layout_alignParentStart="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#91d3df ">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Calmar la mente"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="18sp"
+                            android:layout_alignParentStart="true"/>
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:src="@drawable/play_button"
+                            android:layout_marginRight="20dp"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="¿Qué necesitas ahora?"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="16sp"
+                            android:layout_alignParentStart="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/id_recycler_needs"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Encuentra más contenidos"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="16sp"
+                            android:layout_alignParentStart="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/id_recycler_more_contents"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#91d3df ">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Nuevas meditaciones y contenidos"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="18sp"
+                            android:layout_alignParentStart="true"/>
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:src="@drawable/chevron"
+                            android:layout_marginRight="20dp"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#91d3df ">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Descubre todo el contenido"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="18sp"
+                            android:layout_alignParentStart="true"/>
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:src="@drawable/chevron"
+                            android:layout_marginRight="20dp"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#91d3df ">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Meditaciones descargadas"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center_vertical"
+                            android:textColor="#36757a"
+                            android:textSize="18sp"
+                            android:layout_alignParentStart="true"/>
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:src="@drawable/chevron"
+                            android:layout_marginRight="20dp"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

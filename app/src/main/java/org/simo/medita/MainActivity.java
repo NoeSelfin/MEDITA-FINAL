@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
     private boolean loged = false;
 
 	private FirebaseAnalytics firebaseAnalytics;
-
+	private static final int CONTENT_VIEW_ID = 10101010;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +119,8 @@ public class MainActivity extends Activity {
 			if (Reproductor.mp.isPlaying())
 				Reproductor.mp.stop();
 		}*/
+
+		setBottomMenu();
 
 		packs = new JSONArray();
 		adapterpacks = new AdapterPacks(this, packs);
@@ -457,6 +459,14 @@ public class MainActivity extends Activity {
 
 
     }
+	public void setBottomMenu(){
+
+		LinearLayout menu_container = (LinearLayout)findViewById(R.id.id_bottommenu);
+		menu_container.setVisibility(View.VISIBLE);
+
+	}
+
+
 	/** Comprueba la fecha actual y la fecha de última comprobación, en caso que sean distintas (1 vez al día),
 	 * mostrara un popup
 	 *
@@ -758,7 +768,7 @@ public class MainActivity extends Activity {
 		contacto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(MainActivity.this, Contacto.class);
+				Intent i = new Intent(MainActivity.this, LogIn.class);
 				startActivity(i);
 				finish();
 			}

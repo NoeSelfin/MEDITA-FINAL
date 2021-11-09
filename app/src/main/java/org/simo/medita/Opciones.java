@@ -825,7 +825,7 @@ public class Opciones extends Activity{
 		contacto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(Opciones.this, Contacto.class);
+				Intent i = new Intent(Opciones.this, LogIn.class);
 				startActivity(i);
 				finish();
 			}

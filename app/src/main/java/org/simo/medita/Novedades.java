@@ -38,7 +38,7 @@ public class Novedades extends Activity{
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_news);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
@@ -258,7 +258,7 @@ public class Novedades extends Activity{
         contacto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Novedades.this, Contacto.class);
+                Intent i = new Intent(Novedades.this, LogIn.class);
                 startActivity(i);
                 finish();
             }

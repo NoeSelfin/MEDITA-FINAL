@@ -64,8 +64,9 @@
                 android:layout_marginTop="-15dp"
                 android:gravity="center_vertical"
                 android:text="MEDITANDO EN LA OFICINA"
+				android:lineSpacingMultiplier="0.7"
                 android:textColor="#098eaf"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </RelativeLayout>
     	<ImageView
     	    android:id="@+id/id_main_play"

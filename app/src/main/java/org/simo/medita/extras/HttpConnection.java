@@ -20,6 +20,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
+import org.simo.medita.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,6 +63,7 @@ public class HttpConnection {
 	        HttpConnectionParams.setSoTimeout(httpParameters, SO_TIMEOUT);
             //httppost.setHeader("Content-Type", "application/json");
             httppost.setHeader("Accept", "application/json");
+            httppost.setHeader("Authorization", Config.bearer);
 
 	        httpclient.setParams(httpParameters);
 
@@ -145,7 +147,7 @@ public class HttpConnection {
 		 Bitmap result = null;
 		
 		 HttpClient httpclient = new DefaultHttpClient();
-         HttpGet httpget = new HttpGet(url); 
+         HttpGet httpget = new HttpGet(url);
 
         // Execute the request
         HttpResponse response;

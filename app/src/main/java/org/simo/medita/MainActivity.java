@@ -597,31 +597,32 @@ public class MainActivity extends Activity {
 	private void saveBuys(List<Purchase> ownedBuys) throws JSONException {
 		JSONObject pack;
 
-        packs = new JSONArray(prefs.getString("packs", ""));
-		for (int i = 0; i < packs.length(); i++) {
+		if (prefs.getString("packs", "").compareToIgnoreCase("") != 0){
+			packs = new JSONArray(prefs.getString("packs", ""));
+			for (int i = 0; i < packs.length(); i++) {
+				pack = packs.optJSONObject(i);
+				String Producto = pack.optString("id_pack_compra");
 
-             pack = packs.optJSONObject(i);
-             String Producto = pack.optString("id_pack_compra");
+				if (subscriptionInventory.hasPurchase(Producto)){
+					printLog("saveBuys elemento con sku: " + Producto);
+					prefs.edit().putBoolean("comprado_"+String.valueOf(pack.optInt("id_pack")), true).commit();
+					//Toast.makeText(ctx, "Ya tienes este elemento!", Toast.LENGTH_SHORT).show();
+					if ((pack.optInt("id_pack") == 2) || (pack.optInt("id_pack") == 3) ||  (pack.optInt("id_pack") == 4) || (pack.optInt("id_pack") == 5)) {
 
-			if (subscriptionInventory.hasPurchase(Producto)){
-				printLog("saveBuys elemento con sku: " + Producto);
-				prefs.edit().putBoolean("comprado_"+String.valueOf(pack.optInt("id_pack")), true).commit();
-				//Toast.makeText(ctx, "Ya tienes este elemento!", Toast.LENGTH_SHORT).show();
-				if ((pack.optInt("id_pack") == 2) || (pack.optInt("id_pack") == 3) ||  (pack.optInt("id_pack") == 4) || (pack.optInt("id_pack") == 5)) {
-
-					if (!prefs.contains("Premios_7")) {
-						prefs.edit().putBoolean("Premios_7", true).commit();
-					} else if (!prefs.contains("Premios_8")) {
-						prefs.edit().putBoolean("Premios_8", true).commit();
-					} else if (!prefs.contains("Premios_9")) {
-						prefs.edit().putBoolean("Premios_9", true).commit();
-					} else if (!prefs.contains("Premios_10")) {
-						prefs.edit().putBoolean("Premios_10", true).commit();
+						if (!prefs.contains("Premios_7")) {
+							prefs.edit().putBoolean("Premios_7", true).commit();
+						} else if (!prefs.contains("Premios_8")) {
+							prefs.edit().putBoolean("Premios_8", true).commit();
+						} else if (!prefs.contains("Premios_9")) {
+							prefs.edit().putBoolean("Premios_9", true).commit();
+						} else if (!prefs.contains("Premios_10")) {
+							prefs.edit().putBoolean("Premios_10", true).commit();
+						}
 					}
 				}
 			}
+			adapterpacks.notifyDataSetChanged();
 		}
-		adapterpacks.notifyDataSetChanged();
 	}
 
     /*

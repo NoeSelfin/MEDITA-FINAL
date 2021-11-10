@@ -96,7 +96,7 @@ public class Meditaciones extends Activity{
 		disponibles.setTypeface(font);
 		letrero.setTypeface(font);
 		letrero_nl.setTypeface(font);
-		
+
 		meditaciones = new JSONArray();
 		
 		 display = getWindowManager().getDefaultDisplay();

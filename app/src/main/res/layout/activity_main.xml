@@ -55,17 +55,19 @@
                 android:text="@string/continuar"
                 android:textColor="#0c465e"
                 android:textSize="15sp" />
-            <TextView
-                android:id="@+id/id_main_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_below="@+id/id_main_continuar"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="-15dp"
-                android:gravity="center"
-                android:text="MEDITANDO EN LA OFICINA"
-                android:textColor="#098eaf"
-                android:textSize="18sp" />
+
+			<TextView
+				android:id="@+id/id_main_titulo"
+				android:layout_width="wrap_content"
+				android:layout_height="45dp"
+				android:layout_below="@+id/id_main_continuar"
+				android:layout_marginLeft="15dp"
+				android:layout_marginTop="-15dp"
+				android:gravity="center"
+				android:lineSpacingMultiplier="0.7"
+				android:text="MEDITANDO EN LA OFICINA"
+				android:textColor="#098eaf"
+				android:textSize="16sp" />
         </RelativeLayout>
     	<ImageView
     	    android:id="@+id/id_main_play"

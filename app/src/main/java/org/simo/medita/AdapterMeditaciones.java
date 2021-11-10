@@ -38,6 +38,7 @@ public class AdapterMeditaciones extends BaseAdapter{
 	    {
 		 	ImageView img;
 	        TextView nombre;	
+	        TextView desc;
 	        LinearLayout corta;
 	        LinearLayout media;
 	    	LinearLayout larga;
@@ -51,7 +52,8 @@ public class AdapterMeditaciones extends BaseAdapter{
 			listView = inflater.inflate(R.layout.row_meditaciones, null);	
 			holder.img =(ImageView)listView.findViewById(R.id.id_row_med_img);
 			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);			
-			listView.setTag(holder);	
+			holder.desc =(TextView)listView.findViewById(R.id.id_row_med_description);
+			listView.setTag(holder);
 		} 
 		else {
 			holder = (Holder) listView.getTag();
@@ -62,35 +64,37 @@ public class AdapterMeditaciones extends BaseAdapter{
 			int aux = Integer.valueOf(data.getJSONObject(position).getString("med_dia"));	
 			
 			if (aux == 0){
-	        	holder.nombre.setText(data.getJSONObject(position).getString("med_titulo").trim());	        	
-
+	        	holder.nombre.setText(data.getJSONObject(position).getString("med_titulo").trim());
+				holder.desc.setText("");
 			}
 			else{
 	        	holder.nombre.setText("DÍA " + data.getJSONObject(position).getString("med_dia")+ " - " + data.getJSONObject(position).getString("med_titulo").trim());
-
+				holder.desc.setText(data.getJSONObject(position).optString("med_desc").trim());
 			}		
 			
 			if (pack.optInt("continuo") == 1){
 
 				if (new FilterData().isPrevCompleted(data, data.getJSONObject(position))){	
 					holder.nombre.setTextColor(Color.parseColor("#0c465e"));
+					holder.desc.setTextColor(Color.parseColor("#0c465e"));
 
 				 }
 				 else{
 						holder.nombre.setTextColor(Color.parseColor("#bbbaba"));
+						holder.desc.setTextColor(Color.parseColor("#bbbaba"));
 				 }
 					
 			}
 			else{
 					holder.nombre.setTextColor(Color.parseColor("#0c465e"));
-				
+					holder.desc.setTextColor(Color.parseColor("#0c465e"));
+
 			}
-				
-			
-			
+
 			
         	holder.nombre.setTypeface(font);        
-        		        	
+        	holder.desc.setTypeface(font);
+
 		} catch (JSONException e) {
 		}
 				

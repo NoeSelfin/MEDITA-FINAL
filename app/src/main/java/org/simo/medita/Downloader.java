@@ -313,7 +313,8 @@ public class Downloader {
 	        			prefs.edit().putString("meditaciones",result).commit();	
 	        		}
 	        		
-					new downloadSavePacksIcons().execute();	        		
+					new downloadSavePacksIcons().execute();
+					new downloadSavePacksBg().execute();
 	        		
 	        	}	        	
 	        	else {
@@ -360,7 +361,7 @@ public class Downloader {
 		        @Override
 		        protected void onPostExecute(String result) {
 		        	
-		        	new downloadSavePacksBg().execute();
+		        	//new downloadSavePacksBg().execute();
 
 					Log.i("medita_downloader","Terminando de descargar pack_icons.");
 		        	

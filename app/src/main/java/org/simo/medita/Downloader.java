@@ -120,7 +120,8 @@ public class Downloader {
 		Log.i("medita_memory", String.valueOf(total));
 		Log.i("medita_memory", Formatter.formatFileSize(ctx, 361078784));
 		
-		if (total > 361078784){
+		//if (total > 361078784){
+		if (total < 0){
 			Log.i("medita_intros", "1");
 			time_left = time;
 			this.mp = mp;
@@ -158,7 +159,8 @@ public class Downloader {
 		
 		    
         	try {
-				Log.i("medita_intros", "1");
+				Log.i("medita_streaming", "Reproduciendo srtreaming!!");
+				Log.i("medita_streaming", "1");
         		mp.reset();
               	mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 				mp.setDataSource(Config.url_meditaciones + mp3);

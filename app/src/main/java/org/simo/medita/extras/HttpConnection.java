@@ -12,6 +12,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -40,7 +42,7 @@ public class HttpConnection {
 		
 	    // Create a new HttpClient and Post Header
 		 DefaultHttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost(url);
+	     HttpPost httppost = new HttpPost(url);
 
 		Log.i("medita_url",url);
 
@@ -62,6 +64,10 @@ public class HttpConnection {
             httppost.setHeader("Accept", "application/json");
 
 	        httpclient.setParams(httpParameters);
+
+			httpclient.getConnectionManager().getSchemeRegistry().register(
+					new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
+			);
 	        
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
@@ -107,6 +113,10 @@ public class HttpConnection {
 	        HttpParams p = httpget.getParams();
  	        p.setParameter("params", Basics.toBase64(params.toString()));
  	        httpget.setParams(p);
+
+			 httpclient.getConnectionManager().getSchemeRegistry().register(
+					 new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
+			 );
         	 
              response = httpclient.execute(httpget);
              // Examine the response status
@@ -140,7 +150,10 @@ public class HttpConnection {
         // Execute the request
         HttpResponse response;
         try {
-       	        	 
+
+			httpclient.getConnectionManager().getSchemeRegistry().register(
+					new Scheme("https", SSLSocketFactory.getSocketFactory(), 443)
+			);
             response = httpclient.execute(httpget);
             // Examine the response status
            	 Log.i("medita",response.getStatusLine().toString());

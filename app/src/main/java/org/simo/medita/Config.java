@@ -7,9 +7,12 @@ public class Config {
 	protected final static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8NEwmiClasL7JUgmHaSXmRPOcI6z5CZtyOVM7WsU2y2tyTgTmFt0FqtAKh9U8YZHtFAKYRzmdhLWH4MSnsgF//ZTWCTU+NtokexISaTwz3j3ch17jRevhkoVf70NV5ACVzIYRBJoGcU3padErLQaFixTP2RdsLFiXez8SaDOdbRqKcx2bjZnMzezOGwoGj8OMOe0+5zJmmRvyDLQHeznxw/urabLZxIKTQhS9riMMA151KF65B/zW83KRL9kkfPudE8SfZ1O4YqW3GpFDQyT43KjM4rb8rYBFvU6QuBFcTbm+BvW6nkL6PXDlFGyXBub6VS7Cqjt/tucez/7V3/kQIDAQAB";
 //	protected final static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8NEwmiClasL7JUgmHaSXmRPOcI6z5CZtyOVM7WsU2y2tyTgTmFt0FqtAKh9U8YZHtFAKYRzmdhLWH4MSnsgF//ZTWCTU+NtokexISaTwz3j3ch17jRevhkoVf70NV5ACVzIYRBJoGcU3padErLQaFixTP2RdsLFiXez8SaDOdbRqKcx2bjZnMzezOGwoGj8OMOe0+5zJmmRvyDLQHeznxw/urabLZxIKTQhS9riMMA151KF65B/zW83KRL9kkfPudE8SfZ1O4YqW3GpFDQyT43KjM4rb8rYBFvU6QuBFcTbm+BvW6nkL6PXDlFGyXBub6VS7Cqjt/tucez/7V3/kQIDAQAB";
 	protected final static String url_base = "http://medita.atentamente.net";
-	protected final static String url_iconos = "http://medita.atentamente.net/iconos/";
-	protected final static String url_fondos = "http://medita.atentamente.net/fondos/";
-	protected final static String url_meditaciones = "http://medita.atentamente.net/meditaciones/";
+	//protected final static String url_iconos = "http://medita.atentamente.net/iconos/";
+	protected final static String url_iconos = "https://appmeditapro.s3.eu-west-1.amazonaws.com/iconos/";
+	//protected final static String url_fondos = "http://medita.atentamente.net/fondos/";
+	protected final static String url_fondos = "https://appmeditapro.s3.eu-west-1.amazonaws.com/fondos/";
+	//protected final static String url_meditaciones = "http://medita.atentamente.net/meditaciones/";
+	protected final static String url_meditaciones = "https://appmeditapro.s3.eu-west-1.amazonaws.com/meditaciones/";
 	//protected final static String url_get_packs = "http://medita.atentamente.net/get_packs.php";
 	protected final static String url_get_packs = "http://dashboard.atentamente.net/index.php/api/getPacks";
 	//protected final static String url_get_meditaciones  = "http://medita.atentamente.net/get_meditaciones.php";

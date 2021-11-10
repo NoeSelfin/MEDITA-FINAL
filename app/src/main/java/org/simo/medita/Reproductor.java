@@ -270,11 +270,13 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			//prepareSong(meditacion.optString("med_fichero") + "Intro.mp3");
 
 			helper.setVisibility(View.INVISIBLE);
+			helper.setVisibility(View.GONE);
 		}
 		else{			
 			
 			favoritos_img.setVisibility(View.VISIBLE);
 			helper.setVisibility(View.VISIBLE);
+            helper.setVisibility(View.GONE);
 			
 			song =meditacion.optString("med_fichero") + "M"+dur+".mp3";			
 
@@ -611,6 +613,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					
 					introduccion.setVisibility(View.INVISIBLE);
 					helper.setVisibility(View.VISIBLE);
+                    helper.setVisibility(View.GONE);
 					isIntro = false;
 					
 		    		/*JSONArray meditaciones_aux = new JSONArray();
@@ -684,6 +687,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				if (Basics.checkConn(this)){
 					 time.setText("0:00");
 				     time_left.setText("0:00");
+
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
 					downloader.downloadMp3(song,time_left,mp,pack.toString(), play);
 				}

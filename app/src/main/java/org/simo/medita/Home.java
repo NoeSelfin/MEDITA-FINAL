@@ -43,20 +43,26 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
+        ArrayList<String> array1 = new ArrayList<>();
+        array1.add("¿Sólo tienes 5 minutos?");
+        array1.add("¿Estás triste?");
+        array1.add("¿Necesitas motivación?");
+        array1.add("¿Sientes cansancio?");
+        array1.add("¿Quieres algo para dormir?");
+
+        ArrayList<String> array2 = new ArrayList<>();
+        array2.add("Dormir y relajarte");
+        array2.add("Crecimiento personal");
+        array2.add("Salud y bienestar");
+        array2.add("otros");
 
         // set up the RecyclerView
         RecyclerView recyclerView_more_contents = findViewById(R.id.id_recycler_more_contents);
         RecyclerView recyclerView_needs = findViewById(R.id.id_recycler_needs);
         recyclerView_more_contents.setLayoutManager(new LinearLayoutManager(this));
         recyclerView_needs.setLayoutManager(new LinearLayoutManager(this));
-        adapterHomeMoreContents = new AdapterHomeMoreContents(this, animalNames);
-        adapterHomeNeeds = new AdapterHomeNeeds(this, animalNames);
+        adapterHomeMoreContents = new AdapterHomeMoreContents(this, array2);
+        adapterHomeNeeds = new AdapterHomeNeeds(this, array1);
         adapterHomeMoreContents.setClickListener(this);
         adapterHomeNeeds.setClickListener(this);
 

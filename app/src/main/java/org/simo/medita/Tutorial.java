@@ -37,7 +37,7 @@ public class Tutorial extends Activity{
 		indice = (ImageView)findViewById(R.id.indicador);
 		close = (ImageView)findViewById(R.id.close_tuto);
 
-		imageSwitcher.setImageResource(R.drawable.medita_tutorial_0);
+		imageSwitcher.setImageResource(R.drawable.slide1);
 		indice.setImageResource(R.drawable.swipe1);
 		int color = Color.parseColor("#FFFFFF");          
     	indice.setColorFilter(color);
@@ -68,34 +68,34 @@ public class Tutorial extends Activity{
 		        
 		        if (i==1){
 		        	indice.setImageResource(R.drawable.swipe1);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_0);
+		        	imageSwitcher.setImageResource(R.drawable.slide1);
 		        	int color = Color.parseColor("#FFFFFF");          
 		        	indice.setColorFilter(color);
 		        }
 		        else if (i==2){
 		        	indice.setImageResource(R.drawable.swipe2);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_1);
+		        	imageSwitcher.setImageResource(R.drawable.slide2);
 		        	int color = Color.parseColor("#293c4f");
 		        	indice.setColorFilter(color);
 		        }
 		        else if (i==3){
 		        	indice.setImageResource(R.drawable.swipe3);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_2);
+		        	imageSwitcher.setImageResource(R.drawable.slide3);
 		        	int color = Color.parseColor("#FFFFFF");
 		        	indice.setColorFilter(color);
 		        }
 		        else if (i==4){
 		        	indice.setImageResource(R.drawable.swipe4);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_3);
+		        	imageSwitcher.setImageResource(R.drawable.slide4);
 		        	int color = Color.parseColor("#293c4f");          
 		        	indice.setColorFilter(color);
 		        }
-/*		        else if (i==5){
+		        else if (i==5){
 		        	indice.setImageResource(R.drawable.swipe5);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_4);
+		        	imageSwitcher.setImageResource(R.drawable.slide5);
 		        	int color = Color.parseColor("#293c4f");          
 		        	indice.setColorFilter(color);
-		        }*/
+		        }
 		        
 		        
 		       // Toast.makeText(Tutorial.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
@@ -106,34 +106,34 @@ public class Tutorial extends Activity{
 		        // Toast.makeText(Tutorial.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
 		        if (i==1){
 		        	indice.setImageResource(R.drawable.swipe1);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_0);
+		        	imageSwitcher.setImageResource(R.drawable.slide1);
 		        	int color = Color.parseColor("#FFFFFF");          
 		        	indice.setColorFilter(color);
 		        }
 		        else if (i==2){
 		        	indice.setImageResource(R.drawable.swipe2);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_1);
+		        	imageSwitcher.setImageResource(R.drawable.slide2);
 		        	int color = Color.parseColor("#293c4f");
 		        	indice.setColorFilter(color);
 		        }
 		        else if (i==3){
 		        	indice.setImageResource(R.drawable.swipe3);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_2);
+		        	imageSwitcher.setImageResource(R.drawable.slide3);
 		        	int color = Color.parseColor("#FFFFFF");
 		        	indice.setColorFilter(color);
 		        }
 		        else if (i==4){
 		        	indice.setImageResource(R.drawable.swipe4);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_3);
+		        	imageSwitcher.setImageResource(R.drawable.slide4);
 		        	int color = Color.parseColor("#293c4f");          
 		        	indice.setColorFilter(color);
 		        }
-/*		        else if (i==5){
+		        else if (i==5){
 		        	indice.setImageResource(R.drawable.swipe5);
-		        	imageSwitcher.setImageResource(R.drawable.medita_tutorial_4);
+		        	imageSwitcher.setImageResource(R.drawable.slide5);
 		        	int color = Color.parseColor("#293c4f");          
 		        	indice.setColorFilter(color);
-		        }*/
+		        }
 		        
 		        
 		        if (i==(imagenes+1)){

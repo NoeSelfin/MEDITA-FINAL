@@ -10,7 +10,7 @@
 
     <dimen name="et_tv_height">40dp</dimen>
 
-    <dimen name="grid_horizontal_spacing">10dp</dimen>
+    <dimen name="grid_horizontal_spacing">20dp</dimen>
 
 
 </resources>

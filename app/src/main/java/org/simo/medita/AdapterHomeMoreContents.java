@@ -5,18 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import org.json.JSONArray;
 
 public class AdapterHomeMoreContents  extends RecyclerView.Adapter<AdapterHomeMoreContents.ViewHolder> {
 
-    private List<String> mData;
+    private JSONArray mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    AdapterHomeMoreContents(Context context, List<String> data) {
+    AdapterHomeMoreContents(Context context, JSONArray data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -31,24 +32,35 @@ public class AdapterHomeMoreContents  extends RecyclerView.Adapter<AdapterHomeMo
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        String data = mData.optJSONObject(position).optString("title");
+        holder.myTextView.setText(data);
+        if (position == 0){
+            holder.myImageView.setImageResource(R.drawable.more_content1);
+        }else if (position == 1){
+            holder.myImageView.setImageResource(R.drawable.more_content2);
+        }else if (position == 2){
+            holder.myImageView.setImageResource(R.drawable.more_content3);
+        }else if (position == 3){
+            holder.myImageView.setImageResource(R.drawable.more_content4 );
+        }
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.length();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        ImageView myImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.id_row_more_contents_title);
+            myImageView = itemView.findViewById(R.id.id_row_more_contents_image);
             itemView.setOnClickListener(this);
         }
 
@@ -58,10 +70,6 @@ public class AdapterHomeMoreContents  extends RecyclerView.Adapter<AdapterHomeMo
         }
     }
 
-    // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id);
-    }
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {

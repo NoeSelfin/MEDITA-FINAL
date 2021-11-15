@@ -12,16 +12,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
 
 
 public class Home extends Activity  implements AdapterHomeMoreContents.ItemClickListener,AdapterHomeNeeds.ItemClickListener{
@@ -29,10 +36,18 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
     protected Typeface font;
     protected SlidingMenu menu_lateral;
     protected ImageView menu;
+    protected RelativeLayout option1;
+    protected RelativeLayout option2;
+    protected LinearLayout option3;
+    protected LinearLayout option4;
+    protected LinearLayout option5;
+    JSONObject last_version;
+    JSONArray cats = null;
+    JSONArray cats2 = null;
+    JSONArray cats3 = null;
 
     AdapterHomeMoreContents adapterHomeMoreContents;
     AdapterHomeNeeds adapterHomeNeeds;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +58,38 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
-        ArrayList<String> array1 = new ArrayList<>();
-        array1.add("¿Sólo tienes 5 minutos?");
-        array1.add("¿Estás triste?");
-        array1.add("¿Necesitas motivación?");
-        array1.add("¿Sientes cansancio?");
-        array1.add("¿Quieres algo para dormir?");
+        option1 = (RelativeLayout)findViewById(R.id.id_home_option1);
+        option2 = (RelativeLayout)findViewById(R.id.id_home_option2);
+        option3 = (LinearLayout)findViewById(R.id.id_home_option3);
+        option4 = (LinearLayout)findViewById(R.id.id_home_option4);
+        option5 = (LinearLayout)findViewById(R.id.id_home_option5);
 
-        ArrayList<String> array2 = new ArrayList<>();
-        array2.add("Dormir y relajarte");
-        array2.add("Crecimiento personal");
-        array2.add("Salud y bienestar");
-        array2.add("otros");
+        String options_string = prefs.getString("home_options","");
+
+        Log.i(Config.tag, options_string);
+
+        try {
+            JSONObject options = new JSONObject(options_string);
+            //Notes and meditations last version
+            last_version = options.optJSONObject("last_version");
+
+            cats = options.optJSONArray("cats");
+            cats2 = options.optJSONArray("cats2");
+            cats3 = options.optJSONArray("cats3");
+
+
+            Log.i(Config.tag, options.optJSONArray("cats3").toString());
+        } catch (JSONException e) {
+            Log.i(Config.tag, "Error parse options.");
+        }
 
         // set up the RecyclerView
         RecyclerView recyclerView_more_contents = findViewById(R.id.id_recycler_more_contents);
         RecyclerView recyclerView_needs = findViewById(R.id.id_recycler_needs);
         recyclerView_more_contents.setLayoutManager(new LinearLayoutManager(this));
         recyclerView_needs.setLayoutManager(new LinearLayoutManager(this));
-        adapterHomeMoreContents = new AdapterHomeMoreContents(this, array2);
-        adapterHomeNeeds = new AdapterHomeNeeds(this, array1);
+        adapterHomeMoreContents = new AdapterHomeMoreContents(this, cats2);
+        adapterHomeNeeds = new AdapterHomeNeeds(this, cats);
         adapterHomeMoreContents.setClickListener(this);
         adapterHomeNeeds.setClickListener(this);
 
@@ -76,6 +103,104 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
 
         recyclerView_more_contents.setAdapter(adapterHomeMoreContents);
         recyclerView_needs.setAdapter(adapterHomeNeeds);
+
+
+
+        option1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                JSONArray packs = null;
+                try {
+                    packs = new JSONArray(prefs.getString("packs", ""));
+                    Toast.makeText(Home.this,"option1",Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Home.this, Meditaciones.class);
+                    i.putExtra("pack", packs.optJSONObject(0).toString());
+                    startActivity(i);
+                    finish();
+                } catch (JSONException e) {
+                }
+            }
+        });
+        option2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                int week_of_month = now.get(Calendar.WEEK_OF_MONTH);
+                int month = now.get(Calendar.MONTH);
+
+                if (week_of_month > 4){
+                    week_of_month = 4;
+                }
+
+                String m = "id_"+String.valueOf(month)+"_"+String.valueOf(week_of_month);
+                JSONArray meditations = new JSONArray();
+                for (int i=0; i<cats3.length();i++){
+                    if (cats3.optJSONObject(i).optString("id").compareTo(m) == 0){
+                        try {
+                            meditations = new JSONArray(cats3.optJSONObject(i).optString("meditations"));
+                        } catch (JSONException e) {
+                        }
+                    }
+                }
+
+
+                if (meditations.length() > 0){
+                    //Obtener la meditación con el id pertinente
+
+                    boolean saved = true;
+                    Intent i = new Intent(Home.this, Reproductor.class);
+
+                    if (prefs.contains("saveState_pack"))
+                        i.putExtra("pack", prefs.getString("saveState_pack", ""));
+                    else
+                        saved = false;
+                    if (prefs.contains("saveState_meditacion"))
+                        i.putExtra("meditacion", prefs.getString("saveState_meditacion", ""));
+                    else
+                        saved = false;
+                    if (prefs.contains("saveState_duracion"))
+                        i.putExtra("duracion", prefs.getString("saveState_duracion", ""));
+                    else
+                        saved = false;
+                    if (prefs.contains("saveState_time"))
+                        i.putExtra("dur", prefs.getLong("saveState_time", 0));
+
+                    i.putExtra("intros", false);
+
+                    if (saved){
+                        i.putExtra("fromMain", true);
+                        startActivity(i);
+                        finish();
+                    }
+                }
+
+                Toast.makeText(Home.this,meditations.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        option3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ( last_version != null){
+                    /*{
+                         "id_updates": "7",
+                        "date": "2021-11-10 10:54:16",
+                        "notes": "Nuevas meditaciones y reajustes nuevo Home app",
+                        "version": "98",
+                        "meditations": "[\"265\"]"
+                     }*/
+                }
+            }
+        });
+        option4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(Home.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        option5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+            }
+        });
 
 
     }

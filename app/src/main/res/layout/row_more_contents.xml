@@ -8,6 +8,7 @@
     android:padding="10dp">
 
     <ImageView
+        android:id="@+id/id_row_more_contents_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/more_content1"/>

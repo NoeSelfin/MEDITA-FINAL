@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import org.json.JSONArray;
 
 public class AdapterHomeNeeds  extends RecyclerView.Adapter<AdapterHomeNeeds.ViewHolder> {
 
-    private List<String> mData;
+    private JSONArray mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    AdapterHomeNeeds(Context context, List<String> data) {
+    AdapterHomeNeeds(Context context, JSONArray data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -31,14 +31,14 @@ public class AdapterHomeNeeds  extends RecyclerView.Adapter<AdapterHomeNeeds.Vie
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        String data = mData.optJSONObject(position).optString("title");
+        holder.myTextView.setText(data);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.length();
     }
 
 
@@ -58,10 +58,6 @@ public class AdapterHomeNeeds  extends RecyclerView.Adapter<AdapterHomeNeeds.Vie
         }
     }
 
-    // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id);
-    }
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {

@@ -226,7 +226,7 @@ public class Downloader {
 						packs = new JSONArray(result);
 						MainActivity.packs = packs;
 						prefs.edit().putString("packs", result).commit();	        			
-						new downloadMeditaciones().execute();	
+						new downloadMeditaciones().execute();
 					} catch (JSONException e) {
 						//prefs.edit().clear().commit();
 						error = false;
@@ -313,9 +313,7 @@ public class Downloader {
 	        			prefs.edit().putString("meditaciones",result).commit();	
 	        		}
 	        		
-					new downloadSavePacksIcons().execute();
-					new downloadSavePacksBg().execute();
-	        		
+					new downloadOptions().execute();
 	        	}	        	
 	        	else {
 	        		//prefs.edit().clear().commit();
@@ -326,13 +324,67 @@ public class Downloader {
 		           	reproducir.setVisibility(View.VISIBLE);
 	        	}
 	        	
-	        	
 				prefs.edit().putInt("version", prefs.getInt("server_version",0)).commit();
 
 				Log.i("medita_downloader","Terminando de descargar meditaciones.");
 	        }     	        
-	  } 
-	
+	  }
+	private class downloadOptions extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			// loadingAnimation.start();
+			Log.i("medita_downloader","Empezando a descargar opciones de la Home.");
+		}
+		@Override
+		protected String doInBackground(String... params) {
+			String mac = Basics.getWifiMac(ctx);
+			String result = null;
+			HttpConnection http = null;
+
+			if (Basics.checkConn(ctx)){
+				try {
+					http = new HttpConnection();
+
+					JSONObject jo =  new JSONObject();
+					jo.put("token",Config.token);
+					jo.put("mac",mac);
+
+					http = new HttpConnection();
+					result = http.postData(Config.url_get_config, jo.toString());
+					if (Config.log)
+						Log.i("medita",result);
+
+				} catch (JSONException e) {
+					Log.i("medita","Error descargando datos de configuración de la Home.");
+					error = false;
+				}
+			}
+
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+			if ((result != null) && (result.compareTo("") != 0)){
+				prefs.edit().putString("home_options",result).commit();
+
+				new downloadSavePacksIcons().execute();
+				new downloadSavePacksBg().execute();
+
+			}
+			else {
+				//prefs.edit().clear().commit();
+				//rebootData();
+				//Dialogo error datos.
+				loadingAnimation.stop();
+				loading.setVisibility(View.INVISIBLE);
+				reproducir.setVisibility(View.VISIBLE);
+			}
+
+			Log.i("medita_downloader","Terminando de descargar opciones de la Home.");
+		}
+	}
 	private	class downloadSavePacksIcons extends AsyncTask<String, Void, String> {			 
 			 @Override
 		        protected void onPreExecute() {

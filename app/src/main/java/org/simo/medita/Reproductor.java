@@ -88,6 +88,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected static boolean play_block = true;
 	protected boolean back = false;
 	protected boolean fromMain = false;
+	protected boolean fromHome = false;
 
 	FileInputStream fileInputStream;
 
@@ -158,6 +159,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				
 				if (extras.containsKey("fromMain"))
 					fromMain = extras.getBoolean("fromMain", false);
+				if (extras.containsKey("fromHome"))
+					fromHome = extras.getBoolean("fromHome", false);
+
 				
 				song_name.setText("· " + meditacion.optString("med_titulo").toUpperCase().trim() +" ·");
 				song_name.setTypeface(font);
@@ -221,13 +225,22 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		
 		if (new FilterData().isFirst(meditaciones, meditacion.optString("id_meditacion")))
 				play_left.setVisibility(View.INVISIBLE);
-		else
+		else{
+			if(fromHome){
+				play_left.setVisibility(View.INVISIBLE);
+			}else{
 				play_left.setVisibility(View.VISIBLE);
-		
+			}
+		}
 		if (new FilterData().isLast(meditaciones, meditacion.optString("id_meditacion")))
 			play_right.setVisibility(View.INVISIBLE);
-		else
-			play_right.setVisibility(View.VISIBLE);
+		else{
+			if(fromHome){
+				play_right.setVisibility(View.INVISIBLE);
+			}else{
+				play_right.setVisibility(View.VISIBLE);
+			}
+		}
 
 		
 		/*AnimationDrawable loadingAnimation = new AnimationDrawable();
@@ -630,13 +643,19 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	        			try {
 	        				JSONArray meditaciones_aux = new JSONArray();
 	        				meditaciones_aux = new JSONArray (prefs.getString("meditaciones",""));
-	        				if ((pack.optInt("continuo") == 1) && (!new FilterData().isCompleted(meditaciones_aux, meditacion)))
-	        					play_right.setVisibility(View.INVISIBLE);
-	        				else
-	        					play_right.setVisibility(View.VISIBLE);
-	        				
-	        				if (new FilterData().isLast(new FilterData().filterMeditaciones(meditaciones_aux, pack.getString("id_pack")), meditacion.optString("id_meditacion")))
-	        					play_right.setVisibility(View.INVISIBLE);
+	        				if ((pack.optInt("continuo") == 1) && (!new FilterData().isCompleted(meditaciones_aux, meditacion))){
+								play_right.setVisibility(View.INVISIBLE);
+							}
+	        				else{
+	        					if(fromHome){
+									play_right.setVisibility(View.INVISIBLE);
+								}else{
+									play_right.setVisibility(View.VISIBLE);
+								}
+							}
+	        				if (new FilterData().isLast(new FilterData().filterMeditaciones(meditaciones_aux, pack.getString("id_pack")), meditacion.optString("id_meditacion"))){
+								play_right.setVisibility(View.INVISIBLE);
+							}
 	        				
 	        			} catch (JSONException e) {
 	        				Log.i("medita", "Error isLast");
@@ -653,14 +672,24 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onClick(View arg0) {
 				if (mp.isPlaying())
 					mp.stop();
-				
-				Intent i = new Intent(Reproductor.this, Meditaciones.class);   
-				i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-				i.putExtra("pack", pack.toString());
-				i.setAction(Config.from_Reproductor);
-	    		startActivity(i);
-	    		bitmap = null;
-	    		finish();
+
+				if(fromHome){
+					Intent i = new Intent(Reproductor.this, Home.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+					i.setAction(Config.from_Reproductor);
+					startActivity(i);
+					bitmap = null;
+					finish();
+				}else{
+					Intent i = new Intent(Reproductor.this, Meditaciones.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+					i.putExtra("pack", pack.toString());
+					i.setAction(Config.from_Reproductor);
+					startActivity(i);
+					bitmap = null;
+					finish();
+				}
+
 			}
 		});
 		helper.setOnClickListener(new OnClickListener() {
@@ -702,15 +731,19 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
         		if (prefs.contains("meditaciones")){
         			try {
         				meditaciones_aux = new JSONArray (prefs.getString("meditaciones",""));
-        				if ((pack.optInt("continuo") == 1) && (!new FilterData().isCompleted(meditaciones_aux, meditacion)))
-        					play_right.setVisibility(View.INVISIBLE);
-        				else
-        					play_right.setVisibility(View.VISIBLE);
-        				
-        				
-        				if (new FilterData().isLast(new FilterData().filterMeditaciones(meditaciones_aux, pack.getString("id_pack")), meditacion.optString("id_meditacion")))
-        					play_right.setVisibility(View.INVISIBLE);
-        				
+        				if ((pack.optInt("continuo") == 1) && (!new FilterData().isCompleted(meditaciones_aux, meditacion))){
+							play_right.setVisibility(View.INVISIBLE);
+						}
+        				else{
+        					if(fromHome){
+								play_right.setVisibility(View.INVISIBLE);
+							}else{
+								play_right.setVisibility(View.VISIBLE);
+							}
+						}
+        				if (new FilterData().isLast(new FilterData().filterMeditaciones(meditaciones_aux, pack.getString("id_pack")), meditacion.optString("id_meditacion"))){
+							play_right.setVisibility(View.INVISIBLE);
+						}
         			} catch (JSONException e) {
         			}
         	  	
@@ -870,7 +903,11 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
     			if (!new FilterData().isLast(meditaciones, meditacion.optString("id_meditacion"))){
     				// si no es el ultimo, mostramos el play
 					Log.i(Config.tag,"isLast -> FALSE");
-                    play_right.setVisibility(View.VISIBLE);
+					if (fromHome){
+						play_right.setVisibility(View.INVISIBLE);
+					}else{
+						play_right.setVisibility(View.VISIBLE);
+					}
                 }else{
 
 					// en caso que sea el último elemento, añadimos puntos de premio
@@ -937,13 +974,22 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
     	//audio.setStreamMute(AudioManager.STREAM_RING,  false);
     	if (mp.isPlaying())
 			mp.stop();
-		
-		Intent i = new Intent(Reproductor.this, Meditaciones.class);   
-		i.setAction(Config.from_Reproductor);
-		i.putExtra("pack", pack.toString());
-		i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-		startActivity(i);
-		finish();
+
+    	if (fromHome){
+			Intent i = new Intent(Reproductor.this, Home.class);
+			i.setAction(Config.from_Reproductor);
+			i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+			startActivity(i);
+			finish();
+		}else{
+			Intent i = new Intent(Reproductor.this, Meditaciones.class);
+			i.setAction(Config.from_Reproductor);
+			i.putExtra("pack", pack.toString());
+			i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+			startActivity(i);
+			finish();
+		}
+
 	}
     @Override
    	public void onStop()
@@ -1018,7 +1064,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	}
     protected void alert(String mens){
  		
-			final Dialog dialog = new Dialog(Reproductor.this);
+		final Dialog dialog = new Dialog(Reproductor.this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.alert_generico);
 		dialog.setCancelable(false);
@@ -1040,12 +1086,21 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onClick(View v) {
 				dialog.dismiss();
 				Toast.makeText(Reproductor.this, "Ha habido un error de conexión, intente conectarse más tarde.",Toast.LENGTH_LONG).show();
-				Intent i = new Intent(Reproductor.this, Meditaciones.class);   
-				i.setAction(Config.from_Reproductor);
-				i.putExtra("pack", pack.toString());
-				i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-				startActivity(i);
-				finish();
+
+				if(fromHome){
+					Intent i = new Intent(Reproductor.this, Home.class);
+					i.setAction(Config.from_Reproductor);
+					i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+					startActivity(i);
+					finish();
+				}else{
+					Intent i = new Intent(Reproductor.this, Meditaciones.class);
+					i.setAction(Config.from_Reproductor);
+					i.putExtra("pack", pack.toString());
+					i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+					startActivity(i);
+					finish();
+				}
 			}
 		});
 

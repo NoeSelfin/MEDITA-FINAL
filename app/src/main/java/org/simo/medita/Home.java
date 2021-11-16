@@ -41,10 +41,15 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
     protected LinearLayout option3;
     protected LinearLayout option4;
     protected LinearLayout option5;
+    protected TextView home_option2_title;
     JSONObject last_version;
     JSONArray cats = null;
     JSONArray cats2 = null;
     JSONArray cats3 = null;
+
+    MeditationFunctions med_funcs;
+    JSONObject meditation_opt2;
+    JSONObject pack_opt2;
 
     AdapterHomeMoreContents adapterHomeMoreContents;
     AdapterHomeNeeds adapterHomeNeeds;
@@ -57,12 +62,15 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         setContentView(R.layout.activity_home);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+        med_funcs = new MeditationFunctions(getApplicationContext());
 
         option1 = (RelativeLayout)findViewById(R.id.id_home_option1);
         option2 = (RelativeLayout)findViewById(R.id.id_home_option2);
         option3 = (LinearLayout)findViewById(R.id.id_home_option3);
         option4 = (LinearLayout)findViewById(R.id.id_home_option4);
         option5 = (LinearLayout)findViewById(R.id.id_home_option5);
+
+        home_option2_title = (TextView)findViewById(R.id.id_home_option2_title);
 
         String options_string = prefs.getString("home_options","");
 
@@ -76,6 +84,9 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
             cats = options.optJSONArray("cats");
             cats2 = options.optJSONArray("cats2");
             cats3 = options.optJSONArray("cats3");
+
+            getFullInfoCat3();
+            home_option2_title.setText(meditation_opt2.optString("med_titulo",""));
 
 
             Log.i(Config.tag, options.optJSONArray("cats3").toString());
@@ -122,57 +133,19 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         });
         option2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Calendar now = Calendar.getInstance();
-                int week_of_month = now.get(Calendar.WEEK_OF_MONTH);
-                int month = now.get(Calendar.MONTH);
+                //Intent i = new Intent(Home.this, Reproductor.class);
+                Intent i = new Intent(Home.this, MeditacionesHome.class);
+                i.putExtra("pack", pack_opt2.toString());
+                i.putExtra("onlyDurs",true);
+                i.putExtra("meditacion", meditation_opt2.toString());
+                i.putExtra("dur", 0);
+                i.putExtra("duracion", med_funcs.getMeditationDuraciones(meditation_opt2).optString(0));
+                //i.putExtra("intros", false);
 
-                if (week_of_month > 4){
-                    week_of_month = 4;
-                }
+                i.putExtra("fromHome", true);
+                startActivity(i);
+                finish();
 
-                String m = "id_"+String.valueOf(month)+"_"+String.valueOf(week_of_month);
-                JSONArray meditations = new JSONArray();
-                for (int i=0; i<cats3.length();i++){
-                    if (cats3.optJSONObject(i).optString("id").compareTo(m) == 0){
-                        try {
-                            meditations = new JSONArray(cats3.optJSONObject(i).optString("meditations"));
-                        } catch (JSONException e) {
-                        }
-                    }
-                }
-
-
-                if (meditations.length() > 0){
-                    //Obtener la meditación con el id pertinente
-
-                    boolean saved = true;
-                    Intent i = new Intent(Home.this, Reproductor.class);
-
-                    if (prefs.contains("saveState_pack"))
-                        i.putExtra("pack", prefs.getString("saveState_pack", ""));
-                    else
-                        saved = false;
-                    if (prefs.contains("saveState_meditacion"))
-                        i.putExtra("meditacion", prefs.getString("saveState_meditacion", ""));
-                    else
-                        saved = false;
-                    if (prefs.contains("saveState_duracion"))
-                        i.putExtra("duracion", prefs.getString("saveState_duracion", ""));
-                    else
-                        saved = false;
-                    if (prefs.contains("saveState_time"))
-                        i.putExtra("dur", prefs.getLong("saveState_time", 0));
-
-                    i.putExtra("intros", false);
-
-                    if (saved){
-                        i.putExtra("fromMain", true);
-                        startActivity(i);
-                        finish();
-                    }
-                }
-
-                Toast.makeText(Home.this,meditations.toString(),Toast.LENGTH_SHORT).show();
             }
         });
         option3.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +175,30 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
             }
         });
 
+    }
+
+    protected void getFullInfoCat3(){
+        Calendar now = Calendar.getInstance();
+        int week_of_month = now.get(Calendar.WEEK_OF_MONTH);
+        int month = now.get(Calendar.MONTH) + 1;
+
+        if (week_of_month > 4){
+            week_of_month = 4;
+        }
+
+        String m = "id_"+String.valueOf(month)+"_"+String.valueOf(week_of_month);
+        JSONArray meditations = new JSONArray();
+        for (int i=0; i<cats3.length();i++){
+            if (cats3.optJSONObject(i).optString("id").compareTo(m) == 0){
+                try {
+                    meditations = new JSONArray(cats3.optJSONObject(i).optString("meditations"));
+                } catch (JSONException e) {
+                }
+            }
+        }
+
+        meditation_opt2 = med_funcs.getMeditationById(meditations.optString(0));
+        pack_opt2 = med_funcs.getPackById(meditation_opt2.optString("id_pack"));
 
     }
 

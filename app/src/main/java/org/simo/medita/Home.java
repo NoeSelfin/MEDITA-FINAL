@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -31,11 +30,11 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 
-public class Home extends Activity  implements AdapterHomeMoreContents.ItemClickListener,AdapterHomeNeeds.ItemClickListener{
+public class Home extends Activity {
     protected SharedPreferences prefs;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
-    protected ImageView menu;
+    protected LinearLayout menu;
     protected RelativeLayout option1;
     protected RelativeLayout option2;
     protected LinearLayout option3;
@@ -64,6 +63,7 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
         med_funcs = new MeditationFunctions(getApplicationContext());
 
+        menu = (LinearLayout)findViewById(R.id.id_opciones_atras);
         option1 = (RelativeLayout)findViewById(R.id.id_home_option1);
         option2 = (RelativeLayout)findViewById(R.id.id_home_option2);
         option3 = (LinearLayout)findViewById(R.id.id_home_option3);
@@ -101,8 +101,36 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         recyclerView_needs.setLayoutManager(new LinearLayoutManager(this));
         adapterHomeMoreContents = new AdapterHomeMoreContents(this, cats2);
         adapterHomeNeeds = new AdapterHomeNeeds(this, cats);
-        adapterHomeMoreContents.setClickListener(this);
-        adapterHomeNeeds.setClickListener(this);
+
+        adapterHomeMoreContents.setClickListener(new AdapterHomeMoreContents.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+            }
+        });
+
+        adapterHomeNeeds.setClickListener(new AdapterHomeNeeds.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                String meditations_string = cats.optJSONObject(position).optString("meditations");
+                try {
+                    JSONArray meditations_array = new JSONArray(meditations_string);
+                    String meditations = med_funcs.getMeditationsFromArray(meditations_array).toString();
+                    Log.i(Config.tag,meditations);
+
+                    Intent i = new Intent(Home.this, MeditacionesHome.class);
+                    i.putExtra("onlyDurs",false);
+                    i.putExtra("title", cats.optJSONObject(position).optString("title"));
+                    i.putExtra("option", 3);
+                    i.putExtra("meditations", meditations);
+                    i.putExtra("fromHome", true);
+                    startActivity(i);
+                    finish();
+                } catch (JSONException e) {
+                }
+            }
+        });
 
         LinearLayoutManager horizontalLayoutManager1 = new LinearLayoutManager(Home.this, LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager horizontalLayoutManager2 = new LinearLayoutManager(Home.this, LinearLayoutManager.HORIZONTAL, false);
@@ -115,14 +143,11 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         recyclerView_more_contents.setAdapter(adapterHomeMoreContents);
         recyclerView_needs.setAdapter(adapterHomeNeeds);
 
-
-
         option1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 JSONArray packs = null;
                 try {
                     packs = new JSONArray(prefs.getString("packs", ""));
-                    Toast.makeText(Home.this,"option1",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Home.this, Meditaciones.class);
                     i.putExtra("pack", packs.optJSONObject(0).toString());
                     startActivity(i);
@@ -140,6 +165,8 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
                 i.putExtra("meditacion", meditation_opt2.toString());
                 i.putExtra("dur", 0);
                 i.putExtra("duracion", med_funcs.getMeditationDuraciones(meditation_opt2).optString(0));
+                i.putExtra("title", "Recomendación semanal");
+                i.putExtra("option", 2);
                 //i.putExtra("intros", false);
 
                 i.putExtra("fromHome", true);
@@ -174,6 +201,14 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
 
             }
         });
+
+        menu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                menu_lateral.showMenu(true);
+            }
+        });
+        setMenu();
 
     }
 
@@ -468,8 +503,4 @@ public class Home extends Activity  implements AdapterHomeMoreContents.ItemClick
         dialog.show();
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
 }

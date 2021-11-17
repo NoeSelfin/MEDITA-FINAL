@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -19,7 +16,6 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -28,14 +24,15 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.simo.medita.extras.Basics;
 import org.simo.medita.extras.FilterData;
 
 import java.util.ArrayList;
 
 public class MeditacionesHome extends Activity{
     protected SharedPreferences prefs;
+    MeditationFunctions med_funcs;
     protected AdapterMeditaciones adaptermeditaciones;
+    protected AdapterMeditacionesHome adaptermeditacioneshome;
     protected AdapterMeditacionesDuracion adaptermeditacionesduracion;
     protected ListView listview;
     protected ListView listview_duraciones;
@@ -43,11 +40,9 @@ public class MeditacionesHome extends Activity{
     protected JSONArray meditaciones;
     protected JSONObject meditacion;
     protected LinearLayout atras;
-    protected ImageView ico;
-    protected ImageView bg;
-    protected TextView titulo;
     protected TextView disponibles;
-    protected RelativeLayout header;
+    protected TextView title;
+    protected LinearLayout header;
     protected LinearLayout help;
     protected Typeface font;
     protected RelativeLayout rl_principal;
@@ -68,18 +63,18 @@ public class MeditacionesHome extends Activity{
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+        med_funcs = new MeditationFunctions(getApplicationContext());
 
         atras = (LinearLayout)findViewById(R.id.id_meditaciones_atras);
-        ico = (ImageView)findViewById(R.id.id_meditaciones_ico);
-        titulo = (TextView)findViewById(R.id.id_meditaciones_titulo);
-        header = (RelativeLayout)findViewById(R.id.id_meditaciones_header);
         help = (LinearLayout)findViewById(R.id.id_meditaciones_help);
         listview  = (ListView)findViewById(R.id.id_meditaciones_listview);
         listview_duraciones  = (ListView)findViewById(R.id.id_meditaciones_listview_duraciones);
         rl_principal = (RelativeLayout)findViewById(R.id.id_meditaciones_rl_list);
         disponibles = (TextView)findViewById(R.id.id_meditaciones_disponibles);
+        title = (TextView)findViewById(R.id.id_meditaciones_home_title);
 
         disponibles.setTypeface(font);
+        title.setTypeface(font);
 
         meditaciones = new JSONArray();
 
@@ -93,44 +88,34 @@ public class MeditacionesHome extends Activity{
             Bundle extras = getIntent().getExtras();
             if(extras != null) {
                 try {
+                    title.setText(extras.getString("title"));
                     onlyDurs = extras.getBoolean("onlyDurs");
-                    pack = new JSONObject(extras.getString("pack"));
-                    Log.i(Config.tag,"meditaciones bundle pack -> " + pack);
 
-                    titulo.setText(pack.optString("pack_titulo"));
-                    titulo.setTypeface(font);
-                    //BitmapFactory.Options options = new BitmapFactory.Options();
-                    //options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    //Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Medita/"+pack.getString("pack_icono"), options);
-                    Bitmap bitmap = Basics.readFileInternal(this,"iconos",pack.getString("pack_icono"));
 
-                    if (bitmap!=null){
-                        ico.setImageBitmap(bitmap);
+                    if (extras.containsKey("pack")){
+                        pack = new JSONObject(extras.getString("pack"));
+                        if (prefs.contains("meditaciones")){
+                            JSONArray meditaciones_all = new JSONArray (prefs.getString("meditaciones",""));
+                            meditaciones = new FilterData().filterMeditaciones(meditaciones_all, pack.getString("id_pack"));
+                            if (Config.log)
+                                Log.i("medita","Meditaciones: " + meditaciones.toString());
+
+                            adaptermeditaciones = new AdapterMeditaciones(this, meditaciones,pack);
+                            listview.setAdapter(adaptermeditaciones);
+                            setListView();
+                        }
+                        else{
+                            //Error, no hay meditaciones.
+                        }
+                    }else{
+                        if (extras.containsKey("meditations")){
+                            meditaciones = new JSONArray (extras.getString("meditations"));
+                            adaptermeditacioneshome = new AdapterMeditacionesHome(this, meditaciones);
+                            listview.setAdapter(adaptermeditacioneshome);
+                            setListView();
+                        }
+
                     }
-                    //bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Medita/"+pack.getString("pack_fondo_med"), options);
-                    bitmap = Basics.readFileInternal(this,"fondos",pack.getString("pack_fondo_med"));
-
-                    if (bitmap!=null){
-                        header.setBackground(new BitmapDrawable(this.getResources(), bitmap));
-                    }
-                    else{
-                        header.setBackgroundColor(Color.parseColor(pack.getString("pack_color").trim()));
-                    }
-
-                    if (prefs.contains("meditaciones")){
-                        JSONArray meditaciones_all = new JSONArray (prefs.getString("meditaciones",""));
-                        meditaciones = new FilterData().filterMeditaciones(meditaciones_all, pack.getString("id_pack"));
-                        if (Config.log)
-                            Log.i("medita","Meditaciones: " + meditaciones.toString());
-                    }
-                    else{
-                        //Error, no hay meditaciones.
-                    }
-
-
-                    adaptermeditaciones = new AdapterMeditaciones(this, meditaciones,pack);
-                    listview.setAdapter(adaptermeditaciones);
-                    setListView();
 
                     Log.i("medita","procesando onlydurs");
                     if (onlyDurs){
@@ -239,6 +224,8 @@ public class MeditacionesHome extends Activity{
     }
     public void showDurs(final JSONObject meditacion, boolean animation_){
         Log.i(Config.tag,"listview OnItemClickListener meditacion -> " + meditacion);
+        pack = med_funcs.getPackById(meditacion.optString("id_pack"));
+
 
         Log.i(Config.tag,"entra al primer if");
         Log.i(Config.tag,"pack id_pack -> " + pack.optInt("id_pack"));

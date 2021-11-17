@@ -51,4 +51,20 @@ public class MeditationFunctions {
             return new JSONArray();
         }
     }
+    protected JSONArray getMeditationsFromArray(JSONArray meditations_array){
+        try {
+            JSONArray meditations = new JSONArray (prefs.getString("meditaciones",""));
+            JSONArray meditations_final = new JSONArray();
+            for (int i=0;i<meditations.length();i++){
+                for (int j=0;j<meditations_array.length();j++){
+                    if (meditations.optJSONObject(i).optString("id_meditacion").compareTo(meditations_array.optString(j)) == 0){
+                        meditations_final.put(meditations.optJSONObject(i));
+                    }
+                }
+            }
+            return meditations_final;
+        } catch (JSONException e) {
+        }
+        return new JSONArray();
+    }
 }

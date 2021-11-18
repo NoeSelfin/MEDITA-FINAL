@@ -288,6 +288,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 			helper.setVisibility(View.INVISIBLE);
 			helper.setVisibility(View.GONE);
+
+			download.setVisibility(View.INVISIBLE);
+			music.setVisibility(View.INVISIBLE);
 		}
 		else{			
 			
@@ -619,7 +622,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					        time_left.setText("0:00");
 
 							Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-							downloader.downloadMp3(song,time_left,mp,pack.toString(),play);
+							downloader.downloadMp3(song,time_left,mp,pack.toString(),play,true);
 							play.setBackgroundResource(R.drawable.play_button);
 						}
 						else{
@@ -632,6 +635,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					helper.setVisibility(View.VISIBLE);
                     helper.setVisibility(View.GONE);
 					isIntro = false;
+					download.setVisibility(View.VISIBLE);
+					music.setVisibility(View.VISIBLE);
 					
 		    		/*JSONArray meditaciones_aux = new JSONArray();
 		    		if (prefs.contains("meditaciones")){
@@ -712,6 +717,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 	        File file=new File(directory,song);
 			if(file.exists())   {
+				download.setVisibility(View.INVISIBLE);
 				prepareSong(file.getAbsolutePath());
 				play.performClick();
 
@@ -722,7 +728,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				     time_left.setText("0:00");
 
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-					downloader.downloadMp3(song,time_left,mp,pack.toString(), play);
+					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,true);
 				}
 				else{
 					alert("No hay conexión a Internet.");
@@ -783,11 +789,11 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				}
 
 				Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-				downloader.downloadMp3(song,time_left,mp,pack.toString(), play);
+				downloader.downloadMp3(song,time_left,mp,pack.toString(), play,false);
 
 			}
 		});
-				
+
 	}
 	
 		

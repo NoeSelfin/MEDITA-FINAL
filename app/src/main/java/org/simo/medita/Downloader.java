@@ -28,11 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.simo.medita.extras.Basics;
 import org.simo.medita.extras.HttpConnection;
-import org.simo.medita.extras.Utilities;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -558,7 +556,7 @@ public class Downloader {
 
 	        @Override
 	        protected void onPostExecute(String result) {
-	             Utilities utils = new Utilities();   
+	             /*Utilities utils = new Utilities();
 	        	 ContextWrapper cw = new ContextWrapper(ctx);
 	             File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 	             File file=new File(directory,song);
@@ -618,7 +616,7 @@ public class Downloader {
 	     		 }
 	        	
 	     		loadingAnimation.stop();
-	           	loading.setVisibility(View.INVISIBLE);
+	           	loading.setVisibility(View.INVISIBLE);*/
 	        }
 	}
 	

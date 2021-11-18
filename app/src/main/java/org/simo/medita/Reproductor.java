@@ -717,6 +717,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 	        File file=new File(directory,song);
 			if(file.exists())   {
+				//Downloaded ico
 				download.setVisibility(View.INVISIBLE);
 				prepareSong(file.getAbsolutePath());
 				play.performClick();

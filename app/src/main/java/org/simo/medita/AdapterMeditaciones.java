@@ -37,7 +37,8 @@ public class AdapterMeditaciones extends BaseAdapter{
 	 public class Holder
 	    {
 		 	ImageView img;
-	        TextView nombre;	
+		 	ImageView download_img;
+	        TextView nombre;
 	        TextView desc;
 	        LinearLayout corta;
 	        LinearLayout media;
@@ -51,7 +52,8 @@ public class AdapterMeditaciones extends BaseAdapter{
 			listView = new View(activity); 						
 			listView = inflater.inflate(R.layout.row_meditaciones, null);	
 			holder.img =(ImageView)listView.findViewById(R.id.id_row_med_img);
-			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);			
+			holder.download_img =(ImageView)listView.findViewById(R.id.id_row_med_img_downloaded);
+			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);
 			holder.desc =(TextView)listView.findViewById(R.id.id_row_med_description);
 			listView.setTag(holder);
 		} 
@@ -60,19 +62,18 @@ public class AdapterMeditaciones extends BaseAdapter{
 		}
 		
 		try {
-			
-			int aux = Integer.valueOf(data.getJSONObject(position).getString("med_dia"));	
-			
-			if (aux == 0){
-	        	holder.nombre.setText(data.getJSONObject(position).getString("med_titulo").trim());
-				holder.desc.setText("");
-			}
-			else{
-	        	holder.nombre.setText("DÍA " + data.getJSONObject(position).getString("med_dia")+ " - " + data.getJSONObject(position).getString("med_titulo").trim());
-				holder.desc.setText(data.getJSONObject(position).optString("med_desc").trim());
-			}		
-			
+
 			if (pack.optInt("continuo") == 1){
+
+				int aux = Integer.valueOf(data.getJSONObject(position).getString("med_dia"));
+				if (aux == 0){
+					holder.nombre.setText(data.getJSONObject(position).getString("med_titulo").trim());
+					holder.desc.setText("");
+				}
+				else{
+					holder.nombre.setText("DÍA " + data.getJSONObject(position).getString("med_dia")+ " - " + data.getJSONObject(position).getString("med_titulo").trim());
+					holder.desc.setText(data.getJSONObject(position).optString("med_desc").trim());
+				}
 
 				if (new FilterData().isPrevCompleted(data, data.getJSONObject(position))){	
 					holder.nombre.setTextColor(Color.parseColor("#0c465e"));
@@ -86,12 +87,12 @@ public class AdapterMeditaciones extends BaseAdapter{
 					
 			}
 			else{
+					holder.nombre.setText(data.getJSONObject(position).getString("med_titulo").trim());
+					holder.desc.setText(data.getJSONObject(position).optString("med_desc").trim());
 					holder.nombre.setTextColor(Color.parseColor("#0c465e"));
 					holder.desc.setTextColor(Color.parseColor("#0c465e"));
 
 			}
-
-			
         	holder.nombre.setTypeface(font);        
         	holder.desc.setTypeface(font);
 

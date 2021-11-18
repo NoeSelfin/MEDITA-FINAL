@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:id="@+id/id_meditaciones_header"
+        android:background="#000000" >
+        <LinearLayout
+            android:layout_width="57dp"
+            android:layout_height="25dp"
+            android:id="@+id/id_meditaciones_atras"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/id_meditaciones_atras_ico"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:src="@drawable/atras_ico_blue"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/id_meditaciones_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Título"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/id_meditaciones_news"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="25dp"
+            android:text="Título"
+            android:visibility="invisible"
+            android:background="#ffffff"
+            android:textSize="16sp"
+            android:textColor="#000000"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/id_meditaciones_disponibles"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:text="MEDITACIONES DISPONIBLES"
+        android:textColor="#098eaf"
+        android:layout_marginLeft="30dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d8d8d8"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <RelativeLayout
+            android:id="@+id/id_meditaciones_rl_selector"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation = "horizontal"
+                android:layout_centerInParent="true">
+                <LinearLayout
+                    android:id="@+id/id_meditaciones_sel_corta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:orientation = "vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#0c465e"
+                        android:text="CORTA"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#098eaf"
+                        android:text="2 min"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#000000"/>
+                <LinearLayout
+                    android:id="@+id/id_meditaciones_sel_larga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:orientation = "vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#0c465e"
+                        android:text="LARGA"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#098eaf"
+                        android:text="10 min"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/id_meditaciones_rl_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+            <ListView
+                android:id="@+id/id_meditaciones_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none" >
+            </ListView>
+            <ListView
+                android:id="@+id/id_meditaciones_listview_duraciones"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="invisible">
+            </ListView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -108,7 +108,7 @@ public class Downloader {
 		 new downloadPacks().execute();
 		 
 	}
-	public void downloadMp3(String mp3, TextView time, MediaPlayer mp, final String pack, final ImageView play){
+	public void downloadMp3(String mp3, TextView time, MediaPlayer mp, final String pack, final ImageView play, boolean streaming){
 		
 		File path = Environment.getDataDirectory();
 		StatFs stat = new StatFs(path.getPath());
@@ -119,16 +119,17 @@ public class Downloader {
 		Log.i("medita_memory", free);
 		Log.i("medita_memory", String.valueOf(total));
 		Log.i("medita_memory", Formatter.formatFileSize(ctx, 361078784));
-		
-		//if (total > 361078784){
-		if (total < 0){
-			Log.i("medita_intros", "1");
-			time_left = time;
-			this.mp = mp;
-	        this.play = play;
-			new downloadSaveMp3().execute(mp3);
-		}
-		else{
+
+		if (streaming){
+			//if (total > 361078784){
+			if (total < 0){
+				Log.i("medita_intros", "1");
+				time_left = time;
+				this.mp = mp;
+				this.play = play;
+				new downloadSaveMp3().execute(mp3);
+			}
+			else {
 			/*final Dialog dialog = new Dialog(ctx);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			dialog.setContentView(R.layout.alert_generico);
@@ -136,46 +137,52 @@ public class Downloader {
 			dialog.setCancelable(false);
 			TextView text = (TextView) dialog.findViewById(R.id.id_alert_text);
 			text.setText("No hay espacio en la memória interna de la APP.");
-	
+
 			TextView dialogButton = (TextView) dialog.findViewById(R.id.id_alert_btn);
 			// if button is clicked, close the custom dialog
 			dialogButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					dialog.dismiss();
-					
-					
-					Intent i = new Intent(ctx, Meditaciones.class);   
+
+
+					Intent i = new Intent(ctx, Meditaciones.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 					i.putExtra("pack", pack);
 					i.setAction(Config.from_Reproductor);
 		    		ctx.startActivity(i);
-		    		((Activity)ctx).finish();					
-					
+		    		((Activity)ctx).finish();
+
 				}
 			});
-	
-			dialog.show();		*/	
-		
-		    
-        	try {
-				Log.i("medita_streaming", "Reproduciendo srtreaming!!");
-				Log.i("medita_streaming", "1");
-        		mp.reset();
-              	mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-				mp.setDataSource(Config.url_meditaciones + mp3);
-				mp.prepare();
-		        Reproductor.play_block = false;
-			    play.performClick();  
-			} catch (Exception e) {
-				Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.",Toast.LENGTH_LONG).show();
-				 Intent i = new Intent(ctx, MainActivity.class);   
-				 //i.setAction(Config.from_Meditaciones);
-				 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	    		 ctx.startActivity(i);
-	    		 ((Activity)ctx).finish();
-			}   	
-       
+
+			dialog.show();		*/
+
+
+				try {
+					Log.i("medita_streaming", "Reproduciendo srtreaming!!");
+					Log.i("medita_streaming", "1");
+					mp.reset();
+					mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+					mp.setDataSource(Config.url_meditaciones + mp3);
+					mp.prepare();
+					Reproductor.play_block = false;
+					play.performClick();
+				} catch (Exception e) {
+					Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.", Toast.LENGTH_LONG).show();
+					Intent i = new Intent(ctx, MainActivity.class);
+					//i.setAction(Config.from_Meditaciones);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					ctx.startActivity(i);
+					((Activity) ctx).finish();
+				}
+			}
+		}else{
+			if (total > 361078784){
+				new downloadSaveMp3().execute(mp3);
+			}else{
+				Toast.makeText(ctx, "No queda espacio en el dispositivo para guardar la meditación.", Toast.LENGTH_LONG).show();
+			}
 		}
 		
 		 

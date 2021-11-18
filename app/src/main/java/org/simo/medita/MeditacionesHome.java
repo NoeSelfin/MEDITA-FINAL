@@ -258,9 +258,9 @@ public class MeditacionesHome extends Activity{
         }
 
         if (((meditacion.optInt("id_pack") == 1)) && (meditacion.optInt("orden") == 0))
-            adaptermeditacionesduracion = new AdapterMeditacionesDuracion(MeditacionesHome.this, durs,true);
+            adaptermeditacionesduracion = new AdapterMeditacionesDuracion(MeditacionesHome.this, durs,true,meditacion);
         else
-            adaptermeditacionesduracion = new AdapterMeditacionesDuracion(MeditacionesHome.this, durs,false);
+            adaptermeditacionesduracion = new AdapterMeditacionesDuracion(MeditacionesHome.this, durs,false,meditacion);
 
         listview_duraciones.setAdapter(adaptermeditacionesduracion);
 
@@ -290,9 +290,10 @@ public class MeditacionesHome extends Activity{
                 i.putExtra("pack", pack.toString());
                 i.putExtra("duracion", durs.get(position));
                 i.putExtra("fromHome", true);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
+                //i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+                //startActivity(i);
+                startActivityForResult(i,1);
+                //finish();
 
 
 

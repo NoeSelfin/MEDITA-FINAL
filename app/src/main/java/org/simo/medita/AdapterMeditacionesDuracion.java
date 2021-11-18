@@ -2,6 +2,7 @@ package org.simo.medita;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class AdapterMeditacionesDuracion extends BaseAdapter{	
@@ -20,11 +24,13 @@ public class AdapterMeditacionesDuracion extends BaseAdapter{
 	protected ArrayList<String> durs;
 	AssetManager assetManager;
 	protected boolean isPresentation = false;
+	protected JSONObject meditacion;
 
-	public AdapterMeditacionesDuracion(Activity a, ArrayList<String> durs, boolean isPresentation) {
+	public AdapterMeditacionesDuracion(Activity a, ArrayList<String> durs, boolean isPresentation, JSONObject meditacion) {
 		 activity = a;
 		 this.durs = durs;
 		 this.isPresentation = isPresentation;
+		 this.meditacion = meditacion;
 	     inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		 font = Typeface.createFromAsset(activity.getAssets(), "tipo/Dosis-Regular.otf");
 	}
@@ -32,7 +38,8 @@ public class AdapterMeditacionesDuracion extends BaseAdapter{
 	 public class Holder
 	    {
 		 	ImageView img;
-	        TextView nombre;	
+	        TextView nombre;
+			ImageView download_img;
 	    }
 
 	public View getView(int position, View convertView, ViewGroup parent) { 
@@ -42,7 +49,8 @@ public class AdapterMeditacionesDuracion extends BaseAdapter{
 			listView = new View(activity); 		
 			listView = inflater.inflate(R.layout.row_meditaciones, null);	
 			holder.img =(ImageView)listView.findViewById(R.id.id_row_med_img);
-			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);		
+			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);
+			holder.download_img =(ImageView)listView.findViewById(R.id.id_row_med_img_downloaded);
 			listView.setTag(holder);
 	
 		} 
@@ -65,6 +73,16 @@ public class AdapterMeditacionesDuracion extends BaseAdapter{
 		
 		holder.nombre.setText(dur);	        	
 		holder.nombre.setTypeface(font);
+
+		String song =meditacion.optString("med_fichero") + "M"+durs.get(position)+".mp3";
+		ContextWrapper cw = new ContextWrapper(activity.getBaseContext());
+		File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
+		File file=new File(directory,song);
+		if(file.exists())   {
+			holder.download_img.setVisibility(View.VISIBLE);
+		}else{
+			holder.download_img.setVisibility(View.GONE);
+		}
 				
 	
 		return listView;

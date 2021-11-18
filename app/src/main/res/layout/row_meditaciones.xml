@@ -28,6 +28,7 @@
 		android:id="@+id/id_row_med_img_downloaded"
 		android:layout_width="20dp"
 		android:layout_height="20dp"
+		android:visibility="gone"
 		android:layout_alignRight="@+id/id_row_med_img"
 		android:layout_marginRight="30dp"
 		android:layout_centerVertical="true"

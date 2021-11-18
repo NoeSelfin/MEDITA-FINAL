@@ -76,6 +76,10 @@ public class Home extends Activity {
 
         Log.i(Config.tag, options_string);
 
+        if(prefs.contains("meditations_download") == false){
+            option5.setVisibility(View.GONE);
+        }
+
         try {
             JSONObject options = new JSONObject(options_string);
             //Notes and meditations last version
@@ -105,14 +109,29 @@ public class Home extends Activity {
         adapterHomeMoreContents.setClickListener(new AdapterHomeMoreContents.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                String meditations_string = cats2.optJSONObject(position).optString("meditations");
+                try {
+                    JSONArray meditations_array = new JSONArray(meditations_string);
+                    String meditations = med_funcs.getMeditationsFromArray(meditations_array).toString();
+                    Log.i(Config.tag,meditations);
 
+                    Intent i = new Intent(Home.this, MeditacionesHomeB.class);
+                    i.putExtra("onlyDurs",false);
+                    i.putExtra("title", cats2.optJSONObject(position).optString("title"));
+                    i.putExtra("option", 3);
+                    i.putExtra("id_cat", position);
+                    i.putExtra("meditations", meditations);
+                    i.putExtra("fromHome", true);
+                    startActivity(i);
+                    finish();
+                } catch (JSONException e) {
+                }
             }
         });
 
         adapterHomeNeeds.setClickListener(new AdapterHomeNeeds.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
                 String meditations_string = cats.optJSONObject(position).optString("meditations");
                 try {
                     JSONArray meditations_array = new JSONArray(meditations_string);
@@ -185,6 +204,22 @@ public class Home extends Activity {
                         "version": "98",
                         "meditations": "[\"265\"]"
                      }*/
+                    String meditations_string = last_version.optString("meditations");
+                    try {
+                        JSONArray meditations_array = new JSONArray(meditations_string);
+                        String meditations = med_funcs.getMeditationsFromArray(meditations_array).toString();
+                        Log.i(Config.tag,meditations);
+
+                        Intent i = new Intent(Home.this, MeditacionesHomeB.class);
+                        i.putExtra("onlyDurs",false);
+                        i.putExtra("option", 5);
+                        i.putExtra("notes", last_version.optString("notes"));
+                        i.putExtra("meditations", meditations);
+                        i.putExtra("fromHome", true);
+                        startActivity(i);
+                        finish();
+                    } catch (JSONException e) {
+                    }
                 }
             }
         });
@@ -197,7 +232,23 @@ public class Home extends Activity {
         });
         option5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String meditations_download_string = prefs.getString("meditations_download","");
+                try {
+                    JSONArray meditations_array = new JSONArray(meditations_download_string);
+                    String meditations = med_funcs.getMeditationsFromArray(meditations_array).toString();
+                    Log.i(Config.tag,meditations);
 
+                    Intent i = new Intent(Home.this, MeditacionesHome.class);
+                    i.putExtra("onlyDurs",false);
+                    i.putExtra("title", "Meditaciones descargadas");
+                    i.putExtra("option", 3);
+                    i.putExtra("meditations", meditations);
+                    i.putExtra("fromHome", true);
+                    startActivity(i);
+                    finish();
+                } catch (JSONException e) {
+                    Log.i(Config.tag,"Error mostrando meditaciones descargadas.");
+                }
 
             }
         });

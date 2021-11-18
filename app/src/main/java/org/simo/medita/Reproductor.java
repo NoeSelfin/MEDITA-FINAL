@@ -57,6 +57,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected ImageView play_left;
 	protected ImageView  play_right;	
 	protected ImageView  icono;
+	protected ImageView  download;
+	protected ImageView  music;
 	protected Typeface font;
 	protected ImageView loading;
 	
@@ -119,6 +121,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		loading = (ImageView) findViewById(R.id.id_reproductor_play_loading);
 		bg_img = (ImageView) findViewById(R.id.id_reproductor_bg_img);
 		icono = (ImageView) findViewById(R.id.id_reproductor_ico);
+		download = (ImageView) findViewById(R.id.id_reproductor_download);
+		music = (ImageView) findViewById(R.id.id_reproductor_music);
 		titulo_pack = (TextView)findViewById(R.id.id_reproductor_pack);
 		helper = (TextView)findViewById(R.id.id_reproductor_helper);
 		
@@ -674,11 +678,11 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					mp.stop();
 
 				if(fromHome){
-					Intent i = new Intent(Reproductor.this, Home.class);
+					/*Intent i = new Intent(Reproductor.this, Home.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 					i.setAction(Config.from_Reproductor);
 					startActivity(i);
-					bitmap = null;
+					bitmap = null;*/
 					finish();
 				}else{
 					Intent i = new Intent(Reproductor.this, Meditaciones.class);
@@ -758,6 +762,31 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		duracion.setTextColor(Color.parseColor(pack.optString("pack_color_secundario")));
 		//introduccion.setBackgroundColor(Color.parseColor(pack.optString("pack_color_secundario")));
 		titulo_pack.setTextColor(Color.parseColor(pack.optString("pack_color_secundario")));
+
+
+
+		download.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Log.i("medita","Download button pressed");
+				String song = null;
+
+				Toast.makeText(getApplicationContext(),"Descargando meditación.",Toast.LENGTH_LONG).show();
+				//Descargar intro si la hay. Si es intro que no aparezca descargar. y si está descargada cambiar icono.
+
+				song =meditacion.optString("med_fichero") + "M"+dur+".mp3";
+				ContextWrapper cw = new ContextWrapper(Reproductor.this);
+				File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
+				File file=new File(directory,song);
+				if(file.exists())   {
+					//file.delete();
+				}
+
+				Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
+				downloader.downloadMp3(song,time_left,mp,pack.toString(), play);
+
+			}
+		});
 				
 	}
 	
@@ -976,10 +1005,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			mp.stop();
 
     	if (fromHome){
-			Intent i = new Intent(Reproductor.this, Home.class);
+			/*Intent i = new Intent(Reproductor.this, Home.class);
 			i.setAction(Config.from_Reproductor);
 			i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-			startActivity(i);
+			startActivity(i);*/
 			finish();
 		}else{
 			Intent i = new Intent(Reproductor.this, Meditaciones.class);

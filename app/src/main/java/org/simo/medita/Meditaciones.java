@@ -349,9 +349,9 @@ public class Meditaciones extends Activity{
 						}   							 
 		    				
 						 if (((meditacion.optInt("id_pack") == 1)) && (meditacion.optInt("orden") == 0))		    			 
-							 adaptermeditacionesduracion = new AdapterMeditacionesDuracion(Meditaciones.this, durs,true);
+							 adaptermeditacionesduracion = new AdapterMeditacionesDuracion(Meditaciones.this, durs,true,meditacion);
 						 else
-							 adaptermeditacionesduracion = new AdapterMeditacionesDuracion(Meditaciones.this, durs,false);
+							 adaptermeditacionesduracion = new AdapterMeditacionesDuracion(Meditaciones.this, durs,false,meditacion);
 
 		    			 listview_duraciones.setAdapter(adaptermeditacionesduracion);	    		
 			    		 

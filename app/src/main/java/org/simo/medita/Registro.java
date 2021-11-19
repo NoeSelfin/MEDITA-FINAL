@@ -122,22 +122,33 @@ public class Registro extends Activity {
                                 try {
                                     JSONObject jsonObject = new JSONObject(respuesta);
                                     if (jsonObject.optBoolean("registrado")){
+                                        if (jsonObject.optInt("id_usuario") != -1){
+                                            // {"registrado":true,"id_usuario":"8","plataforma":"android"}
+                                            JSONObject usuario = new JSONObject();
+                                            usuario.put(getString(R.string.email_usuario), etEmail.getText().toString());
+                                            usuario.put(getString(R.string.id_usuario), jsonObject.optString("id_usuario"));
+                                            usuario.put(getString(R.string.plataforma), jsonObject.optString("plataforma"));
 
-                                        // {"registrado":true,"id_usuario":"8","plataforma":"android"}
-                                        JSONObject usuario = new JSONObject();
-                                        usuario.put(getString(R.string.email_usuario), etEmail.getText().toString());
-                                        usuario.put(getString(R.string.id_usuario), jsonObject.optString("id_usuario"));
-                                        usuario.put(getString(R.string.plataforma), jsonObject.optString("plataforma"));
+                                            prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
+                                            prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
+                                            Basics.toastCentered(Registro.this, "Registro realizado correctamente.", Toast.LENGTH_LONG);
+                                            /*if (cbNewsletter.isChecked()){
+                                                setNewsletter();
+                                            }*/
+                                            prefs.edit().putString("id_usuario", jsonObject.optString("id_usuario")).commit();
+                                            prefs.edit().putString("nombre_usuario", jsonObject.optString("nombre_usuario")).commit();
 
-                                        prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
-                                        prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
-                                        Basics.toastCentered(Registro.this, "Registro realizado correctamente.", Toast.LENGTH_LONG);
-                                        /*if (cbNewsletter.isChecked()){
-                                            setNewsletter();
-                                        }*/
-                                        menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
-
-
+                                            //Si está suscrito voy a la home y si no a la pantalla de suscripción.
+                                            if(prefs.getBoolean(getString(R.string.suscrito), false)){
+                                                Intent i = new Intent(getApplicationContext(), Home.class);
+                                                startActivity(i);
+                                                finish();
+                                            }else{
+                                                menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                                            }
+                                        }else{
+                                            Basics.toastCentered(Registro.this, "El usuario ya existe.", Toast.LENGTH_LONG);
+                                        }
                                     }else{
                                         Basics.toastCentered(Registro.this, "El usuario ya existe.", Toast.LENGTH_LONG);
                                     }

@@ -151,6 +151,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity android:name=".Charts"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>

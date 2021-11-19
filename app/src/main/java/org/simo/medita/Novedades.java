@@ -67,11 +67,12 @@ public class Novedades extends Activity{
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
-                Log.i("medita_override", Uri.parse(url).getHost());
+                Log.i("medita_override1", Uri.parse(url).getHost());
                 if (Uri.parse(url).getHost().equals("https://news.atentamente.net")){
                     view.loadUrl(url);
                     return true;
                 }else{
+                    view.stopLoading();
                     return false;
                }
             }
@@ -80,7 +81,7 @@ public class Novedades extends Activity{
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)
             {
-                Log.i("medita_override", Uri.parse(request.getUrl().toString()).getHost());
+                Log.i("medita_override2", Uri.parse(request.getUrl().toString()).getHost());
                 if (Uri.parse(request.getUrl().toString()).getHost().equals("news.atentamente.net")){
                     view.loadUrl(request.getUrl().toString());
                     return true;
@@ -89,6 +90,7 @@ public class Novedades extends Activity{
                     return true;
                 }
                 else{
+                    view.stopLoading();
                     return false;
                 }
             }

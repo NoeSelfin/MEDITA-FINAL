@@ -40,9 +40,9 @@ public class Config {
 	protected static String url_condiciones_y_politica = "http://medita.atentamente.net/condiciones_y_politica.html";
 	protected static String url_nota_legal = "http://medita.atentamente.net/nota_legal.html";
 
-	protected final static String url_login  = "http://medita.atentamente.net/login.php";
-	protected final static String url_registrar  = "http://medita.atentamente.net/set_registro_usuarios.php";
-	protected final static String url_recuperar_pass  = "http://medita.atentamente.net/recover_pass.php";
+	protected final static String url_login  = "https://app.atentamente.net/api/login";
+	protected final static String url_registrar  = "https://app.atentamente.net/api/setRegister";
+	protected final static String url_recuperar_pass  = "https://app.atentamente.net/api/resetPassword";
 	protected final static String url_guardar_suscripcion  = "http://medita.atentamente.net/set_suscripciones.php";
 	protected final static String url_get_suscripcion  = "http://medita.atentamente.net/get_suscripciones.php";
 	protected final static String url_update_suscripcion  = "http://medita.atentamente.net/update_suscripciones.php";

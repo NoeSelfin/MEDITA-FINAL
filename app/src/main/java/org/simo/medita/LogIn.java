@@ -54,6 +54,12 @@ public class LogIn extends Activity {
         tvTitulo = findViewById(R.id.id_titulo_acercade);
         tvTitulo.setTypeface(font);
 
+        if (prefs.getBoolean(getString(R.string.registrado),false)){
+            Intent i = new Intent(LogIn.this, Logout.class);
+            startActivity(i);
+            finish();
+        }
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -80,7 +86,7 @@ public class LogIn extends Activity {
                                     Log.i("medita", "login respuesta: " + respuesta);
                                     try {
                                         JSONObject jsonObject = new JSONObject(respuesta);
-                                        if (jsonObject.optBoolean("registrado")){
+                                        if (jsonObject.optBoolean("logeado")){
                                             JSONObject usuario = new JSONObject();
                                             // {"registrado":true,"id_usuario":"8","plataforma":"android"}
                                             usuario.put(getString(R.string.email_usuario), etEmail.getText().toString());
@@ -90,7 +96,18 @@ public class LogIn extends Activity {
                                             prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
                                             Log.i(Config.tag,"usuario guardado en sharedpref: " + usuario.toString());
                                             prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
-                                            menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                                            prefs.edit().putString("id_usuario", jsonObject.optString("id_usuario")).commit();
+                                            prefs.edit().putString("nombre_usuario", jsonObject.optString("nombre_usuario")).commit();
+
+                                            //Si está suscrito voy a la home y si no a la pantalla de suscripción.
+                                            if(prefs.getBoolean(getString(R.string.suscrito), false)){
+                                                Intent i = new Intent(getApplicationContext(), Home.class);
+                                                startActivity(i);
+                                                finish();
+                                            }else{
+                                                menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                                            }
+
                                         }else{
                                             Basics.toastCentered(LogIn.this, "Error en el usuario o contraseña.", Toast.LENGTH_LONG);
                                         }

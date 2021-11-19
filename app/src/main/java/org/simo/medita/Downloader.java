@@ -796,9 +796,9 @@ public class Downloader {
 		}
 	}
 
-	public void registrar(boolean conection, String email, String password, Registrar.AsyncResponse response){
+	public void registrar(boolean conection, String email, String password, String nombre,int newsletter, Registrar.AsyncResponse response){
 
-		new Registrar(conection, email, password, response).execute();
+		new Registrar(conection, email, password, nombre,newsletter,response).execute();
 	}
 
 	public static class Registrar extends AsyncTask<Void, Void, String> {
@@ -806,16 +806,20 @@ public class Downloader {
 		private boolean conection;
 		private String email;
 		private String password;
+		private String nombre;
+		private int newsletter;
 		private AsyncResponse response;
 
 		public interface AsyncResponse {
 			void processFinish(String respuesta);
 		}
 
-		public Registrar(boolean conection, String email, String password, AsyncResponse response) {
+		public Registrar(boolean conection, String email, String password, String nombre, int newsletter, AsyncResponse response) {
 			this.conection = conection;
 			this.email = email;
 			this.password = password;
+			this.nombre = nombre;
+			this.newsletter = newsletter;
 			this.response = response;
 		}
 
@@ -831,6 +835,8 @@ public class Downloader {
 					jsonObject.put("usuario", email);
 					jsonObject.put("password", password);
 					jsonObject.put("plataforma", Config.plataforma);
+					jsonObject.put("nombre", nombre);
+					jsonObject.put("newsletter", newsletter);
 					jsonObject.put("token", Config.token);
 
 					http = new HttpConnection();
@@ -881,7 +887,7 @@ public class Downloader {
 			if (conection){
 				try {
 					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("email", email);
+					jsonObject.put("usuario", email);
 					jsonObject.put("token", Config.token);
 					http = new HttpConnection();
 					result = http.postData(Config.url_recuperar_pass, jsonObject.toString());

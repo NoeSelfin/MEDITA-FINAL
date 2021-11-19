@@ -41,6 +41,7 @@ public class Home extends Activity {
     protected LinearLayout option4;
     protected LinearLayout option5;
     protected TextView home_option2_title;
+    protected TextView home_name;
     JSONObject last_version;
     JSONArray cats = null;
     JSONArray cats2 = null;
@@ -71,11 +72,14 @@ public class Home extends Activity {
         option5 = (LinearLayout)findViewById(R.id.id_home_option5);
 
         home_option2_title = (TextView)findViewById(R.id.id_home_option2_title);
+        home_name = (TextView)findViewById(R.id.id_two_text_1);
 
         String options_string = prefs.getString("home_options","");
 
         Log.i(Config.tag, options_string);
 
+        home_name.setText("Hola "+prefs.getString("nombre_usuario",""));
+        home_name.setTypeface(font);
         if(prefs.contains("meditations_download") == false){
             option5.setVisibility(View.GONE);
         }

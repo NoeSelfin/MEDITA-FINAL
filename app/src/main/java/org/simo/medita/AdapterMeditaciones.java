@@ -56,6 +56,7 @@ public class AdapterMeditaciones extends BaseAdapter{
 			holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);
 			holder.desc =(TextView)listView.findViewById(R.id.id_row_med_description);
 			listView.setTag(holder);
+
 		} 
 		else {
 			holder = (Holder) listView.getTag();

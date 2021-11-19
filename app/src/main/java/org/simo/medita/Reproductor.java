@@ -600,6 +600,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			        File file=new File(directory,song);
 					if(file.exists())   {
 
+						download.setImageResource(R.drawable.downloaded);
 						currentTime = 0;
 						prepareSong(file.getAbsolutePath());
 						mp.start();
@@ -718,7 +719,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	        File file=new File(directory,song);
 			if(file.exists())   {
 				//Downloaded ico
-				download.setVisibility(View.INVISIBLE);
+				download.setImageResource(R.drawable.downloaded);
 				prepareSong(file.getAbsolutePath());
 				play.performClick();
 
@@ -757,7 +758,6 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						}
         			} catch (JSONException e) {
         			}
-        	  	
                }
 						
 			}				
@@ -770,16 +770,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		//introduccion.setBackgroundColor(Color.parseColor(pack.optString("pack_color_secundario")));
 		titulo_pack.setTextColor(Color.parseColor(pack.optString("pack_color_secundario")));
 
-
-
 		download.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Log.i("medita","Download button pressed");
 				String song = null;
-
-				Toast.makeText(getApplicationContext(),"Descargando meditación.",Toast.LENGTH_LONG).show();
-				//Descargar intro si la hay. Si es intro que no aparezca descargar. y si está descargada cambiar icono.
 
 				song =meditacion.optString("med_fichero") + "M"+dur+".mp3";
 				ContextWrapper cw = new ContextWrapper(Reproductor.this);
@@ -787,16 +781,18 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				File file=new File(directory,song);
 				if(file.exists())   {
 					//file.delete();
+				}else{
+					Log.i("medita","Download button pressed");
+					Toast.makeText(getApplicationContext(),"Descargando meditación.",Toast.LENGTH_LONG).show();
+					//Descargar intro si la hay. Si es intro que no aparezca descargar. y si está descargada cambiar icono.
+					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
+					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,false);
+                    download.setImageResource(R.drawable.downloaded);
 				}
-
-				Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-				downloader.downloadMp3(song,time_left,mp,pack.toString(), play,false);
 
 			}
 		});
-
 	}
-	
 		
 	public void prepareSong(String path){
 		try {

@@ -38,6 +38,7 @@ public class Registro extends Activity {
     private EditText etEmail;
     private EditText etPassword;
     private EditText etRepeatPassword;
+    private EditText etUsername;
     private CheckBox cbCondiciones;
     private CheckBox cbNewsletter;
     private Button btRegistrarse;
@@ -60,6 +61,7 @@ public class Registro extends Activity {
         prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         menu = findViewById(R.id.id_registro_menu);
+        etUsername = findViewById(R.id.et_username);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
         etRepeatPassword = findViewById(R.id.et_repeat_password);
@@ -90,7 +92,11 @@ public class Registro extends Activity {
     }
 
     public void checkInfo(){
-        if (etEmail.getText().length() == 0 || etPassword.getText().length() == 0 || etRepeatPassword.getText().length() == 0){
+
+        if (etUsername.getText().length() == 0){
+            Basics.toastCentered(Registro.this, getString(R.string.faltan_datos), Toast.LENGTH_LONG);
+//                    Toast.makeText(Registro.this, getString(R.string.faltan_datos), Toast.LENGTH_LONG).show();
+        }else if (etEmail.getText().length() == 0 || etPassword.getText().length() == 0 || etRepeatPassword.getText().length() == 0){
             Basics.toastCentered(Registro.this, getString(R.string.faltan_datos), Toast.LENGTH_LONG);
 //                    Toast.makeText(Registro.this, getString(R.string.faltan_datos), Toast.LENGTH_LONG).show();
         }else if (!isValidEmail(etEmail.getText().toString())){
@@ -102,8 +108,12 @@ public class Registro extends Activity {
             Basics.toastCentered(Registro.this, getString(R.string.faltan_condiciones), Toast.LENGTH_LONG);
 //                    Toast.makeText(Registro.this, getString(R.string.faltan_condiciones), Toast.LENGTH_LONG).show();
         }else{
+            int news = 0;
+            if(cbNewsletter.isChecked()){
+                news = 1;
+            }
             new Downloader(Registro.this, prefs).registrar(Basics.checkConn(Registro.this),
-                    etEmail.getText().toString(), etPassword.getText().toString(),
+                    etEmail.getText().toString(), etPassword.getText().toString(),etUsername.getText().toString(),news,
                     new Downloader.Registrar.AsyncResponse() {
                         @Override
                         public void processFinish(String respuesta) {
@@ -122,9 +132,9 @@ public class Registro extends Activity {
                                         prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
                                         prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
                                         Basics.toastCentered(Registro.this, "Registro realizado correctamente.", Toast.LENGTH_LONG);
-                                        if (cbNewsletter.isChecked()){
+                                        /*if (cbNewsletter.isChecked()){
                                             setNewsletter();
-                                        }
+                                        }*/
                                         menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
 
 

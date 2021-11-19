@@ -2,18 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="55dp" >
-    
-    <TextView
-    	    android:id="@+id/id_row_med_nombre"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-			android:layout_marginRight="80dp"
-		    android:layout_marginLeft="30dp"
-		    android:textColor="#0c465e"
-		    android:gravity="center_vertical"
-		    android:textSize="14sp"
-		    android:text="·BUENAS NOCHES·"/>
+
+	<TextView
+		android:id="@+id/id_row_med_nombre"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="false"
+		android:layout_marginLeft="30dp"
+		android:layout_marginRight="80dp"
+		android:gravity="center_vertical"
+		android:layout_marginTop="10px"
+		android:text="·BUENAS NOCHES·"
+		android:textColor="#0c465e"
+		android:textSize="14sp" />
     
     <ImageView
    	    android:id="@+id/id_row_med_img"
@@ -39,12 +40,12 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/id_row_med_nombre"
-		android:layout_marginTop="15dp"
+		android:layout_marginTop="5dp"
 		android:layout_marginLeft="30dp"
 		android:textColor="#0c465e"
 		android:layout_marginRight="80dp"
 		android:lineSpacingMultiplier="0.7"
-		android:maxLines="2"
+		android:maxLines="4"
 		android:gravity="center_vertical"
 		android:textSize="11sp"
 		android:text=""/>

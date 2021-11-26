@@ -220,7 +220,7 @@ public class LogIn extends Activity {
         progreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(LogIn.this, Progreso.class);
+                Intent i = new Intent(LogIn.this, Charts.class);
                 startActivity(i);
                 finish();
             }

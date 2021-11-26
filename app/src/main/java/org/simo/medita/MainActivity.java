@@ -721,7 +721,7 @@ public class MainActivity extends Activity {
 		progreso.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(MainActivity.this, Progreso.class);
+				 Intent i = new Intent(MainActivity.this, Charts.class);
 	    		 startActivity(i);
 	    		 finish();
 			}

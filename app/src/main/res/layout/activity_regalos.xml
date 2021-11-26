@@ -195,6 +195,5 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:src="@drawable/regalo1"
-	        android:scaleType="centerCrop"
 	        android:visibility="gone"/>
 </RelativeLayout>

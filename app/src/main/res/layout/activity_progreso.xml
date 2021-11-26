@@ -63,7 +63,7 @@
 	    	 <ImageView
 		        android:layout_width="wrap_content"
 		        android:layout_height="19dp"
-		        android:src="@drawable/hamburguesa"/>
+		        android:src="@drawable/atras_ico_blue"/>
     	 </LinearLayout>
 	  <RelativeLayout 
 	       android:id="@+id/id_progreso_regalo_rl"

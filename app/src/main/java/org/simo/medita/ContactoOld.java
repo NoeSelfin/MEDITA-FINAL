@@ -282,7 +282,7 @@ public class ContactoOld extends Activity {
         progreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(ContactoOld.this, Progreso.class);
+                Intent i = new Intent(ContactoOld.this, Charts.class);
                 startActivity(i);
                 finish();
             }

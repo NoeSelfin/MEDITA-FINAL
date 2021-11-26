@@ -537,7 +537,7 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         progreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Suscripcion.this, Progreso.class);
+                Intent i = new Intent(Suscripcion.this, Charts.class);
                 startActivity(i);
                 finish();
             }

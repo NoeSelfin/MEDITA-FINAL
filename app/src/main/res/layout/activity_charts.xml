@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff" >
     <LinearLayout
+        android:id="@+id/id_progreso_puntos_texto_link"
         android:layout_width="75dp"
         android:layout_height="27dp"
         android:layout_alignParentTop="true"
@@ -33,7 +34,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:id="@+id/id_progreso_atras"
+        android:id="@+id/id_charts_atras"
         android:gravity="center"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
@@ -50,90 +51,107 @@
             android:layout_marginLeft="16dp"
             android:textSize="19sp"
             android:textColor="#0c465e"
-            android:text="NOVEDADES" />
+            android:text="PROGRESO" />
     </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/id_progreso_atras"
-        android:layout_marginTop="16dp"
-        android:fillViewport="true">
+        android:layout_marginTop="45dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="25dp"
-
-                android:background="#0c465e"
+                android:layout_height="350dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/layout_rounded_charts1_bg"
                 android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:layout_marginTop="25dp"
-                    android:textSize="18sp"
                     android:layout_gravity="center"
-                    android:text="TOTALES">
-                </TextView>
+                    android:layout_marginTop="25dp"
+                    android:text="TOTALES"
+                    android:textColor="#f8d593"
+                    android:textSize="18sp"></TextView>
+
                 <ListView
                     android:id="@+id/totals"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="50dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/layout_rounded_charts3_bg"
+                    android:padding="15dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="350dp"
                 android:layout_marginTop="25dp"
-                android:paddingTop="50dp"
-                android:paddingBottom="50dp"
+                android:background="@drawable/layout_rounded_charts1_bg"
+                android:orientation="vertical"
                 android:paddingLeft="25dp"
+                android:paddingTop="25dp"
                 android:paddingRight="25dp"
-                android:background="#0c465e"
-                android:orientation="vertical">
+                android:paddingBottom="50dp">
+
                 <TextView
+                    android:id="@+id/txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Minutos meditados"
                     android:textColor="#ffffff"
-                    android:textSize="16sp"
-                    android:text="Minutos meditados">
-                </TextView>
+                    android:textSize="16sp"></TextView>
+
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/barchart1"
-                    android:background="#ffffff"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/layout_rounded_charts2_bg" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="350dp"
                 android:layout_marginTop="25dp"
-                android:paddingTop="50dp"
-                android:paddingBottom="50dp"
+                android:background="@drawable/layout_rounded_charts1_bg"
+                android:orientation="vertical"
                 android:paddingLeft="25dp"
+                android:paddingTop="25dp"
                 android:paddingRight="25dp"
-                android:background="#0c465e"
-                android:orientation="vertical">
+                android:paddingBottom="50dp">
+
                 <TextView
+                    android:id="@+id/txt3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Minutos meditados por tema"
                     android:textColor="#ffffff"
-                    android:textSize="16sp"
-                    android:text="Minutos meditados por tema">
-                </TextView>
+                    android:textSize="16sp"></TextView>
+
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/barchart2"
                     android:layout_width="match_parent"
-                    android:background="#ffffff"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/layout_rounded_charts2_bg" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/id_charts_regalos"
                 android:layout_width="match_parent"
@@ -141,26 +159,30 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="50dp"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#91d3df ">
+
                     <TextView
+                        android:id="@+id/txt4"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Tenemos regalos por tu progreso"
+                        android:layout_alignParentStart="true"
                         android:layout_marginLeft="25dp"
                         android:gravity="center_vertical"
+                        android:text="Tenemos regalos por tu progreso"
                         android:textColor="#36757a"
-                        android:textSize="14sp"
-                        android:layout_alignParentStart="true"/>
+                        android:textSize="14sp" />
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/chevron"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginRight="20dp"
-                        android:layout_alignParentEnd="true"/>
+                        android:gravity="center_vertical"
+                        android:src="@drawable/chevron" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

@@ -53,7 +53,7 @@ public class FragmentBottomMenu extends Fragment {
         menu4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Progreso.class);
+                Intent i = new Intent(getActivity(), Charts.class);
                 startActivity(i);
                 getActivity().finish();
             }

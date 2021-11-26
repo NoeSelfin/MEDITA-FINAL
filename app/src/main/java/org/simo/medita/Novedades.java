@@ -42,10 +42,6 @@ public class Novedades extends Activity{
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
-        Intent i = new Intent(Novedades.this, Charts.class);
-        startActivity(i);
-        finish();
-
         LinearLayout atras = (LinearLayout) findViewById(R.id.id_opciones_atras);
 
         atras.setOnClickListener(new OnClickListener() {
@@ -196,7 +192,7 @@ public class Novedades extends Activity{
         progreso.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Novedades.this, Progreso.class);
+                Intent i = new Intent(Novedades.this, Charts.class);
                 startActivity(i);
                 finish();
             }

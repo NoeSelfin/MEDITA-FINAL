@@ -195,7 +195,7 @@ public class Sincro2 extends Activity{
 		progreso.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(Sincro2.this, Progreso.class);   
+				 Intent i = new Intent(Sincro2.this, Charts.class);
 	    		 startActivity(i);
 	    		 finish();
 			}

@@ -294,7 +294,7 @@ public class Favoritos extends Activity{
 		progreso.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(Favoritos.this, Progreso.class);   
+				 Intent i = new Intent(Favoritos.this, Charts.class);
 	    		 startActivity(i);
 	    		 finish();
 			}

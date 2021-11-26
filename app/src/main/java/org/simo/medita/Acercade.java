@@ -251,7 +251,7 @@ public class Acercade extends Activity{
 		progreso.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(Acercade.this, Progreso.class);   
+				 Intent i = new Intent(Acercade.this, Charts.class);
 	    		 startActivity(i);
 	    		 finish();
 			}

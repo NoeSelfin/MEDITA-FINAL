@@ -165,4 +165,12 @@
     <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
 
 
+    <string-array name="array_totals_progreso">
+        <item>Tiempo total meditando</item>
+        <item>Top días seguidos</item>
+        <item>Pack escuchados</item>
+        <item>Meditación más larga</item>
+    </string-array>
+
+
 </resources>

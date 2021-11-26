@@ -285,7 +285,7 @@ public class Registro extends Activity {
         progreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Registro.this, Progreso.class);
+                Intent i = new Intent(Registro.this, Charts.class);
                 startActivity(i);
                 finish();
             }

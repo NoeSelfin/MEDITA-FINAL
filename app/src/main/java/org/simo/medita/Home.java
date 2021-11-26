@@ -368,7 +368,7 @@ public class Home extends Activity {
         progreso.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Home.this, Progreso.class);
+                Intent i = new Intent(Home.this, Charts.class);
                 startActivity(i);
                 finish();
             }

@@ -247,7 +247,9 @@ public class Progreso extends Activity{
 		atras.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				menu_lateral.showMenu(true);
+				Intent i = new Intent(Progreso.this, Charts.class);
+				startActivity(i);
+				finish();
 			}
 		});
 		regalo_btn.setOnClickListener(new OnClickListener() {

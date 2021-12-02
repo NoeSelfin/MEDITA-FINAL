@@ -49,9 +49,9 @@ public class AdapterTotals extends BaseAdapter{
             holder = (Holder) listView.getTag();
         }
 
-        holder.desc.setText(data.optString(position).trim());
-        holder.value.setText("25");
-        holder.units.setText("mins.");
+        holder.desc.setText(data.optJSONObject(position).optString("title",""));
+        holder.value.setText(data.optJSONObject(position).optString("value",""));
+        holder.units.setText(data.optJSONObject(position).optString("units",""));
 
 
         holder.value.setTypeface(font);

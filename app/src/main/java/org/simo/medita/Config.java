@@ -4,7 +4,7 @@ public class Config {
 
 
 	public final static String bearer = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJNZWRpdGEiLCJuYW1lIjoiYW5vbnltb3VzIn0.UkmfFFYEeyfr3Zq1-QyH7nXHkvqod8M6iXlBhqLphIw";
-	public final static String tag = "medita_compras";
+	public final static String tag = "medita";
     protected final static String plataforma = "android";
 	protected final static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8NEwmiClasL7JUgmHaSXmRPOcI6z5CZtyOVM7WsU2y2tyTgTmFt0FqtAKh9U8YZHtFAKYRzmdhLWH4MSnsgF//ZTWCTU+NtokexISaTwz3j3ch17jRevhkoVf70NV5ACVzIYRBJoGcU3padErLQaFixTP2RdsLFiXez8SaDOdbRqKcx2bjZnMzezOGwoGj8OMOe0+5zJmmRvyDLQHeznxw/urabLZxIKTQhS9riMMA151KF65B/zW83KRL9kkfPudE8SfZ1O4YqW3GpFDQyT43KjM4rb8rYBFvU6QuBFcTbm+BvW6nkL6PXDlFGyXBub6VS7Cqjt/tucez/7V3/kQIDAQAB";
 //	protected final static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8NEwmiClasL7JUgmHaSXmRPOcI6z5CZtyOVM7WsU2y2tyTgTmFt0FqtAKh9U8YZHtFAKYRzmdhLWH4MSnsgF//ZTWCTU+NtokexISaTwz3j3ch17jRevhkoVf70NV5ACVzIYRBJoGcU3padErLQaFixTP2RdsLFiXez8SaDOdbRqKcx2bjZnMzezOGwoGj8OMOe0+5zJmmRvyDLQHeznxw/urabLZxIKTQhS9riMMA151KF65B/zW83KRL9kkfPudE8SfZ1O4YqW3GpFDQyT43KjM4rb8rYBFvU6QuBFcTbm+BvW6nkL6PXDlFGyXBub6VS7Cqjt/tucez/7V3/kQIDAQAB";

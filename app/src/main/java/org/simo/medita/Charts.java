@@ -24,8 +24,10 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Charts  extends Activity {
     protected SharedPreferences prefs;
@@ -44,6 +46,7 @@ public class Charts  extends Activity {
     protected TextView txt4;
     protected ListView totals;
     String[] listItem;
+    protected MeditationFunctions funcs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class Charts  extends Activity {
         setContentView(R.layout.activity_charts);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
+        funcs= new MeditationFunctions(this);
 
         atras = findViewById(R.id.id_charts_atras);
         barchart1 = findViewById(R.id.barchart1);
@@ -104,9 +108,38 @@ public class Charts  extends Activity {
     private void setTotals(){
 
         listItem = getResources().getStringArray(R.array.array_totals_progreso);
-        JSONArray ja = null;
+        JSONArray ja = new JSONArray();
+        JSONObject jo = new JSONObject();
+
         try {
-            ja = new JSONArray(listItem);
+            jo = new JSONObject();
+            jo.put("title",listItem[0]);
+            jo.put("value", TimeUnit.SECONDS.toMinutes(funcs.getTotalSecondsMed()));
+            jo.put("units","mins.");
+
+            ja.put(jo);
+
+            jo = new JSONObject();
+            jo.put("title",listItem[1]);
+            jo.put("value",TimeUnit.SECONDS.toMinutes(funcs.getTotalSecondsMed()));
+            jo.put("units","días");
+
+            ja.put(jo);
+
+            jo = new JSONObject();
+            jo.put("title",listItem[2]);
+            jo.put("value",funcs.getTotalPacks());
+            jo.put("units","-");
+
+            ja.put(jo);
+
+            jo = new JSONObject();
+            jo.put("title",listItem[3]);
+            jo.put("value",TimeUnit.SECONDS.toMinutes(funcs.getTotalSecondsMed()));
+            jo.put("units","mins.");
+
+            ja.put(jo);
+
             totals.setAdapter(new AdapterTotals(this,  ja));
         } catch (JSONException e) {
         }

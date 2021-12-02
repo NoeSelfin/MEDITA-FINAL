@@ -43,6 +43,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Reproductor extends Activity implements OnCompletionListener, SeekBar.OnSeekBarChangeListener, MediaPlayer.OnBufferingUpdateListener{
 	protected SharedPreferences prefs;
@@ -97,6 +99,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	FileInputStream fileInputStream;
 
 	protected boolean introActivated = false;
+
+	protected MeditationFunctions funcs;
+	protected double total1 = 0;
+	Timer T;
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +140,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		dia.setTypeface(font);
 		duracion.setTypeface(font);
 		titulo_pack.setTypeface(font);
-		
+
+		funcs= new MeditationFunctions(this);
 			
 		 // Mediaplayer
         mp = new MediaPlayer();
@@ -449,6 +456,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		play_left.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				T.cancel();
+				funcs.setTotalSecondsMed((int)total1);
+				Log.i(Config.tag,String.valueOf(total1));
+				total1 = 0;
 				 JSONObject prev = new JSONObject();
 				 prev = new FilterData().prevMed(meditaciones, meditacion.optString("id_meditacion"));
 				 JSONArray d;
@@ -480,6 +491,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		play_right.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				T.cancel();
+				funcs.setTotalSecondsMed((int)total1);
+				Log.i(Config.tag,String.valueOf(total1));
+				total1 = 0;
 				if (isIntro){
 					introduccion.performClick();
 				}
@@ -536,6 +551,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 						//Lo desactivo porqué en versiones nuevas da error
 						//audio.setStreamMute(AudioManager.STREAM_RING,  false);
+						T.cancel();
+						funcs.setTotalSecondsMed((int)total1);
+						Log.i(Config.tag,String.valueOf(total1));
+						total1 = 0;
 
 					}
 					else{
@@ -558,6 +577,21 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 							}
 
 						}
+						funcs.setTotalPacks(pack.optString("id_pack"));
+						T=new Timer();
+						T.scheduleAtFixedRate(new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										total1 = total1 + 1;
+									}
+								});
+							}
+						}, 1000, 1000);
 					}					
 				}
 				
@@ -694,6 +728,12 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		atras.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+
+				T.cancel();
+				funcs.setTotalSecondsMed((int)total1);
+				Log.i(Config.tag,String.valueOf(total1));
+				total1 = 0;
+
 				if (mp.isPlaying())
 					mp.stop();
 
@@ -826,7 +866,6 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					muted = true;
 				}
 
-
 			}
 		});
 	}
@@ -904,6 +943,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
                int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
                //Log.d("Progress", ""+progress);
                songProgressBar.setProgress(progress);
+			   //funcs.setTotalSecondsMed(progress);
 
                if (currentDuration>15.0){
 				   introActivated = true;
@@ -954,6 +994,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
         Log.i(Config.tag,"onCompletion");
     	//if(arg0.getDuration() == arg0.getCurrentPosition()){
 		Log.i(Config.tag+"duration",String.valueOf(arg0.getDuration()));
+		T.cancel();
+		funcs.setTotalSecondsMed((int)total1);
+		Log.i(Config.tag,String.valueOf(total1));
+		total1 = 0;
     	play.setBackgroundResource(R.drawable.play_button);
     		if (!isIntro){
 
@@ -1038,6 +1082,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	{
     	back = true;
     	AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+		T.cancel();
+		funcs.setTotalSecondsMed((int)total1);
+		Log.i(Config.tag,String.valueOf(total1));
+		total1 = 0;
 
     	//Lo desactivo porqué en versiones nuevas da error
     	//audio.setStreamMute(AudioManager.STREAM_RING,  false);
@@ -1064,8 +1112,11 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
    	public void onStop()
    	{
     	super.onStop();
-    	prefs.edit().putLong("saveState_time", currentTime).commit();    	
-    	
+    	prefs.edit().putLong("saveState_time", currentTime).commit();
+		T.cancel();
+		funcs.setTotalSecondsMed((int)total1);
+		Log.i(Config.tag,String.valueOf(total1));
+		total1 = 0;
     	
     	/*if (mp.isPlaying()){
     		

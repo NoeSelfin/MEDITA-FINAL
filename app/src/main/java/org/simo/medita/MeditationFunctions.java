@@ -67,4 +67,39 @@ public class MeditationFunctions {
         }
         return new JSONArray();
     }
+    protected int getTotalSecondsMed(){
+        int total = prefs.getInt("total1",0);
+        return total;
+    }
+    protected void setTotalSecondsMed(int seconds){
+        int total = prefs.getInt("total1",0);
+        total = total + seconds;
+        prefs.edit().putInt("total1",total).commit();
+    }
+    protected int getTotalPacks(){
+        JSONArray totals3 = null;
+        try {
+            totals3 = new JSONArray(prefs.getString("total3",""));
+            return totals3.length();
+        } catch (JSONException e) {
+            return 0;
+        }
+    }
+    protected void setTotalPacks(String id_pack){
+        boolean finded = false;
+        JSONArray totals3 = null;
+        try {
+            totals3 = new JSONArray(prefs.getString("total3",""));
+            for (int i=0;i<totals3.length();i++){
+                if(totals3.optString(i).compareTo(id_pack) == 0){
+                    finded = true;
+                }
+            }
+            if (finded == false){
+                totals3.put(id_pack);
+                prefs.edit().putString("total3",totals3.toString()).commit();
+            }
+        } catch (JSONException e) {
+        }
+    }
 }

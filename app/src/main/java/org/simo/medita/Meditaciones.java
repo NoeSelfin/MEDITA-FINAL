@@ -52,6 +52,7 @@ public class Meditaciones extends Activity{
 	protected TextView titulo;
 	protected TextView disponibles;
 	protected TextView letrero;
+	protected TextView desc_med;
 	protected RelativeLayout header;
 	protected LinearLayout help;
 	protected Typeface font;
@@ -83,7 +84,8 @@ public class Meditaciones extends Activity{
 		titulo = (TextView)findViewById(R.id.id_meditaciones_titulo);
 		header = (RelativeLayout)findViewById(R.id.id_meditaciones_header);
 		entendido = (TextView)findViewById(R.id.id_meditaciones_entendido);
-		help = (LinearLayout)findViewById(R.id.id_meditaciones_help);		
+		desc_med = (TextView)findViewById(R.id.id_meditaciones_desc);
+		help = (LinearLayout)findViewById(R.id.id_meditaciones_help);
 		listview  = (ListView)findViewById(R.id.id_meditaciones_listview);
 		listview_duraciones  = (ListView)findViewById(R.id.id_meditaciones_listview_duraciones);
 		rl_principal = (RelativeLayout)findViewById(R.id.id_meditaciones_rl_list);	
@@ -96,6 +98,7 @@ public class Meditaciones extends Activity{
 		disponibles.setTypeface(font);
 		letrero.setTypeface(font);
 		letrero_nl.setTypeface(font);
+		desc_med.setTypeface(font);
 
 		meditaciones = new JSONArray();
 		
@@ -172,7 +175,8 @@ public class Meditaciones extends Activity{
 		    			    public void onAnimationEnd(Animation arg0) {
 		    			    	 disponibles.setText(pack.optString("pack_titulo"));
 		    					 listview_duraciones.setVisibility(View.GONE); 
-		    	    			 listview.setVisibility(View.VISIBLE); 
+		    	    			 listview.setVisibility(View.VISIBLE);
+							     desc_med.setVisibility(View.GONE);
 		    	    			 duraciones = false;
 		    			    }
 
@@ -256,6 +260,13 @@ public class Meditaciones extends Activity{
 	         public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 
     			 meditacion = meditaciones.optJSONObject(position);
+    			 if((meditacion.optString("med_desc","").length() > 4)&&(meditacion.optString("med_desc","").compareTo("null") != 0)&&(meditacion.optString("med_desc","") != null)){
+					 desc_med.setText(meditacion.optString("med_desc"));
+					 desc_med.setVisibility(View.VISIBLE);
+				 }else{
+					 desc_med.setVisibility(View.GONE);
+				 }
+
 				 Log.i(Config.tag,"listview OnItemClickListener meditacion -> " + meditacion);
 
 	    		 if (((pack.optInt("continuo") == 1) && (new FilterData().isPrevCompleted(meditaciones, meditacion))) || (pack.optInt("continuo") == 0)){

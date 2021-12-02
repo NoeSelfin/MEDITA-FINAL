@@ -491,12 +491,9 @@ public class Downloader {
 
 				Log.i("medita_downloader","Terminando de  descargar Backgrounds.");
 
-	        	
 	        }     	        
-	   
 	}
-	
-	private class downloadSaveMp3 extends AsyncTask<String, Void, String> {		
+	private class downloadSaveMp3 extends AsyncTask<String, Void, String> {
 		protected String song;
 		 @Override
 	        protected void onPreExecute() {		
@@ -531,8 +528,7 @@ public class Downloader {
 			            int count=0;
 			            while ((count = input.read(data)) != -1) {
 			                total++;
-			                Log.e("while","A"+total);
-	
+			                Log.i("Medita "+"while","A"+total);
 			                output.write(data, 0, count);
 			            }
 	
@@ -613,14 +609,13 @@ public class Downloader {
 	     			 }
 	     			
 	              
-	     		 }
+	     		 }*/
 	        	
 	     		loadingAnimation.stop();
-	           	loading.setVisibility(View.INVISIBLE);*/
+	           	loading.setVisibility(View.INVISIBLE);
 	        }
 	}
-	
-	private class isUpdated extends AsyncTask<String, Void, String> {			 
+	private class isUpdated extends AsyncTask<String, Void, String> {
 		 @Override
 	        protected void onPreExecute() {
 		 	}

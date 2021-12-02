@@ -87,6 +87,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected ImageView favoritos_img;
 	protected boolean favorito = false;
 	protected boolean intros = true;
+	protected boolean muted = false;
+	protected int bg_sound = 0;
 	protected static boolean play_block = true;
 	protected boolean back = false;
 	protected boolean fromMain = false;
@@ -160,6 +162,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				meditacion = new JSONObject(extras.getString("meditacion"));
 				pack = new JSONObject(extras.getString("pack"));
 				dur = extras.getString("duracion");
+				bg_sound = Integer.valueOf(meditacion.optString("musica","0"));
+
+				Log.i(Config.tag +"_med",meditacion.toString());
 				
 				if (extras.containsKey("fromMain"))
 					fromMain = extras.getBoolean("fromMain", false);
@@ -208,6 +213,12 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		        time.setText(""+utils.milliSecondsToTimer(currentTime));
 		       
 		        titulo_pack.setText(pack.optString("pack_titulo").toUpperCase());
+
+		        if (bg_sound == 0){
+					music.setVisibility(View.INVISIBLE);
+				}else{
+					music.setVisibility(View.VISIBLE);
+				}
 	  	    	
 	  	       
 			} catch (JSONException e) {
@@ -601,6 +612,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					if(file.exists())   {
 
 						download.setImageResource(R.drawable.downloaded);
+
 						currentTime = 0;
 						prepareSong(file.getAbsolutePath());
 						mp.start();
@@ -618,7 +630,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						}
 					}
 					else{
+						download.setImageResource(R.drawable.download);
 						if (Basics.checkConn(Reproductor.this)){
+
 							time.setText("0:00");
 					        time_left.setText("0:00");
 
@@ -714,7 +728,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		/*if (fromMain)
 			play.performClick();*/
 		
-		 ContextWrapper cw = new ContextWrapper(Reproductor.this);
+		 	ContextWrapper cw = new ContextWrapper(Reproductor.this);
 	        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 	        File file=new File(directory,song);
 			if(file.exists())   {
@@ -725,6 +739,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 			}
 			else{
+				download.setImageResource(R.drawable.download);
 				if (Basics.checkConn(this)){
 					 time.setText("0:00");
 				     time_left.setText("0:00");
@@ -735,8 +750,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				else{
 					alert("No hay conexión a Internet.");
 				}
-		
-			}					
+
+			}
 		
 			if (!isIntro){
 				JSONArray meditaciones_aux = new JSONArray();
@@ -787,8 +802,30 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					//Descargar intro si la hay. Si es intro que no aparezca descargar. y si está descargada cambiar icono.
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
 					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,false);
+					if(intros == true){
+						String song_intro = meditacion.optString("med_fichero") + "Intro.mp3";
+						downloader.downloadMp3(song_intro,time_left,mp,pack.toString(), play,false);
+					}
+					if(bg_sound == 1){
+						String song_sound = meditacion.optString("med_fichero") + "M"+dur+"Sound.mp3";
+						downloader.downloadMp3(song_sound,time_left,mp,pack.toString(), play,false);
+					}
                     download.setImageResource(R.drawable.downloaded);
 				}
+
+			}
+		});
+		music.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if (muted){
+					music.setImageResource(R.drawable.music);
+					muted = false;
+				}else{
+					music.setImageResource(R.drawable.muted_music);
+					muted = true;
+				}
+
 
 			}
 		});

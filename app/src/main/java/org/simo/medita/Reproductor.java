@@ -458,6 +458,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onClick(View arg0) {
 				T.cancel();
 				funcs.setTotalSecondsMed((int)total1);
+                funcs.setTotalDaySeconds((int)total1);
+                funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 				Log.i(Config.tag,String.valueOf(total1));
 				total1 = 0;
 				 JSONObject prev = new JSONObject();
@@ -493,6 +495,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onClick(View arg0) {
 				T.cancel();
 				funcs.setTotalSecondsMed((int)total1);
+				funcs.setTotalDaySeconds((int)total1);
+				funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 				Log.i(Config.tag,String.valueOf(total1));
 				total1 = 0;
 				if (isIntro){
@@ -553,6 +557,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						//audio.setStreamMute(AudioManager.STREAM_RING,  false);
 						T.cancel();
 						funcs.setTotalSecondsMed((int)total1);
+                        funcs.setTotalDaySeconds((int)total1);
+						funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 						Log.i(Config.tag,String.valueOf(total1));
 						total1 = 0;
 
@@ -578,6 +584,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 						}
 						funcs.setTotalPacks(pack.optString("id_pack"));
+						funcs.setTotalMedLong(Integer.valueOf(dur));
+						funcs.setTotalDaysContinous();
 						T=new Timer();
 						T.scheduleAtFixedRate(new TimerTask() {
 							@Override
@@ -731,6 +739,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 				T.cancel();
 				funcs.setTotalSecondsMed((int)total1);
+				funcs.setTotalDaySeconds((int)total1);
+				funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 				Log.i(Config.tag,String.valueOf(total1));
 				total1 = 0;
 
@@ -996,6 +1006,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		Log.i(Config.tag+"duration",String.valueOf(arg0.getDuration()));
 		T.cancel();
 		funcs.setTotalSecondsMed((int)total1);
+		funcs.setTotalDaySeconds((int)total1);
+		funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 		Log.i(Config.tag,String.valueOf(total1));
 		total1 = 0;
     	play.setBackgroundResource(R.drawable.play_button);
@@ -1084,6 +1096,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
     	AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		T.cancel();
 		funcs.setTotalSecondsMed((int)total1);
+		funcs.setTotalDaySeconds((int)total1);
+		funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 		Log.i(Config.tag,String.valueOf(total1));
 		total1 = 0;
 
@@ -1115,6 +1129,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
     	prefs.edit().putLong("saveState_time", currentTime).commit();
 		T.cancel();
 		funcs.setTotalSecondsMed((int)total1);
+		funcs.setTotalDaySeconds((int)total1);
+		funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
 		Log.i(Config.tag,String.valueOf(total1));
 		total1 = 0;
     	

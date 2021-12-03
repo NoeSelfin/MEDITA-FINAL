@@ -121,7 +121,7 @@ public class Charts  extends Activity {
 
             jo = new JSONObject();
             jo.put("title",listItem[1]);
-            jo.put("value",TimeUnit.SECONDS.toMinutes(funcs.getTotalSecondsMed()));
+            jo.put("value",funcs.getTotalDaysContinous());
             jo.put("units","días");
 
             ja.put(jo);
@@ -135,7 +135,7 @@ public class Charts  extends Activity {
 
             jo = new JSONObject();
             jo.put("title",listItem[3]);
-            jo.put("value",TimeUnit.SECONDS.toMinutes(funcs.getTotalSecondsMed()));
+            jo.put("value",funcs.getTotalMedLong());
             jo.put("units","mins.");
 
             ja.put(jo);
@@ -146,6 +146,7 @@ public class Charts  extends Activity {
 
     }
     private void showBarChart1(){
+        JSONArray chart1 = funcs.getTotalDaySeconds();
         ArrayList<Double> valueList = new ArrayList<Double>();
         ArrayList<BarEntry> entries = new ArrayList<>();
         String title = "Title";
@@ -168,6 +169,7 @@ public class Charts  extends Activity {
         barchart1.invalidate();
     }
     private void showBarChart2(){
+        JSONArray chart2 = funcs.getTotalSectionsSeconds();
         ArrayList<Double> valueList = new ArrayList<Double>();
         ArrayList<BarEntry> entries = new ArrayList<>();
         String title = "Title";

@@ -19,6 +19,42 @@ public class MeditationFunctions {
         prefs = ctx.getSharedPreferences(ctx.getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
     }
 
+    public void setMeditationDownload(String id_meditation){
+        String download_string = prefs.getString("download_meds",null);
+        try {
+            JSONArray download = null;
+
+            if(download_string == null){
+                download = new JSONArray();
+                download.put(id_meditation);
+                prefs.edit().putString("download_meds", download.toString()).commit();
+            }else{
+                download = new JSONArray(download_string);
+                boolean finded = false;
+                for (int i=0;i<download.length();i++){
+                    if (download.optString(i).compareTo(id_meditation) == 0){
+                        finded = true;
+                    }
+                }
+                if(finded == false){
+                    download.put(id_meditation);
+                    prefs.edit().putString("download_meds", download.toString()).commit();
+                }
+            }
+
+        } catch (JSONException e) {
+        }
+    }
+    public JSONArray getMeditationDownload(){
+        String download_string = prefs.getString("download_meds","");
+        try {
+            JSONArray download = new JSONArray(download_string);
+            return download;
+        } catch (JSONException e) {
+            return new JSONArray();
+        }
+    }
+
     protected JSONObject getMeditationById(String id_meditation){
         try {
             JSONArray meditations = new JSONArray (prefs.getString("meditaciones",""));

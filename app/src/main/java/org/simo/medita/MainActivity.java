@@ -57,6 +57,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends Activity {
 	protected SharedPreferences prefs;
+	protected Functions functions;
 	protected ImageView menu;
 	protected TextView inicio;
 	protected Typeface font;
@@ -103,6 +104,8 @@ public class MainActivity extends Activity {
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
 		prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
 
+		functions = new Functions(this);
+
 		menu = (ImageView)findViewById(R.id.id_main_hamburguesa);
 		inicio = (TextView)findViewById(R.id.id_main_inicio);
 		inicio.setTypeface(font);
@@ -119,8 +122,6 @@ public class MainActivity extends Activity {
 			if (Reproductor.mp.isPlaying())
 				Reproductor.mp.stop();
 		}*/
-
-		setBottomMenu();
 
 		packs = new JSONArray();
 		adapterpacks = new AdapterPacks(this, packs);
@@ -456,8 +457,9 @@ public class MainActivity extends Activity {
         }
 
 
-
-
+        if(functions.shouldShowMenu()){
+			functions.showMenu();
+		}
     }
 	public void setBottomMenu(){
 
@@ -679,6 +681,21 @@ public class MainActivity extends Activity {
 		((View) menu_lateral.findViewById(R.id.id_menu_view_suscription)).setVisibility(View.INVISIBLE);
 		((View) menu_lateral.findViewById(R.id.id_menu_view_contact)).setVisibility(View.INVISIBLE);
         ((View) menu_lateral.findViewById(R.id.id_menu_view_news)).setVisibility(View.INVISIBLE);
+
+
+		LinearLayout inicio = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_inicio_ll);
+		inicio.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if(functions.shouldShowMenu()){
+					Intent i = new Intent(MainActivity.this, Home.class);
+					startActivity(i);
+					finish();
+				}else{
+
+				}
+			}
+		});
 
 		LinearLayout acercade = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_acercade_ll);
 		acercade.setOnClickListener(new OnClickListener() {

@@ -80,7 +80,9 @@ public class Home extends Activity {
 
         home_name.setText("Hola "+prefs.getString("nombre_usuario",""));
         home_name.setTypeface(font);
-        if(prefs.contains("meditations_download") == false){
+        if(med_funcs.getMeditationDownload().length() > 0){
+            option5.setVisibility(View.VISIBLE);
+        }else{
             option5.setVisibility(View.GONE);
         }
 
@@ -236,9 +238,9 @@ public class Home extends Activity {
         });
         option5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String meditations_download_string = prefs.getString("meditations_download","");
+                //String meditations_download_string = prefs.getString("meditations_download","");
                 try {
-                    JSONArray meditations_array = new JSONArray(meditations_download_string);
+                    JSONArray meditations_array = med_funcs.getMeditationDownload();
                     String meditations = med_funcs.getMeditationsFromArray(meditations_array).toString();
                     Log.i(Config.tag,meditations);
 
@@ -250,12 +252,14 @@ public class Home extends Activity {
                     i.putExtra("fromHome", true);
                     startActivity(i);
                     finish();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     Log.i(Config.tag,"Error mostrando meditaciones descargadas.");
                 }
 
             }
         });
+
+        Log.i(Config.tag + "_download", med_funcs.getMeditationDownload().toString());
 
         menu.setOnClickListener(new OnClickListener() {
             @Override
@@ -377,9 +381,9 @@ public class Home extends Activity {
         inicio.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Home.this, MainActivity.class);
+                /*Intent i = new Intent(Home.this, MainActivity.class);
                 startActivity(i);
-                finish();
+                finish();*/
             }
         });
         LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);

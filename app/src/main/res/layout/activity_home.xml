@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -114,17 +114,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#91d3df ">
+
                             <TextView
                                 android:id="@+id/id_home_option2_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="Calmar la mente"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="25dp"
                                 android:layout_marginLeft="25dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_toStartOf="@+id/id_btn2"
                                 android:gravity="center_vertical"
+                                android:text="Calmar la mente"
                                 android:textColor="#36757a"
-                                android:textSize="14sp"
-                                android:layout_alignParentStart="true"/>
+                                android:textSize="14sp" />
                             <ImageView
+                                android:id="@+id/id_btn2"
                                 android:layout_width="40dp"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"

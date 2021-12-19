@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Charts  extends Activity {
     protected SharedPreferences prefs;
+    protected Functions functions;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
     protected LinearLayout menu;
@@ -57,6 +58,7 @@ public class Charts  extends Activity {
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
         funcs= new MeditationFunctions(this);
+        functions = new Functions(this);
 
         atras = findViewById(R.id.id_charts_atras);
         barchart1 = findViewById(R.id.barchart1);
@@ -104,6 +106,9 @@ public class Charts  extends Activity {
 
         setMenu();
 
+        if(functions.shouldShowMenu()){
+            functions.showMenu();
+        }
     }
     private void setTotals(){
 
@@ -226,6 +231,15 @@ public class Charts  extends Activity {
         ((View) menu_lateral.findViewById(R.id.id_menu_view_news)).setVisibility(View.VISIBLE);
 
 
+        LinearLayout acercade = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_acercade_ll);
+        acercade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(Charts.this, Acercade.class);
+                startActivity(i);
+                finish();
+            }
+        });
         LinearLayout opciones = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_opciones_ll);
         opciones.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,9 +281,15 @@ public class Charts  extends Activity {
         inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Charts.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                if(functions.shouldShowMenu()){
+                    Intent i = new Intent(Charts.this, Home.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Intent i = new Intent(Charts.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
         LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);

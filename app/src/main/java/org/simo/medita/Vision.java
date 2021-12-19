@@ -35,6 +35,7 @@ public class Vision extends Activity{
 	protected RelativeLayout fundido;
 	protected Typeface font;
 	protected SharedPreferences prefs;
+	protected Functions functions;
 	protected VideoView videoView;
 	protected AnimationSet animation;
 	protected ImageView menu;
@@ -65,6 +66,7 @@ public class Vision extends Activity{
 		font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
 		prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+		functions = new Functions(this);
 
 		fundido = (RelativeLayout)findViewById(R.id.id_vision_fundido);
 		
@@ -220,7 +222,10 @@ public class Vision extends Activity{
 		});
 		
 		 setMenu();
-		
+
+		if(functions.shouldShowMenu()){
+			functions.showMenu();
+		}
 	}
 	
 	@Override

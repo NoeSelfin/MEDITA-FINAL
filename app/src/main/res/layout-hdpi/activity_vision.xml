@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"    
     android:paddingTop="@dimen/activity_vertical_margin"
+	android:layout_marginBottom="5dp"
+	android:layout_above="@+id/id_bottommenu"
     android:background="@drawable/vision_bg"
     android:orientation="vertical" >    
      <LinearLayout
@@ -144,4 +146,16 @@
     android:layout_height="match_parent"
     android:background="#293c4f"
     android:visibility="invisible" />
+
+	<LinearLayout
+		android:id="@+id/id_bottommenu"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:visibility="gone"
+		android:layout_alignParentBottom="true">
+		<fragment android:name="org.simo.medita.FragmentBottomMenu"
+			android:id="@+id/id_fragment_bottom_menu"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+	</LinearLayout>
 </RelativeLayout>

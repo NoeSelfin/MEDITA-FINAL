@@ -39,6 +39,7 @@ import java.util.Calendar;
 
 public class Opciones extends Activity{
 	protected SharedPreferences prefs;
+	protected Functions functions;
 	protected SlidingMenu menu_lateral;
 	protected Typeface font;
 	protected ToggleButton molestar;
@@ -75,6 +76,8 @@ public class Opciones extends Activity{
 		setContentView(R.layout.activity_opciones);
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
 		prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+		functions = new Functions(this);
+
 		font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 		LinearLayout atras = (LinearLayout) findViewById(R.id.id_opciones_atras);		
 		((TextView) findViewById(R.id.id_opciones_inicio)).setTypeface(font);
@@ -340,6 +343,10 @@ public class Opciones extends Activity{
 		});
 		
 		 setMenu();
+
+		if(functions.shouldShowMenu()){
+			functions.showMenu();
+		}
 	}
 	
 	public void getDays(final int alarm, final String time,final int view1, final int view2, final int view3 ,final int view4, final int view5, final boolean alarm_bool1, final boolean alarm_bool2){
@@ -881,9 +888,15 @@ public class Opciones extends Activity{
 		inicio.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(Opciones.this, MainActivity.class);   
-	    		 startActivity(i);
-	    		 finish();
+				if(functions.shouldShowMenu()){
+					Intent i = new Intent(Opciones.this, Home.class);
+					startActivity(i);
+					finish();
+				}else{
+					Intent i = new Intent(Opciones.this, MainActivity.class);
+					startActivity(i);
+					finish();
+				}
 			}
 		});
 		LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);

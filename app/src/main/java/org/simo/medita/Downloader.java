@@ -106,7 +106,7 @@ public class Downloader {
 		 new downloadPacks().execute();
 		 
 	}
-	public void downloadMp3(String mp3, TextView time, MediaPlayer mp, final String pack, final ImageView play, boolean streaming){
+	public void downloadMp3(String mp3, TextView time, MediaPlayer mp, final String pack, final ImageView play, boolean streaming, String id_meditation){
 		
 		File path = Environment.getDataDirectory();
 		StatFs stat = new StatFs(path.getPath());
@@ -125,7 +125,7 @@ public class Downloader {
 				time_left = time;
 				this.mp = mp;
 				this.play = play;
-				new downloadSaveMp3().execute(mp3);
+				new downloadSaveMp3().execute(mp3,id_meditation);
 			}
 			else {
 			/*final Dialog dialog = new Dialog(ctx);
@@ -177,7 +177,7 @@ public class Downloader {
 			}
 		}else{
 			if (total > 361078784){
-				new downloadSaveMp3().execute(mp3);
+				new downloadSaveMp3().execute(mp3,id_meditation);
 			}else{
 				Toast.makeText(ctx, "No queda espacio en el dispositivo para guardar la meditación.", Toast.LENGTH_LONG).show();
 			}
@@ -495,6 +495,7 @@ public class Downloader {
 	}
 	private class downloadSaveMp3 extends AsyncTask<String, Void, String> {
 		protected String song;
+		protected String id_meditation;
 		 @Override
 	        protected void onPreExecute() {		
 			 loadingAnimation.start();
@@ -508,6 +509,7 @@ public class Downloader {
 	           HttpConnection http = null;	
 	           String url = params[0];
 	           song = params[0];
+	           id_meditation = params[1];
 	           File mypath = null;
 	           
 	           if (Basics.checkConn(ctx)){
@@ -610,6 +612,8 @@ public class Downloader {
 	     			
 	              
 	     		 }*/
+
+				new MeditationFunctions(ctx).setMeditationDownload(id_meditation);
 	        	
 	     		loadingAnimation.stop();
 	           	loading.setVisibility(View.INVISIBLE);

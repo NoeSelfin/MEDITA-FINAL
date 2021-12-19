@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 
 public class Acercade extends Activity{
 	protected SharedPreferences prefs;
+	protected Functions functions;
 	protected Typeface font;
 	protected SlidingMenu menu_lateral;
 	protected ImageView menu;
@@ -51,6 +52,7 @@ public class Acercade extends Activity{
 		font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
 		prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+		functions = new Functions(this);
 
 		((TextView)findViewById(R.id.id_acercade_inicio)).setTypeface(font);
 		((TextView)findViewById(R.id.id_acercade_texto1)).setTypeface(font);
@@ -172,7 +174,10 @@ public class Acercade extends Activity{
 		
 		prefs.edit().putBoolean("Premios_1", true).commit();
 		 setMenu();
-		
+
+		if(functions.shouldShowMenu()){
+			functions.showMenu();
+		}
 	}
 	
 	@Override
@@ -260,9 +265,15 @@ public class Acercade extends Activity{
 		inicio.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(Acercade.this, MainActivity.class);   
-	    		 startActivity(i);
-	    		 finish();
+				if(functions.shouldShowMenu()){
+					Intent i = new Intent(Acercade.this, Home.class);
+					startActivity(i);
+					finish();
+				}else{
+					Intent i = new Intent(Acercade.this, MainActivity.class);
+					startActivity(i);
+					finish();
+				}
 			}
 		});
 		LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);

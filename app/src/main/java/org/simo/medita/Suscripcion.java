@@ -47,6 +47,7 @@ import java.util.List;
 public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishedListener, IabHelper.OnIabPurchaseFinishedListener{
 
     protected SharedPreferences prefs;
+    protected Functions functions;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
     protected ImageView menu;
@@ -89,6 +90,8 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 //        prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
         prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+        functions = new Functions(this);
+
         LinearLayout atras = (LinearLayout)findViewById(R.id.id_suscripcion_atras);
 
         tvTitulo = findViewById(R.id.id_titulo_suscripcion);
@@ -173,6 +176,10 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         billingHelper = new IabHelper(Suscripcion.this, Config.license_key);
         billingHelper.startSetup(this);
 
+
+        if(functions.shouldShowMenu()){
+            functions.showMenu();
+        }
 
     }
 
@@ -528,9 +535,15 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Suscripcion.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                if(functions.shouldShowMenu()){
+                    Intent i = new Intent(Suscripcion.this, Home.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Intent i = new Intent(Suscripcion.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
         LinearLayout progreso = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_progreso_ll);

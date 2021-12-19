@@ -29,6 +29,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class Novedades extends Activity{
     protected SharedPreferences prefs;
+    protected Functions functions;
     protected Typeface font;
     protected SlidingMenu menu_lateral;
     protected ImageView menu;
@@ -53,6 +54,8 @@ public class Novedades extends Activity{
 
 
         prefs.edit().putBoolean("Premios_1", true).commit();
+        functions = new Functions(this);
+
         setMenu();
 
         WebView mywebview = (WebView) findViewById(R.id.webViewNews);
@@ -113,7 +116,9 @@ public class Novedades extends Activity{
         mywebview.setWebViewClient(webViewClient);
         mywebview.loadUrl("https://news.atentamente.net/");
 
-
+        if(functions.shouldShowMenu()){
+            functions.showMenu();
+        }
     }
 
     @Override
@@ -201,9 +206,15 @@ public class Novedades extends Activity{
         inicio.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Novedades.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                if(functions.shouldShowMenu()){
+                    Intent i = new Intent(Novedades.this, Home.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Intent i = new Intent(Novedades.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
         LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);

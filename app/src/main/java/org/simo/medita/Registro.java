@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 public class Registro extends Activity {
 
     protected SharedPreferences prefs;
+    protected Functions functions;
     protected Typeface font;
     private LinearLayout menu;
     private SlidingMenu menu_lateral;
@@ -59,6 +60,7 @@ public class Registro extends Activity {
         tvPolitica.setMovementMethod(LinkMovementMethod.getInstance());
 
         prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
+        functions = new Functions(this);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
         menu = findViewById(R.id.id_registro_menu);
         etUsername = findViewById(R.id.et_username);
@@ -238,9 +240,15 @@ public class Registro extends Activity {
         inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(Registro.this, MainActivity.class);
-                startActivity(i);
-                finish();
+                if(functions.shouldShowMenu()){
+                    Intent i = new Intent(Registro.this, Home.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Intent i = new Intent(Registro.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
 

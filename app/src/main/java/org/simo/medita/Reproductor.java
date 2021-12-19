@@ -679,7 +679,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					        time_left.setText("0:00");
 
 							Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-							downloader.downloadMp3(song,time_left,mp,pack.toString(),play,true);
+							downloader.downloadMp3(song,time_left,mp,pack.toString(),play,true, meditacion.optString("id_meditacion"));
 							play.setBackgroundResource(R.drawable.play_button);
 						}
 						else{
@@ -795,7 +795,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				     time_left.setText("0:00");
 
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,true);
+					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,true, meditacion.optString("id_meditacion"));
 				}
 				else{
 					alert("No hay conexión a Internet.");
@@ -851,14 +851,14 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					Toast.makeText(getApplicationContext(),"Descargando meditación.",Toast.LENGTH_LONG).show();
 					//Descargar intro si la hay. Si es intro que no aparezca descargar. y si está descargada cambiar icono.
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
-					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,false);
+					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,false, meditacion.optString("id_meditacion"));
 					if(intros == true){
 						String song_intro = meditacion.optString("med_fichero") + "Intro.mp3";
-						downloader.downloadMp3(song_intro,time_left,mp,pack.toString(), play,false);
+						downloader.downloadMp3(song_intro,time_left,mp,pack.toString(), play,false, meditacion.optString("id_meditacion"));
 					}
 					if(bg_sound == 1){
 						String song_sound = meditacion.optString("med_fichero") + "M"+dur+"Sound.mp3";
-						downloader.downloadMp3(song_sound,time_left,mp,pack.toString(), play,false);
+						downloader.downloadMp3(song_sound,time_left,mp,pack.toString(), play,false, meditacion.optString("id_meditacion"));
 					}
                     download.setImageResource(R.drawable.downloaded);
 				}
@@ -1004,12 +1004,15 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
         Log.i(Config.tag,"onCompletion");
     	//if(arg0.getDuration() == arg0.getCurrentPosition()){
 		Log.i(Config.tag+"duration",String.valueOf(arg0.getDuration()));
-		T.cancel();
-		funcs.setTotalSecondsMed((int)total1);
-		funcs.setTotalDaySeconds((int)total1);
-		funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
-		Log.i(Config.tag,String.valueOf(total1));
-		total1 = 0;
+		if (T != null){
+			T.cancel();
+			funcs.setTotalSecondsMed((int)total1);
+			funcs.setTotalDaySeconds((int)total1);
+			funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
+			Log.i(Config.tag,String.valueOf(total1));
+			total1 = 0;
+		}
+
     	play.setBackgroundResource(R.drawable.play_button);
     		if (!isIntro){
 
@@ -1127,12 +1130,15 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
    	{
     	super.onStop();
     	prefs.edit().putLong("saveState_time", currentTime).commit();
-		T.cancel();
-		funcs.setTotalSecondsMed((int)total1);
-		funcs.setTotalDaySeconds((int)total1);
-		funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
-		Log.i(Config.tag,String.valueOf(total1));
-		total1 = 0;
+    	if (T != null){
+			T.cancel();
+			funcs.setTotalSecondsMed((int)total1);
+			funcs.setTotalDaySeconds((int)total1);
+			funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
+			Log.i(Config.tag,String.valueOf(total1));
+			total1 = 0;
+		}
+
     	
     	/*if (mp.isPlaying()){
     		

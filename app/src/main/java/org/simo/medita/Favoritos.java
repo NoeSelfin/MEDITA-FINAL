@@ -40,6 +40,7 @@ public class Favoritos extends Activity{
 	protected ListView listview;
 	protected JSONArray favoritos;
 	protected SharedPreferences prefs;
+	protected Functions functions;
 	protected Typeface font;
 	protected LinearLayout atras;
 	protected TextView nofav_btn;
@@ -56,6 +57,8 @@ public class Favoritos extends Activity{
 		setContentView(R.layout.activity_favoritos);
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
 		prefs = getSharedPreferences(getString(R.string.sharedpref_name),Context.MODE_PRIVATE);
+		functions = new Functions(this);
+
 		font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 		atras =  (LinearLayout)findViewById(R.id.id_fav_atras);
 		titulo = (TextView)findViewById(R.id.id_main_inicio);
@@ -195,6 +198,10 @@ public class Favoritos extends Activity{
 	
 	
 		 setMenu();
+
+		if(functions.shouldShowMenu()){
+			functions.showMenu();
+		}
 	}
 	
 	
@@ -303,9 +310,15 @@ public class Favoritos extends Activity{
 		inicio.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(Favoritos.this, MainActivity.class);   
-	    		 startActivity(i);
-	    		 finish();
+				if(functions.shouldShowMenu()){
+					Intent i = new Intent(Favoritos.this, Home.class);
+					startActivity(i);
+					finish();
+				}else{
+					Intent i = new Intent(Favoritos.this, MainActivity.class);
+					startActivity(i);
+					finish();
+				}
 			}
 		});
 		LinearLayout sincro = (LinearLayout) menu_lateral.findViewById(R.id.id_menu_sincro_ll);

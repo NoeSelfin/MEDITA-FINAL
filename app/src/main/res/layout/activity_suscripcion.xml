@@ -65,12 +65,13 @@
             android:layout_marginEnd="16dp"/>
     </LinearLayout>
 
+
     <ScrollView
         android:id="@+id/id_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/id_bottommenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
@@ -79,16 +80,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:src="@drawable/icono" />
 
             <LinearLayout
@@ -164,7 +165,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-<!--            <ListView
+            <!--            <ListView
                 android:id="@+id/listviewSusc"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -224,8 +225,8 @@
                 android:id="@+id/tv_cancelar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:text="@string/cancel_suscription" />
 
@@ -283,6 +284,20 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/id_bottommenu"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible">
+        <fragment android:name="org.simo.medita.FragmentBottomMenu"
+            android:id="@+id/id_fragment_bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 
     <!-- <TextView

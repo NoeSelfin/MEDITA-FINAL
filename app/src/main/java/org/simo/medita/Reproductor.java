@@ -77,6 +77,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	
 	
 	protected static MediaPlayer mp;
+	protected static MediaPlayer mp_sound;
 	private Utilities utils;
 	private Handler mHandler = new Handler();
 	
@@ -97,6 +98,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected boolean fromHome = false;
 
 	FileInputStream fileInputStream;
+	FileInputStream fileInputStreamSound;
 
 	protected boolean introActivated = false;
 
@@ -145,11 +147,15 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			
 		 // Mediaplayer
         mp = new MediaPlayer();
-        utils = new Utilities();        
+		//mp_sound = new MediaPlayer();
+        utils = new Utilities();
         // Listeners
         songProgressBar.setOnSeekBarChangeListener(this);
         mp.setOnCompletionListener(this);
         mp.setOnBufferingUpdateListener(this);
+
+		//mp_sound.setOnCompletionListener(this);
+		//mp_sound.setOnBufferingUpdateListener(this);
         
         meditacion = new JSONObject();
         pack = new JSONObject();        
@@ -216,7 +222,11 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	  	    	else
 	  	    		currentTime = 0;   
 	  	    	
-	  	    	mp.seekTo((int)currentTime); 
+	  	    	mp.seekTo((int)currentTime);
+				/*if(mp_sound != null){
+					mp_sound.seekTo((int)currentTime);
+				}*/
+
 		        time.setText(""+utils.milliSecondsToTimer(currentTime));
 		       
 		        titulo_pack.setText(pack.optString("pack_titulo").toUpperCase());
@@ -298,6 +308,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		setFavoritos();
 				
 		String song = null;
+		String song_sound = null;
 		if (isIntro){
 			duracion.setText("INTRODUCCIÓN");
 			song =meditacion.optString("med_fichero") + "Intro.mp3";
@@ -316,7 +327,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			helper.setVisibility(View.VISIBLE);
             helper.setVisibility(View.GONE);
 			
-			song =meditacion.optString("med_fichero") + "M"+dur+".mp3";			
+			song = meditacion.optString("med_fichero") + "M"+dur+".mp3";
+			song_sound = meditacion.optString("med_fichero") + "M"+dur+"Sound.mp3";
 
 			int d = Integer.valueOf(dur.trim());
 			if (d < 5)
@@ -475,6 +487,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				 if (prev != null){
 					 if (prev.length() > 0){
 						 mp.stop();
+						 /*if(mp_sound != null){
+							 mp_sound.stop();
+						 }*/
 						 bitmap = null;
 						 Intent i = new Intent(Reproductor.this, Reproductor.class);  	    			
 						 i.putExtra("pack",pack.toString());	    			
@@ -518,7 +533,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					 
 					 if (next != null){
 						 if (next.length() > 0){
-							 mp.stop();	
+							 mp.stop();
+							 /*if(mp_sound != null){
+								 mp_sound.stop();
+							 }*/
 							 time.setText("0:00");
 						     time_left.setText("0:00");
 							 bitmap = null;
@@ -551,6 +569,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	
 					if (mp.isPlaying()){
 						mp.pause();
+						/*if(mp_sound != null){
+							mp_sound.pause();
+						}*/
 						play.setBackgroundResource(R.drawable.play_button);
 
 						//Lo desactivo porqué en versiones nuevas da error
@@ -565,6 +586,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					}
 					else{
 						mp.start();
+						/*if(mp_sound != null){
+							mp_sound.start();
+						}*/
+
 						play.setBackgroundResource(R.drawable.pause_button);
 						updateProgressBar();						
 						if (prefs.contains("opciones_nomolestar")){
@@ -615,11 +640,17 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					play.setBackgroundResource(R.drawable.play_button);
 					play_block = true;
 	
-					mp.stop();	
+					mp.stop();
+					/*if(mp_sound != null){
+						mp_sound.stop();
+					}*/
+
 					favoritos_img.setVisibility(View.VISIBLE);
 					String song = null;
+					String song_sound = null;
 
 					song =meditacion.optString("med_fichero") + "M"+dur+".mp3";			
+					song_sound =meditacion.optString("med_fichero") + "M"+dur+"Sound.mp3";
 
 					int d = Integer.valueOf(dur.trim());
 					if (d < 5)
@@ -651,13 +682,24 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					ContextWrapper cw = new ContextWrapper(Reproductor.this);
 			        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 			        File file=new File(directory,song);
+					File file_sound=new File(directory,song_sound);
 					if(file.exists())   {
 
 						download.setImageResource(R.drawable.downloaded);
 
 						currentTime = 0;
-						prepareSong(file.getAbsolutePath());
-						mp.start();
+						if(file_sound.exists()){
+							prepareSong(file.getAbsolutePath(),file_sound.getAbsolutePath());
+							mp.start();
+							/*if(mp_sound != null){
+								mp_sound.start();
+							}*/
+						}else{
+							prepareSong(file.getAbsolutePath(), null);
+							mp.start();
+						}
+
+
 						play.setBackgroundResource(R.drawable.pause_button);
 
 						JSONArray meditaciones_aux = new JSONArray();
@@ -744,8 +786,12 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				Log.i(Config.tag,String.valueOf(total1));
 				total1 = 0;
 
-				if (mp.isPlaying())
+				if (mp.isPlaying()){
 					mp.stop();
+					/*if(mp_sound != null){
+						mp_sound.stop();
+					}*/
+				}
 
 				if(fromHome){
 					/*Intent i = new Intent(Reproductor.this, Home.class);
@@ -781,10 +827,21 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		 	ContextWrapper cw = new ContextWrapper(Reproductor.this);
 	        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 	        File file=new File(directory,song);
+
+
 			if(file.exists())   {
 				//Downloaded ico
 				download.setImageResource(R.drawable.downloaded);
-				prepareSong(file.getAbsolutePath());
+
+				if(song_sound != null){
+					File file_sound = new File(directory,song_sound);
+					if(file_sound.exists()){
+						prepareSong(file.getAbsolutePath(),file_sound.getAbsolutePath());
+					}else{
+						prepareSong(file.getAbsolutePath(), null);
+					}
+				}
+
 				play.performClick();
 
 			}
@@ -796,6 +853,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 					Downloader downloader = new Downloader(Reproductor.this,prefs,loading,0);
 					downloader.downloadMp3(song,time_left,mp,pack.toString(), play,true, meditacion.optString("id_meditacion"));
+
 				}
 				else{
 					alert("No hay conexión a Internet.");
@@ -880,13 +938,27 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		});
 	}
 		
-	public void prepareSong(String path){
+	public void prepareSong(String path, String path_sound){
 		try {
 			fileInputStream = new FileInputStream(path);
 			mp.reset();
 	        mp.setDataSource(fileInputStream.getFD());
 	        mp.prepare();
-	        mp.seekTo((int)currentTime); 
+	        mp.seekTo((int)currentTime);
+
+	        /*if(path_sound != null){
+				if(mp_sound != null){
+
+					fileInputStreamSound = new FileInputStream(path_sound);
+
+					mp_sound.reset();
+					mp_sound.setDataSource(fileInputStreamSound.getFD());
+					mp_sound.prepare();
+					mp_sound.seekTo((int)currentTime);
+				}
+			}*/
+
+
 	        time.setText(""+utils.milliSecondsToTimer(currentTime));
 	        time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
 	        play_block = false;
@@ -994,7 +1066,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
  
         // forward or backward to certain seconds
         mp.seekTo(currentPosition);
- 
+		/*if(mp_sound != null){
+			mp_sound.seekTo(currentPosition);
+		}*/
+
         // update timer progress again
         updateProgressBar();
     }
@@ -1106,8 +1181,13 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
     	//Lo desactivo porqué en versiones nuevas da error
     	//audio.setStreamMute(AudioManager.STREAM_RING,  false);
-    	if (mp.isPlaying())
+    	if (mp.isPlaying()){
 			mp.stop();
+			/*if(mp_sound != null){
+				mp_sound.stop();
+			}*/
+
+		}
 
     	if (fromHome){
 			/*Intent i = new Intent(Reproductor.this, Home.class);
@@ -1309,6 +1389,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				}
 
 				mp.stop();
+				/*if(mp_sound != null){
+					mp_sound.stop();
+				}*/
+
 				time.setText("0:00");
 				time_left.setText("0:00");
 				bitmap = null;

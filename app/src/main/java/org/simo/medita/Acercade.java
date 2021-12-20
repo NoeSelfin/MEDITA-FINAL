@@ -165,7 +165,8 @@ public class Acercade extends Activity{
 		web.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				
+
+				prefs.edit().putBoolean("Premios_10", true).commit();
 				Intent i = new Intent(new Intent(Intent.ACTION_VIEW, Uri.parse(Config.url_atentamente)));   
 	    		startActivity(i);
 				

@@ -227,7 +227,7 @@ public class Progreso extends Activity{
 				    		 finish();	
 						} catch (JSONException e) {
 						}*/
-					 	Intent i = new Intent(Progreso.this, MainActivity.class);   
+					 	Intent i = new Intent(Progreso.this, Acercade.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 						startActivity(i);		
 						finish();
@@ -272,7 +272,7 @@ public class Progreso extends Activity{
 		
 		if(!prefs.contains("Premios_10")){
 			marcador = 10;
-			texto2.setText(Html.fromHtml("Termina uno de nuestros packs y te recompensaremos con <b>100 pts.</b>"));
+			texto2.setText(Html.fromHtml("Pásate por nuestra web y ganarás los últimos 100 pts. Te espera un regalo final!"));
 			/*try {
 				JSONArray packs = new JSONArray(prefs.getString("packs", ""));
 				//texto2.setText(Html.fromHtml("Compra el pack "+packs.optJSONObject(4).optString("pack_titulo")+" y te recompensaremos con <b>100 pts.</b>"));
@@ -282,7 +282,7 @@ public class Progreso extends Activity{
 		}
 		if(!prefs.contains("Premios_9")){
 			marcador = 9;
-			texto2.setText(Html.fromHtml("Termina uno de nuestros packs y te recompensaremos con <b>100 pts.</b>"));
+			texto2.setText(Html.fromHtml("Comparte Medita en tus redes sociales y te recompensaremos con <b>100 pts.</b>"));
 			/*try {
 				JSONArray packs = new JSONArray(prefs.getString("packs", ""));
 				//texto2.setText(Html.fromHtml("Compra el pack "+packs.optJSONObject(3).optString("pack_titulo")+" y te recompensaremos con <b>100 pts.</b>"));
@@ -292,7 +292,7 @@ public class Progreso extends Activity{
 		}
 		if(!prefs.contains("Premios_8")){
 			marcador = 8;
-			texto2.setText(Html.fromHtml("Termina uno de nuestros packs y te recompensaremos con <b>100 pts.</b>"));
+			texto2.setText(Html.fromHtml("Regístrate o accede a nuestra comunidad y te recompensaremos con <b>100 pts.</b>"));
 
 			/*try {
 				JSONArray packs = new JSONArray(prefs.getString("packs", ""));
@@ -306,7 +306,7 @@ public class Progreso extends Activity{
 			try {
 				JSONArray packs = new JSONArray(prefs.getString("packs", ""));
 				//texto2.setText(Html.fromHtml("Compra el pack "+packs.optJSONObject(1).optString("pack_titulo")+" y te recompensaremos con <b>100 pts.</b>"));
-				texto2.setText(Html.fromHtml("Compra uno de nuestros packs y te recompensaremos con <b>100 pts.</b>"));
+				texto2.setText(Html.fromHtml("Mira las últimas novedades y te recompensaremos con <b>100 pts.</b>"));
 			} catch (JSONException e) {
 			}
 		}

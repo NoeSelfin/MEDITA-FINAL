@@ -24,27 +24,24 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.vending.billing.util.IabException;
-import com.android.vending.billing.util.IabHelper;
 import com.android.vending.billing.util.IabResult;
-import com.android.vending.billing.util.Inventory;
 import com.android.vending.billing.util.Purchase;
-import com.android.vending.billing.util.SkuDetails;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.simo.medita.billing.BillingHelper;
 import org.simo.medita.extras.Basics;
 import org.simo.medita.extras.HttpConnection;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
-public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishedListener, IabHelper.OnIabPurchaseFinishedListener{
+public class Suscripcion extends Activity{
+
+    BillingHelper bh;
 
     protected SharedPreferences prefs;
     protected Functions functions;
@@ -53,7 +50,6 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
     protected ImageView menu;
     protected TextView btn_suscripcion;
     protected boolean bloqueo = false;
-    private IabHelper billingHelper;
     private TextView tvCancelar;
     private TextView tvNombreSuscripcion;
 
@@ -65,7 +61,6 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
     private JSONArray listaSuscripciones = new JSONArray();
 //    private AdapterSuscripciones adapter;
 
-    private Inventory subscriptionInventory;
     private boolean subGooglePlayUpdated = false;
     private JSONObject userInfo = null;
     private JSONObject subcripcionDDBB = null;
@@ -173,80 +168,21 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         //getSubscriptionsDatabaseInfo();
 
         //inicializamos el helper para obtener las suscripciones de GP
-        billingHelper = new IabHelper(Suscripcion.this, Config.license_key);
-        billingHelper.startSetup(this);
+        bh = new BillingHelper(this);
 
 
         if(functions.shouldShowMenu()){
             functions.showMenu();
         }
 
+        subGooglePlayUpdated = true;
+        checkAllDownload();
+
     }
 
-    /*
-     ** Method for releasing resources (dispose of object)
-     */
-    public void dispose() {
-        if (billingHelper != null) {
-            try {
-                billingHelper.dispose();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            billingHelper = null;
-        }
-    }
 
-    @Override
-    public void onIabSetupFinished(IabResult result) {
 
-        printLog("onIabSetupFinished");
-        printLog(result.getMessage());
-        printLog(result.toString());
 
-        if (billingHelper.subscriptionsSupported()){
-            printLog("subscriptionsSupported == true");
-        }else{
-            printLog("subscriptionsSupported == false");
-        }
-        if (result.isFailure()) {
-            printLog("Problem setting up In-app Billing: " + result);
-            errorAlIniciar();
-            dispose();
-        }else{
-            try {
-                final String[] skuIds = getResources().getStringArray(R.array.suscriptions_sku);
-                final List<String> skuIdsList = Arrays.asList(skuIds);
-                billingHelper.queryInventoryAsync(true, skuIdsList, new IabHelper.QueryInventoryFinishedListener() {
-                    @Override
-                    public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-                        if (result.isFailure()) {
-                            printLog("Problem querying inventory: " + result);
-                            dispose();
-                            return;
-                        }
-                        subscriptionInventory = inventory;
-                        // informacion de las suscripciones activas
-                        List<Purchase> purchaseList = inventory.getAllPurchases();
-                        for (Purchase p : purchaseList){
-                            printLog("PURCHASE");
-                            printLog("getOrderId: " + p.getOrderId());
-                        }
-
-                        // todo ir a metodo para iniciar la lista o bien para mostrar el texto correspondiente
-                        JSONArray jsonArray = new JSONArray(subscriptionInventory.getAllOwnedSkus());
-                        prefs.edit().putString(getString(R.string.skus_activos), jsonArray.toString()).commit();
-
-                        subGooglePlayUpdated = true;
-                        checkAllDownload();
-                    }
-                });
-            } catch (Exception e) {
-//        } catch (IabHelper.IabAsyncInProgressException e) {
-                printLog("EXCEPTION:" + e.getMessage());
-            }
-        }
-    }
 
     private void checkAllDownload(){
 
@@ -276,7 +212,22 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
         final String[] skuIds = getResources().getStringArray(R.array.suscriptions_sku);
         String[] skuNames = getResources().getStringArray(R.array.suscriptions_type);
         try {
-            JSONArray skuActivos = new JSONArray(subscriptionInventory.getAllOwnedSkus());
+            JSONArray skuActivos = new JSONArray();
+            JSONObject jo = new JSONObject();
+            jo.put("sku","id_suscripcion_mensual");
+            jo.put("title","SUSCRIPCIÓN MENSUAL");
+            jo.put("price","4,99 €");
+            skuActivos.put(jo);
+            jo = new JSONObject();
+            jo.put("sku","id_suscripcion_semestral");
+            jo.put("title","SUSCRIPCIÓN SEMESTRAL");
+            jo.put("price","23,99 €");
+            skuActivos.put(jo);
+            jo = new JSONObject();
+            jo.put("sku","id_suscripcion_anual");
+            jo.put("title","SUSCRIPCIÓN ANUAL");
+            jo.put("price","35,99 €");
+            skuActivos.put(jo);
             // inicializamos nombre de suscripcion a null
             tipoSuscripcion = null;
             // punto 1, comprobar si la suscripcion en Google Play esta activa
@@ -331,11 +282,11 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
                 tvNombreSuscripcion.setVisibility(View.GONE);
                 for (int i = 0; i < skuIds.length; i++) {
                     // obtenemos los detalles de la suscripcion
-                    SkuDetails details = subscriptionInventory.getSkuDetails(skuIds[i]);
+                    //SkuDetails details = subscriptionInventory.getSkuDetails(skuIds[i]);
                     JSONObject item  = new JSONObject();
-                    item.put("product",skuNames[i]);
-                    item.put("price",details.getPrice());
-                    item.put("sku",skuIds[i]);
+                    item.put("product",skuActivos.optJSONObject(i).optString("title"));
+                    item.put("price",skuActivos.optJSONObject(i).optString("price"));
+                    item.put("sku",skuActivos.optJSONObject(i).optString("sku"));
                     listaSuscripciones.put(item);
                 }
                 setButtonsListText();
@@ -348,18 +299,15 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
 
     private void setButtonsListText() throws JSONException {
 
-        btMensual.setText("SUSCRIPCIÓN " +
-                listaSuscripciones.getJSONObject(0).getString("product").toUpperCase() +
+        btMensual.setText(listaSuscripciones.getJSONObject(0).getString("product").toUpperCase() +
                 " " +
                 listaSuscripciones.getJSONObject(0).getString("price"));
         btMensual.setTypeface(font);
-        btSemestral.setText("SUSCRIPCIÓN " +
-                listaSuscripciones.getJSONObject(1).getString("product").toUpperCase() +
+        btSemestral.setText(listaSuscripciones.getJSONObject(1).getString("product").toUpperCase() +
                 " " +
                 listaSuscripciones.getJSONObject(1).getString("price"));
         btSemestral.setTypeface(font);
-        btAnual.setText("SUSCRIPCIÓN " +
-                listaSuscripciones.getJSONObject(2).getString("product").toUpperCase() +
+        btAnual.setText(listaSuscripciones.getJSONObject(2).getString("product").toUpperCase() +
                 " " +
                 listaSuscripciones.getJSONObject(2).getString("price"));
         btAnual.setTypeface(font);
@@ -393,15 +341,7 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
     }
 
     private void tryPurchase(){
-        try {
-            // si no se ha comprado el producto
-            if (!billingHelper.queryInventory(true,null,null).hasPurchase(Producto)){
-                printLog("no ha comprado el producto. Procediendo a la compra");
-                purchaseItem(Producto);
-            }
-        } catch (IabException e) {
-            e.printStackTrace();
-        }
+        bh.purchase(Producto);
     }
 
     /** Guardas suscripcion
@@ -646,36 +586,7 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
             }
         });
     }
-    protected void errorAlIniciar() {
-        Toast.makeText(Suscripcion.this, "Error al intentar iniciar la compra", Toast.LENGTH_SHORT).show();
-    }
 
-    protected void purchaseItem(String sku) {
-        //billingHelper.launchSubscriptionPurchaseFlow(this, sku, 541, this);
-        billingHelper.launchSubscriptionPurchaseFlow(this, sku, 541, this);
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!billingHelper.handleActivityResult(requestCode, resultCode, data)) {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
-    public void onIabPurchaseFinished(IabResult result, Purchase info) {
-        if (result.isFailure()) {
-            compraFallida();
-        } else if (Producto.equals(info.getSku())) {
-            try {
-                saveSubscription(info);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            compraCorrecta(result, info);
-        }
-    }
 
     /*
      * COSAS QUE QUERAMOS HACER CUANDO SE HAYA
@@ -700,19 +611,8 @@ public class Suscripcion extends Activity implements IabHelper.OnIabSetupFinishe
     protected void compraFallida(){
         alert("Ha habido un error con su compra.");
     }
-    //LIMPIAMOS
-    @Override
-    protected void onDestroy() {
-        disposeBillingHelper();
-        super.onDestroy();
-    }
 
-    private void disposeBillingHelper() {
-        if (billingHelper != null) {
-            billingHelper.dispose();
-        }
-        billingHelper = null;
-    }
+
 
     protected void alertOk(String mensaje){
 

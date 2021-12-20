@@ -6,8 +6,8 @@ android {
         applicationId "org.simo.medita"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 566
-        versionName "5.66"
+        versionCode 567
+        versionName "5.67"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -74,6 +74,9 @@ dependencies {
     compile 'com.amazonaws:aws-android-sdk-s3:2.1.+'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation("com.android.billingclient:billing:4.0.0")
+
 }
 repositories {
     maven { url 'https://jitpack.io' }

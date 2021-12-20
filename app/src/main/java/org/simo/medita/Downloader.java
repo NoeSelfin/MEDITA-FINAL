@@ -106,7 +106,7 @@ public class Downloader {
 		 new downloadPacks().execute();
 		 
 	}
-	public void downloadMp3(String mp3, TextView time, MediaPlayer mp, final String pack, final ImageView play, boolean streaming, String id_meditation){
+	public void downloadMp3(String mp3, TextView time, MediaPlayer mp, final String pack, final ImageView play, boolean streaming, String id_meditation, MediaPlayer mp_sound, String mp3_sound){
 		
 		File path = Environment.getDataDirectory();
 		StatFs stat = new StatFs(path.getPath());
@@ -164,9 +164,20 @@ public class Downloader {
 					mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 					mp.setDataSource(Config.url_meditaciones + mp3);
 					mp.prepare();
+
+					if(mp3_sound != null){
+						if(mp_sound != null){
+							mp_sound.reset();
+							mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+							mp_sound.setDataSource(Config.url_meditaciones + mp3_sound);
+							mp_sound.prepare();
+						}
+					}
+
 					Reproductor.play_block = false;
 					play.performClick();
 				} catch (Exception e) {
+					Log.i("medita_streaming", e.getMessage());
 					Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.", Toast.LENGTH_LONG).show();
 					Intent i = new Intent(ctx, MainActivity.class);
 					//i.setAction(Config.from_Meditaciones);

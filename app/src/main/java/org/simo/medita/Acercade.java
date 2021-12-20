@@ -173,7 +173,7 @@ public class Acercade extends Activity{
 		});
 		
 		prefs.edit().putBoolean("Premios_1", true).commit();
-		 setMenu();
+		setMenu();
 
 		if(functions.shouldShowMenu()){
 			functions.showMenu();
@@ -359,6 +359,7 @@ public class Acercade extends Activity{
 		rs1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
 			}
@@ -367,6 +368,7 @@ public class Acercade extends Activity{
 		rs2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
 				Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 				likeIng.setPackage("com.instagram.android");
@@ -383,6 +385,7 @@ public class Acercade extends Activity{
 		rs3.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				Intent intent = null;
 				try {
 					// get the Twitter app if possible
@@ -400,6 +403,7 @@ public class Acercade extends Activity{
 		rs4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				String facebookId = "fb://page/appmedita";
 				String urlPage = "https://www.facebook.com/appmedita";
 

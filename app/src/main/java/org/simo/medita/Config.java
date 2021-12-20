@@ -22,6 +22,7 @@ public class Config {
 	//protected final static String url_get_updates  = "http://medita.atentamente.net/get_updates.php";
 	protected final static String url_get_config  = "https://app.atentamente.net/api/getConfig";
 	protected final static String url_get_updates  = "https://app.atentamente.net/api/getUpdates";
+	protected final static String url_get_suscription_active  = "https://app.atentamente.net/api/getSuscriptionActive";
 	//protected final static String url_set_newsletter  = "http://medita.atentamente.net/set_newsletter.php";
 	protected final static String url_set_newsletter  = "https://app.atentamente.net/api/setNewsletter";
 	protected final static String url_set_registro  = "http://medita.atentamente.net/set_registro_sincro.php";

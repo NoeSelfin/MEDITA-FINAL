@@ -571,6 +571,10 @@ public class MainActivity extends Activity {
                                     prefs.edit().putBoolean(getString(R.string.suscrito),false).commit();
 									printLog("Subscription -> NO HAY SUSCRIPCIONES.");
 
+									if (prefs.getBoolean( getString(R.string.suscrito_externo), false) == true){
+										prefs.edit().putBoolean(getString(R.string.suscrito),true).commit();
+									}
+
 									//TODO
 									//Bloquear progreso: NO
 									//Bloquear favoritos: SI, pero mirar que no están comprados
@@ -593,7 +597,11 @@ public class MainActivity extends Activity {
                         printLog("EXCEPTION:" + e.getMessage());
                     }
                 }
+				/*if (prefs.getBoolean( getString(R.string.suscrito_externo), false) == true){
+					prefs.edit().putBoolean(getString(R.string.suscrito),true).commit();
+				}*/
             }
+
         });
 	}
 	private void saveBuys(List<Purchase> ownedBuys) throws JSONException {
@@ -611,7 +619,7 @@ public class MainActivity extends Activity {
 					//Toast.makeText(ctx, "Ya tienes este elemento!", Toast.LENGTH_SHORT).show();
 					if ((pack.optInt("id_pack") == 2) || (pack.optInt("id_pack") == 3) ||  (pack.optInt("id_pack") == 4) || (pack.optInt("id_pack") == 5)) {
 
-						if (!prefs.contains("Premios_7")) {
+						/*if (!prefs.contains("Premios_7")) {
 							prefs.edit().putBoolean("Premios_7", true).commit();
 						} else if (!prefs.contains("Premios_8")) {
 							prefs.edit().putBoolean("Premios_8", true).commit();
@@ -619,7 +627,7 @@ public class MainActivity extends Activity {
 							prefs.edit().putBoolean("Premios_9", true).commit();
 						} else if (!prefs.contains("Premios_10")) {
 							prefs.edit().putBoolean("Premios_10", true).commit();
-						}
+						}*/
 					}
 				}
 			}
@@ -815,6 +823,7 @@ public class MainActivity extends Activity {
 		rs1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
 			}
@@ -823,6 +832,7 @@ public class MainActivity extends Activity {
 		rs2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
 				Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 				likeIng.setPackage("com.instagram.android");
@@ -839,6 +849,7 @@ public class MainActivity extends Activity {
 		rs3.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				Intent intent = null;
 				try {
 					// get the Twitter app if possible
@@ -856,6 +867,7 @@ public class MainActivity extends Activity {
 		rs4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				String facebookId = "fb://page/appmedita";
 				String urlPage = "https://www.facebook.com/appmedita";
 

@@ -33,6 +33,7 @@ public class Charts  extends Activity {
     protected SharedPreferences prefs;
     protected Functions functions;
     protected Typeface font;
+    protected Typeface font_negrita;
     protected SlidingMenu menu_lateral;
     protected LinearLayout menu;
     protected BarChart barchart1;
@@ -45,8 +46,10 @@ public class Charts  extends Activity {
     protected TextView txt2;
     protected TextView txt3;
     protected TextView txt4;
+    protected TextView puntos_texto;
     protected ListView totals;
     String[] listItem;
+    protected int nivel = 0;
     protected MeditationFunctions funcs;
 
     @Override
@@ -56,6 +59,7 @@ public class Charts  extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_charts);
         font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
+        font_negrita = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Bold.otf");
         prefs = getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
         funcs= new MeditationFunctions(this);
         functions = new Functions(this);
@@ -71,11 +75,13 @@ public class Charts  extends Activity {
         txt2 = findViewById(R.id.txt2);
         txt3 = findViewById(R.id.txt3);
         txt4 = findViewById(R.id.txt4);
+        puntos_texto = findViewById(R.id.id_progreso_puntos_texto);
         title.setTypeface(font);
         txt1.setTypeface(font);
         txt2.setTypeface(font);
         txt3.setTypeface(font);
         txt4.setTypeface(font);
+        puntos_texto.setTypeface(font_negrita);
 
         ll_progreso_puntos_texto_link.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -109,6 +115,8 @@ public class Charts  extends Activity {
         if(functions.shouldShowMenu()){
             functions.showMenu();
         }
+
+        puntos_texto.setText(String.valueOf(functions.getProgresoNivel() * 100));
     }
     private void setTotals(){
 
@@ -376,6 +384,7 @@ public class Charts  extends Activity {
         rs1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
             }
@@ -384,6 +393,7 @@ public class Charts  extends Activity {
         rs2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
                 Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
                 likeIng.setPackage("com.instagram.android");
@@ -400,6 +410,7 @@ public class Charts  extends Activity {
         rs3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 Intent intent = null;
                 try {
                     // get the Twitter app if possible
@@ -417,6 +428,7 @@ public class Charts  extends Activity {
         rs4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 String facebookId = "fb://page/appmedita";
                 String urlPage = "https://www.facebook.com/appmedita";
 

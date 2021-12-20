@@ -73,6 +73,31 @@ public class Functions {
 
         return show;
     }
+    public int getProgresoNivel(){
+        int nivel = 0;
+        if (prefs.contains("Premios_1"))
+            nivel = nivel + 1;
+        if (prefs.contains("Premios_2"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_3"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_4"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_5"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_6"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_7"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_8"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_9"))
+            nivel = nivel+1;
+        if (prefs.contains("Premios_10"))
+            nivel = nivel+1;
+
+        return nivel;
+    }
     private boolean validateCode(JSONObject jo){
         //[{"id_promo":"1","from":"2020-01-01 00:00:00","to":"2020","code":"abcd","type":"1","consumed":"0","deleted_at":null}]
         if (jo.length() > 3){

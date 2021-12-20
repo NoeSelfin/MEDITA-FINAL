@@ -99,6 +99,8 @@ public class LogIn extends Activity {
                                             prefs.edit().putString("id_usuario", jsonObject.optString("id_usuario")).commit();
                                             prefs.edit().putString("nombre_usuario", jsonObject.optString("nombre_usuario")).commit();
 
+                                            prefs.edit().putBoolean("Premios_8", true).commit();
+
                                             //Si está suscrito voy a la home y si no a la pantalla de suscripción.
                                             if(prefs.getBoolean(getString(R.string.suscrito), false)){
                                                 Intent i = new Intent(getApplicationContext(), Home.class);
@@ -307,6 +309,7 @@ public class LogIn extends Activity {
         rs1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
             }
@@ -315,6 +318,7 @@ public class LogIn extends Activity {
         rs2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
                 Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
                 likeIng.setPackage("com.instagram.android");
@@ -331,6 +335,7 @@ public class LogIn extends Activity {
         rs3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 Intent intent = null;
                 try {
                     // get the Twitter app if possible
@@ -348,6 +353,7 @@ public class LogIn extends Activity {
         rs4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs.edit().putBoolean("Premios_9", true).commit();
                 String facebookId = "fb://page/appmedita";
                 String urlPage = "https://www.facebook.com/appmedita";
 

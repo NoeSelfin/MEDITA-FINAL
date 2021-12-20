@@ -13,6 +13,7 @@
     <string name="plataforma">plataforma</string>
     <!-- sharedpref key -->
     <string name="suscrito">suscrito</string>
+    <string name="suscrito_externo">suscrito_externo</string>
     <string name="skus_activos">skus_activos</string> <!--lista de items comprados/suscritos en play store-->
     <!-- string key -->
     <string name="ya_suscrito">SUSCRITO</string>

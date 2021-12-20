@@ -140,6 +140,8 @@ public class Registro extends Activity {
                                             prefs.edit().putString("id_usuario", jsonObject.optString("id_usuario")).commit();
                                             prefs.edit().putString("nombre_usuario", jsonObject.optString("nombre_usuario")).commit();
 
+                                            prefs.edit().putBoolean("Premios_8", true).commit();
+
                                             //Si está suscrito voy a la home y si no a la pantalla de suscripción.
                                             if(prefs.getBoolean(getString(R.string.suscrito), false)){
                                                 Intent i = new Intent(getApplicationContext(), Home.class);

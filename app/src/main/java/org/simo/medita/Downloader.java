@@ -680,6 +680,8 @@ public class Downloader {
 		        		prefs.edit().putInt("server_version", version).commit();
 						prefs.edit().putString("version_desc", version_desc).commit();
 
+						new hasExternSuscription().execute();
+
 					} catch (JSONException e) {
 					}
 	        		
@@ -687,8 +689,66 @@ public class Downloader {
     	
 	        	
 	        }     	        
-	  } 
-	
+	  }
+	private class hasExternSuscription extends AsyncTask<String, Void, String> {
+		String id_user;
+		@Override
+		protected void onPreExecute() {
+			id_user = prefs.getString("id_usuario", "");
+		}
+		@Override
+		protected String doInBackground(String... params) {
+			String mac = Basics.getWifiMac(ctx);
+			String result = null;
+			HttpConnection http = null;
+
+			if (Basics.checkConn(ctx)){
+				try {
+					http = new HttpConnection();
+
+					JSONObject jo =  new JSONObject();
+					jo.put("token",Config.token);
+					jo.put("id_user",id_user);
+
+					http = new HttpConnection();
+					result = http.postData(Config.url_get_suscription_active, jo.toString());
+
+					if (Config.log){
+						if (result != null)
+							Log.i("medita_susc",result);
+					}
+
+
+				} catch (JSONException e) {
+					Log.i("medita","Error descargando datos de suscripciones externas.");
+					error = false;
+				}
+			}
+
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+			if ((result != null) && (result.compareTo("") != 0)){
+				Log.i("medita_susc_result",result);
+				try{
+				    JSONArray ja = new JSONArray(result);
+				    if(ja.length() > 0){
+                        prefs.edit().putBoolean(ctx.getString(R.string.suscrito_externo), true).commit();
+						prefs.edit().putBoolean(ctx.getString(R.string.suscrito), true).commit();
+                    }
+
+                } catch (JSONException e) {
+                }
+
+            }
+
+
+		}
+	}
+
 	protected void rebootData(){
 		JSONArray completadas = new JSONArray();
 		JSONArray meditaciones_aux = new JSONArray();

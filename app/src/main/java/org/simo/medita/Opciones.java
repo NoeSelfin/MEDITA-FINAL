@@ -965,6 +965,7 @@ public class Opciones extends Activity{
 		rs1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				String urlPage = "https://www.youtube.com/channel/UCOKXZZHPxigzEvJPd8vGvNw";
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
 			}
@@ -973,6 +974,7 @@ public class Opciones extends Activity{
 		rs2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				Uri uri = Uri.parse("https://instagram.com/_u/medita_app");
 				Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 				likeIng.setPackage("com.instagram.android");
@@ -989,6 +991,7 @@ public class Opciones extends Activity{
 		rs3.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				Intent intent = null;
 				try {
 					// get the Twitter app if possible
@@ -1006,6 +1009,7 @@ public class Opciones extends Activity{
 		rs4.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				prefs.edit().putBoolean("Premios_9", true).commit();
 				String facebookId = "fb://page/appmedita";
 				String urlPage = "https://www.facebook.com/appmedita";
 

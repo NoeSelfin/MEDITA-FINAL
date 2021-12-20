@@ -185,7 +185,7 @@ public class Progreso extends Activity{
 				    		 finish();	
 						} catch (JSONException e) {
 						}*/
-					 	Intent i = new Intent(Progreso.this, MainActivity.class);   
+					 	Intent i = new Intent(Progreso.this, Novedades.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 						startActivity(i);		
 						finish();
@@ -199,7 +199,7 @@ public class Progreso extends Activity{
 				    		 finish();	
 						} catch (JSONException e) {
 						}*/
-					 	Intent i = new Intent(Progreso.this, MainActivity.class);   
+					 	Intent i = new Intent(Progreso.this, Registro.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 						startActivity(i);		
 						finish();

@@ -24,24 +24,27 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.vending.billing.util.IabResult;
-import com.android.vending.billing.util.Purchase;
+import com.android.billingclient.api.Purchase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.simo.medita.billing.BillingHelper;
+import org.simo.medita.billing.BillingHelperProducts;
 import org.simo.medita.extras.Basics;
 import org.simo.medita.extras.HttpConnection;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Suscripcion extends Activity{
 
-    BillingHelper bh;
+    protected BillingHelper bh;
+    protected BillingHelperProducts bhp;
 
     protected SharedPreferences prefs;
     protected Functions functions;
@@ -168,8 +171,9 @@ public class Suscripcion extends Activity{
         //getSubscriptionsDatabaseInfo();
 
         //inicializamos el helper para obtener las suscripciones de GP
-        bh = new BillingHelper(this);
+        bh = new BillingHelper(this, prefs);
 
+        bh.getProducts();
 
         if(functions.shouldShowMenu()){
             functions.showMenu();
@@ -179,10 +183,6 @@ public class Suscripcion extends Activity{
         checkAllDownload();
 
     }
-
-
-
-
 
     private void checkAllDownload(){
 
@@ -341,7 +341,9 @@ public class Suscripcion extends Activity{
     }
 
     private void tryPurchase(){
-        bh.purchase(Producto);
+        List <String> skusList = new ArrayList<String>();
+        skusList.add(Producto);
+        bh.purchase(skusList);
     }
 
     /** Guardas suscripcion
@@ -350,7 +352,7 @@ public class Suscripcion extends Activity{
      * @throws JSONException
      */
     private void saveSubscription(Purchase p) throws JSONException {
-        JSONObject original = new JSONObject(p.getOriginalJson());
+        /*JSONObject original = new JSONObject(p.getOriginalJson());
         new Downloader.SaveSuscription(Basics.checkConn(Suscripcion.this),
                 prefs.getString(getString(R.string.id_usuario), ""),
                 original.optString("productId"),
@@ -366,7 +368,7 @@ public class Suscripcion extends Activity{
                             printLog("SaveSuscription respuesta: " + respuesta);
                         }
                     }
-                }).execute();
+                }).execute();*/
     }
 
     @Override
@@ -587,26 +589,6 @@ public class Suscripcion extends Activity{
         });
     }
 
-
-    /*
-     * COSAS QUE QUERAMOS HACER CUANDO SE HAYA
-     * ADQUIRIDO EL PRODUCTO CON EXITO
-     */
-    protected void compraCorrecta(IabResult result, Purchase info){
-        // Consumimos los elementos a fin de poder probar varias compras
-        // billingHelper.consumeAsync(info, null);
-
-        Intent i = new Intent(Suscripcion.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra("fromSuscription",true);
-        startActivity(i);
-        finish();
-
-    }
-	    /*
-	     * COSAS QUE QUERAMOS HACER CUANDO EL PRODUCTO
-	     * NO HAYA SIDO ADQUIRIDO
-	     */
 
     protected void compraFallida(){
         alert("Ha habido un error con su compra.");

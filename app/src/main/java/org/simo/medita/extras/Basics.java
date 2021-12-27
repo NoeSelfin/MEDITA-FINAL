@@ -6,12 +6,58 @@ package org.simo.medita.extras;
  * 
  **/
 
-import java.io.File;
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Environment;
+import android.os.StatFs;
+import android.text.format.Formatter;
+import android.util.Base64;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.simo.medita.Config;
+import org.simo.medita.R;
+import org.simo.medita.R.drawable;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,7 +68,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
@@ -38,58 +83,6 @@ import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.simo.medita.Config;
-import org.simo.medita.R;
-import org.simo.medita.R.drawable;
-import org.xmlpull.v1.XmlPullParserException;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.drawable.Drawable;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Environment;
-import android.os.StatFs;
-import android.os.Vibrator;
-import android.telephony.TelephonyManager;
-import android.text.format.Formatter;
-import android.util.Base64;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.vending.billing.util.Purchase;
 
 public class Basics {
 	
@@ -141,12 +134,12 @@ public class Basics {
 		return address;
     }	
 	
-	public static String getImei(Context ctx){
+	/*public static String getImei(Context ctx){
 		String imei=null;
 		TelephonyManager telephonyManager = (TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
 		imei = telephonyManager.getDeviceId().toString();		
 		return imei;
-	}
+	}*/
 	
 	 protected static int getSreenWidht(Activity act){
     	 Display display = act.getWindowManager().getDefaultDisplay();
@@ -317,11 +310,11 @@ public class Basics {
 		return direccion;
 	}	
 	//Gesti?n de errores
-	public void error(Context ctx, Activity act){
+	/*public void error(Context ctx, Activity act){
     	Vibrator vibrator =(Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
 	    vibrator.vibrate(200);
 	    act.finish();
-    } 	 
+    } 	*/
 	
 	 //Imagenes
 	

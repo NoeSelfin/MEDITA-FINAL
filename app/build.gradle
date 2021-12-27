@@ -6,8 +6,8 @@ android {
         applicationId "org.simo.medita"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 567
-        versionName "5.67"
+        versionCode 569
+        versionName "5.69"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

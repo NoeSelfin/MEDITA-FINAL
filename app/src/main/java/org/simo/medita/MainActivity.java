@@ -29,16 +29,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.vending.billing.util.IabHelper;
-import com.android.vending.billing.util.IabResult;
-import com.android.vending.billing.util.Inventory;
-import com.android.vending.billing.util.Purchase;
+import com.android.billingclient.api.Purchase;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.simo.medita.billing.BillingHelper;
 import org.simo.medita.extras.Basics;
 
 import java.io.File;
@@ -48,7 +46,6 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -74,12 +71,10 @@ public class MainActivity extends Activity {
 	protected ListView listview;
 
 	//protected boolean pagado = false;
-    private IabHelper iabHelper;
 
     private boolean suscripcionesGoogle = false;
     private boolean suscripcionesDDBB = false;
 	private JSONObject suscripcionDDBB = null;
-	private Inventory subscriptionInventory;
 	private List<Purchase> ownedSubscriptions = new ArrayList<>();
 
     private JSONObject userInfo = null;
@@ -398,10 +393,10 @@ public class MainActivity extends Activity {
 							startActivity(i);
 							finish();
 						}else{
-							Intent i = new Intent(MainActivity.this, Compras.class);
+							/*Intent i = new Intent(MainActivity.this, Compras.class);
 							i.putExtra("pack", packs.optJSONObject(position).toString());
 							startActivity(i);
-							finish();
+							finish();*/
 						}
 		    		 }
 	    		 }
@@ -498,156 +493,12 @@ public class MainActivity extends Activity {
 		//Comprobamos si hay conexión a Internet
 		if(Basics.checkConn(MainActivity.this)){
 			// obtenemos las suscripciones de Google Play
-			getSubscriptionsInfo();
+			//getSubscriptionsInfo();
+			BillingHelper bh = new BillingHelper(this, prefs);
+			bh.purchaseRestore(adapterpacks);
 		}
 	}
 
-	private void getSubscriptionsInfo(){
-
-        final String[] skuIds = getResources().getStringArray(R.array.suscriptions_sku);
-        final List<String> skuIdsList = Arrays.asList(skuIds);
-        iabHelper = new IabHelper(MainActivity.this, Config.license_key);
-        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                if (result.isFailure()) {
-                    printLog("Problem setting up In-app Billing: " + result);
-                    dispose();
-                }else{
-                    try {
-                        iabHelper.queryInventoryAsync(true, skuIdsList, new IabHelper.QueryInventoryFinishedListener() {
-                            @Override
-                            public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-                                if (result.isFailure()) {
-                                    printLog("Problem querying inventory: " + result);
-                                    dispose();
-                                    return;
-                                }
-								subscriptionInventory = inventory;
-								// obtenemos todas las llaves de las compras/suscripciones activas
-								List<String> ownedSkus = subscriptionInventory.getAllOwnedSkus();
-								ownedSubscriptions = new ArrayList<>();
-								List<String> ownedSubscriptionsSku = new ArrayList<>();
-
-								List<Purchase> ownedBuys = new ArrayList<>();
-
-								for (Purchase p : subscriptionInventory.getAllPurchases()){
-									printLog("getAllPurchases ->  " + p.getSku());
-
-									printLog("saveSubscription -> toString -> " + p.toString());
-									printLog("saveSubscription -> getOrderId -> " + p.getOrderId());
-									printLog("saveSubscription -> getToken-> " + p.getToken());
-									printLog("saveSubscription -> getItemType -> " + p.getItemType());
-									printLog("saveSubscription -> getPurchaseTime -> " + p.getPurchaseTime());
-									printLog("saveSubscription -> getPurchaseState -> " + p.getPurchaseState());
-									printLog("saveSubscription -> getSignature -> " + p.getSignature());
-									printLog("saveSubscription -> getOriginalJson -> " + p.getOriginalJson());
-
-									if (p.getSku().contains("id_pack")){
-										ownedBuys.add(p);
-									}
-									if (p.getSku().contains("suscripcion")) {
-										ownedSubscriptions.add(p);
-										ownedSubscriptionsSku.add(p.getSku());
-									}
-								}
-								if (ownedBuys.size() > 0){
-                                    try {
-                                        saveBuys(ownedBuys);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-								// si esta registrado y hay llaves, guardamos las llaves como skus activos en sharedpreferences
-                                if (ownedSubscriptions.size() > 0){
-                                    JSONArray jsonArray = new JSONArray(ownedSubscriptionsSku);
-                                    // marcamos que esta suscrito
-                                    prefs.edit().putBoolean(getString(R.string.suscrito),true).commit();
-									printLog("Subscription -> HAY SUSCRIPCIONES.");
-                                    // guardamos los sku en sharedpref
-                                    //prefs.edit().putString(getString(R.string.skus_activos), jsonArray.toString()).commit();
-                                }else{
-                                    // marcamos que no está suscrito
-                                    prefs.edit().putBoolean(getString(R.string.suscrito),false).commit();
-									printLog("Subscription -> NO HAY SUSCRIPCIONES.");
-
-									if (prefs.getBoolean( getString(R.string.suscrito_externo), false) == true){
-										prefs.edit().putBoolean(getString(R.string.suscrito),true).commit();
-									}
-
-									//TODO
-									//Bloquear progreso: NO
-									//Bloquear favoritos: SI, pero mirar que no están comprados
-
-                                    // si no hay sku activos, quitamos la clave en las SharedPref
-                                    //prefs.edit().remove(getString(R.string.skus_activos)).commit();
-                                }
-                                // indicamos al adapter que debe actualizar los datos
-                                adapterpacks.notifyDataSetChanged();
-
-                                suscripcionesGoogle = true;
-
-								for (int i = 0; i < ownedSkus.size(); i++) {
-                                    printLog(" sku key ACTIVO: " + ownedSkus.get(i));
-                                }
-                            }
-                        });
-                    } catch (Exception e) {
-//        } catch (IabHelper.IabAsyncInProgressException e) {
-                        printLog("EXCEPTION:" + e.getMessage());
-                    }
-                }
-				/*if (prefs.getBoolean( getString(R.string.suscrito_externo), false) == true){
-					prefs.edit().putBoolean(getString(R.string.suscrito),true).commit();
-				}*/
-            }
-
-        });
-	}
-	private void saveBuys(List<Purchase> ownedBuys) throws JSONException {
-		JSONObject pack;
-
-		if (prefs.getString("packs", "").compareToIgnoreCase("") != 0){
-			packs = new JSONArray(prefs.getString("packs", ""));
-			for (int i = 0; i < packs.length(); i++) {
-				pack = packs.optJSONObject(i);
-				String Producto = pack.optString("id_pack_compra");
-
-				if (subscriptionInventory.hasPurchase(Producto)){
-					printLog("saveBuys elemento con sku: " + Producto);
-					prefs.edit().putBoolean("comprado_"+String.valueOf(pack.optInt("id_pack")), true).commit();
-					//Toast.makeText(ctx, "Ya tienes este elemento!", Toast.LENGTH_SHORT).show();
-					if ((pack.optInt("id_pack") == 2) || (pack.optInt("id_pack") == 3) ||  (pack.optInt("id_pack") == 4) || (pack.optInt("id_pack") == 5)) {
-
-						/*if (!prefs.contains("Premios_7")) {
-							prefs.edit().putBoolean("Premios_7", true).commit();
-						} else if (!prefs.contains("Premios_8")) {
-							prefs.edit().putBoolean("Premios_8", true).commit();
-						} else if (!prefs.contains("Premios_9")) {
-							prefs.edit().putBoolean("Premios_9", true).commit();
-						} else if (!prefs.contains("Premios_10")) {
-							prefs.edit().putBoolean("Premios_10", true).commit();
-						}*/
-					}
-				}
-			}
-			adapterpacks.notifyDataSetChanged();
-		}
-	}
-
-    /*
-     ** Method for releasing resources (dispose of object)
-     */
-    public void dispose() {
-        if (iabHelper != null) {
-            try {
-                iabHelper.dispose();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            iabHelper = null;
-        }
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

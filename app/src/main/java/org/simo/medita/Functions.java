@@ -126,4 +126,7 @@ public class Functions {
             Log.i(Config.tag, text);
         }
     }
+    public int getMinutesFromSeconds(int seconds){
+        return Integer.valueOf(seconds/60);
+    }
 }

@@ -44,6 +44,7 @@ public class MeditacionesHomeB extends Activity{
     protected JSONObject meditacion;
     protected LinearLayout atras;
     protected TextView disponibles;
+    protected TextView desc_med;
     protected TextView title;
     protected TextView news;
     protected LinearLayout header;
@@ -79,9 +80,11 @@ public class MeditacionesHomeB extends Activity{
         disponibles = (TextView)findViewById(R.id.id_meditaciones_disponibles);
         title = (TextView)findViewById(R.id.id_meditaciones_titulo);
         news = (TextView)findViewById(R.id.id_meditaciones_news);
+        desc_med = (TextView)findViewById(R.id.id_meditaciones_desc);
 
         disponibles.setTypeface(font);
         title.setTypeface(font);
+        desc_med.setTypeface(font);
 
         meditaciones = new JSONArray();
 
@@ -188,6 +191,7 @@ public class MeditacionesHomeB extends Activity{
                                 disponibles.setText(pack.optString("pack_titulo"));
                                 listview_duraciones.setVisibility(View.GONE);
                                 listview.setVisibility(View.VISIBLE);
+                                desc_med.setVisibility(View.GONE);
                                 duraciones = false;
                             }
 
@@ -249,6 +253,12 @@ public class MeditacionesHomeB extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 meditacion = meditaciones.optJSONObject(position);
+                if((meditacion.optString("med_desc","").length() > 4)&&(meditacion.optString("med_desc","").compareTo("null") != 0)&&(meditacion.optString("med_desc","") != null)){
+                    desc_med.setText(meditacion.optString("med_desc"));
+                    desc_med.setVisibility(View.VISIBLE);
+                }else{
+                    desc_med.setVisibility(View.GONE);
+                }
                 showDurs(meditacion,true);
             }
         });

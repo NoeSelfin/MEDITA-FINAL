@@ -233,20 +233,32 @@ public class MeditationFunctions {
 
                 for (int j=0;j<chart1.length();j++){
                     if(chart1.optJSONObject(j).optString("fecha").compareTo(dateFormat.format(cal.getTime())) == 0){
-                        chart1.optJSONObject(j).put("valor",chart1.optJSONObject(j).optInt("valor") + seconds);
-                        new_array.put(chart1.optJSONObject(j));
+                        if(chart1.optJSONObject(j).optString("fecha").compareTo(now) == 0){
+                            chart1.optJSONObject(j).put("valor",chart1.optJSONObject(j).optInt("valor") + seconds);
+                            new_array.put(chart1.optJSONObject(j));
+                        }else{
+                            new_array.put(chart1.optJSONObject(j));
+                        }
                         finded = true;
                     }
                 }
                 if (finded == false){
                     JSONObject jo = new JSONObject();
-                    jo.put("fecha",dateFormat.format(cal.getTime()));
-                    jo.put("valor",seconds);
+                    if(dateFormat.format(cal.getTime()).compareTo(now) == 0){
+                        jo.put("fecha",dateFormat.format(cal.getTime()));
+                        jo.put("valor",seconds);
+                    }else{
+                        jo.put("fecha",dateFormat.format(cal.getTime()));
+                        jo.put("valor",0);
+                    }
                     new_array.put(jo);
                 }
+
                 cal.add(Calendar.DATE, -1);
             }
-            prefs.edit().putString("chart1",chart1.toString()).commit();
+
+
+            prefs.edit().putString("chart1",new_array.toString()).commit();
 
         } catch (JSONException e) {
             Log.i(Config.tag,"chart1 error: "+e.getMessage());
@@ -261,6 +273,10 @@ public class MeditationFunctions {
             Log.i(Config.tag,"error: "+e.getMessage());
         }
         return chart1;
+    }
+    protected String getTotalDaySecondsString(){
+        return prefs.getString("chart1","");
+
     }
     protected void setTotalSectionsSeconds(int seconds, String id_meditation){
         try {
@@ -294,14 +310,17 @@ public class MeditationFunctions {
             Log.i(Config.tag,"chart1 error: "+e.getMessage());
         }
     }
-    protected JSONArray getTotalSectionsSeconds(){
-        JSONArray chart2 = null;
+    protected JSONObject getTotalSectionsSeconds(){
+        JSONObject chart2 = null;
         try {
-            chart2 = new JSONArray(prefs.getString("chart2",""));
+            chart2 = new JSONObject(prefs.getString("chart2",""));
             return chart2;
         } catch (JSONException e) {
             Log.i(Config.tag,"error: "+e.getMessage());
         }
         return chart2;
+    }
+    protected String getTotalSectionsSecondsString(){
+        return prefs.getString("chart2","");
     }
 }

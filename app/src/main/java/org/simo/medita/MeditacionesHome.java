@@ -41,6 +41,7 @@ public class MeditacionesHome extends Activity{
     protected JSONObject meditacion;
     protected LinearLayout atras;
     protected TextView disponibles;
+    protected TextView desc_med;
     protected TextView title;
     protected LinearLayout header;
     protected LinearLayout help;
@@ -72,9 +73,11 @@ public class MeditacionesHome extends Activity{
         rl_principal = (RelativeLayout)findViewById(R.id.id_meditaciones_rl_list);
         disponibles = (TextView)findViewById(R.id.id_meditaciones_disponibles);
         title = (TextView)findViewById(R.id.id_meditaciones_home_title);
+        desc_med = (TextView)findViewById(R.id.id_meditaciones_desc);
 
         disponibles.setTypeface(font);
         title.setTypeface(font);
+        desc_med.setTypeface(font);
 
         meditaciones = new JSONArray();
 
@@ -157,6 +160,7 @@ public class MeditacionesHome extends Activity{
                                 disponibles.setText(pack.optString("pack_titulo"));
                                 listview_duraciones.setVisibility(View.GONE);
                                 listview.setVisibility(View.VISIBLE);
+                                desc_med.setVisibility(View.GONE);
                                 duraciones = false;
                             }
 
@@ -218,6 +222,12 @@ public class MeditacionesHome extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 meditacion = meditaciones.optJSONObject(position);
+                if((meditacion.optString("med_desc","").length() > 4)&&(meditacion.optString("med_desc","").compareTo("null") != 0)&&(meditacion.optString("med_desc","") != null)){
+                    desc_med.setText(meditacion.optString("med_desc"));
+                    desc_med.setVisibility(View.VISIBLE);
+                }else{
+                    desc_med.setVisibility(View.GONE);
+                }
                 showDurs(meditacion,true);
             }
         });

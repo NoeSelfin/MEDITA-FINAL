@@ -154,6 +154,48 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
         mp.setOnCompletionListener(this);
         mp.setOnBufferingUpdateListener(this);
 
+		mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+			@Override
+			public void onPrepared(MediaPlayer player) {
+				// Called when the MediaPlayer is ready to play
+				Log.i(Config.tag,"mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener()");
+				((AnimationDrawable) loading.getBackground()).stop();
+				loading.setVisibility(View.INVISIBLE);
+				Reproductor.play_block = false;
+				if (mp != null){
+					mp.seekTo((int)currentTime);
+				}
+				time.setText(""+utils.milliSecondsToTimer(currentTime));
+				time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
+				play_block = false;
+				play.performClick();
+
+			}
+		}); // Set callback for when prepareAsync() finishes
+		mp.setOnErrorListener(new MediaPlayer.OnErrorListener(){
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				//Toast.makeText(Reproductor.this, "Ha habido un error de conexión, intente conectarse más tarde.", Toast.LENGTH_LONG).show();
+
+				/*Intent i = new Intent(Reproductor.this, MainActivity.class);
+				//i.setAction(Config.from_Meditaciones);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);*/
+				return true;
+			}
+		});
+		mp_sound.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+			@Override
+			public void onPrepared(MediaPlayer player) {
+				// Called when the MediaPlayer is ready to play
+				Log.i(Config.tag,"mp_sound.setOnPreparedListener(new MediaPlayer.OnPreparedListener()");
+				if (mp_sound != null){
+					mp_sound.seekTo((int)currentTime);
+				}
+
+			}
+		}); // Set callback for when prepareAsync() finishes
+
 		//mp_sound.setOnCompletionListener(this);
 		//mp_sound.setOnBufferingUpdateListener(this);
         
@@ -197,22 +239,22 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	  	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 	  	        //Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Medita/"+pack.getString("pack_fondo_rep"), options);
 		  	    bitmap = Basics.readFileInternal(this,"fondos",pack.getString("pack_fondo_rep"));
-	  	     
-	  	       if (bitmap!=null){ 
-	  	    	 bg_img.setImageBitmap(bitmap); 
+
+	  	       if (bitmap!=null){
+	  	    	 bg_img.setImageBitmap(bitmap);
 	  	    	 // bg.setBackground(new BitmapDrawable(this.getResources(), bitmap));
 	  	       }
 	  	       else{
 	  	    	 bg.setBackgroundColor(Color.parseColor(pack.getString("pack_color").trim()));
-	  	       }	  	      
-	  	       
-	  	       
+	  	       }
+
+
 	  	      bitmap = Basics.readFileInternal(this,"iconos",pack.getString("pack_icono"));
-	  			
-	  	       if (bitmap!=null){ 
+
+	  	       if (bitmap!=null){
 	  	    	 icono.setImageBitmap(bitmap);
 	  	       }
- 	       
+
 
 	  	       if (extras.containsKey("intros"))
 	  	    	   intros = extras.getBoolean("intros");	  	       
@@ -276,7 +318,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 		
 		/*AnimationDrawable loadingAnimation = new AnimationDrawable();
-		loading.setBackground( new BitmapDrawable(getResources(), loadBitmapFromAsset("player/player_00000.png")));	        
+		loading.setBackground( new BitmapDrawable(getResources(), loadBitmapFromAsset("player/player_00000.png")));
         AddFrames af =  new AddFrames(this, loadingAnimation);
         af.addPlayerFrames();
         loadingAnimation = af.getAnimation();
@@ -284,6 +326,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
         loadingAnimation.start();*/
 		
 		((AnimationDrawable) loading.getBackground()).start();
+		loading.setVisibility(View.VISIBLE);
 		
 		saveState();		
 		
@@ -468,7 +511,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		play_left.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				T.cancel();
+				if (T != null){
+					T.cancel();
+				}
 				funcs.setTotalSecondsMed((int)total1);
                 funcs.setTotalDaySeconds((int)total1);
                 funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
@@ -508,7 +553,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		play_right.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				T.cancel();
+				if (T != null){
+					T.cancel();
+				}
 				funcs.setTotalSecondsMed((int)total1);
 				funcs.setTotalDaySeconds((int)total1);
 				funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));
@@ -635,6 +682,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		introduccion.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				((AnimationDrawable) loading.getBackground()).start();
+				loading.setVisibility(View.VISIBLE);
 				if (!play_block){
 					
 					prefs.edit().putLong("saveState_time", 0).commit();  
@@ -838,7 +887,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		
 		/*if (fromMain)
 			play.performClick();*/
-		
+
 		 	ContextWrapper cw = new ContextWrapper(Reproductor.this);
 	        File directory = cw.getDir("meditaciones", Context.MODE_PRIVATE);
 	        File file=new File(directory,song);
@@ -883,7 +932,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				}
 
 			}
-		
+
 			if (!isIntro){
 				JSONArray meditaciones_aux = new JSONArray();
         		if (prefs.contains("meditaciones")){
@@ -969,8 +1018,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 			}
 		});
+
+
 	}
-		
+
 	public void prepareSong(String path, String path_sound){
 		try {
             Log.i("medita_",path);
@@ -978,8 +1029,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			fileInputStream = new FileInputStream(path);
 			mp.reset();
 	        mp.setDataSource(fileInputStream.getFD());
-	        mp.prepare();
-	        mp.seekTo((int)currentTime);
+	        mp.prepareAsync();
+	        //mp.seekTo((int)currentTime);
 
 	        if(path_sound != null){
 				if(mp_sound != null){
@@ -988,15 +1039,13 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 					mp_sound.reset();
 					mp_sound.setDataSource(fileInputStreamSound.getFD());
-					mp_sound.prepare();
-					mp_sound.seekTo((int)currentTime);
+					mp_sound.prepareAsync();
+					//mp_sound.seekTo((int)currentTime);
 				}
 			}
 
 
-	        time.setText(""+utils.milliSecondsToTimer(currentTime));
-	        time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
-	        play_block = false;
+
 	        
 		} catch (IOException e) {	
 			Log.i("medita","Error playing audio");

@@ -163,22 +163,22 @@ public class Downloader {
 					mp.reset();
 					mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 					mp.setDataSource(Config.url_meditaciones + mp3);
-					mp.prepare();
+					mp.prepareAsync ();
 
 					if(mp3_sound != null){
 						if(mp_sound != null){
 							mp_sound.reset();
-							mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+							mp_sound.setAudioStreamType(AudioManager.STREAM_MUSIC);
 							mp_sound.setDataSource(Config.url_meditaciones + mp3_sound);
-							mp_sound.prepare();
+							mp_sound.prepareAsync();
 						}
 					}
 
-					Reproductor.play_block = false;
-					play.performClick();
+					//Reproductor.play_block = false;
+					//play.performClick();
 				} catch (Exception e) {
-					Log.i("medita_streaming", e.getMessage());
 					Toast.makeText(ctx, "Ha habido un error de conexión, intente conectarse más tarde.", Toast.LENGTH_LONG).show();
+
 					Intent i = new Intent(ctx, MainActivity.class);
 					//i.setAction(Config.from_Meditaciones);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

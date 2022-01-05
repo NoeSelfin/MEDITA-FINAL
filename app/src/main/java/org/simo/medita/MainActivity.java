@@ -397,6 +397,9 @@ public class MainActivity extends Activity {
 							i.putExtra("pack", packs.optJSONObject(position).toString());
 							startActivity(i);
 							finish();*/
+							Intent i = new Intent(MainActivity.this, Suscripcion.class);
+							startActivity(i);
+							finish();
 						}
 		    		 }
 	    		 }

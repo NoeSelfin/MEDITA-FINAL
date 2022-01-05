@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -116,8 +115,8 @@ public class Charts  extends Activity {
         showBarChart2();
 
 
-        Log.i(Config.tag+"_charts",funcs.getTotalDaySecondsString());
-        Log.i(Config.tag+"_charts",funcs.getTotalDaySeconds().toString());
+        //Log.i(Config.tag+"_charts",funcs.getTotalDaySecondsString());
+        //Log.i(Config.tag+"_charts",funcs.getTotalDaySeconds().toString());
 
 
 
@@ -175,25 +174,28 @@ public class Charts  extends Activity {
         ArrayList<BarEntry> entries = new ArrayList<>();
         String title = "";
 
-        //input data
-        for(int i = 0; i < chart1.length(); i++){
-            valueList.add(chart1.optJSONObject(i).optDouble("valor",0));
+        if (chart1 != null){
+            //input data
+            for(int i = 0; i < chart1.length(); i++){
+                valueList.add(chart1.optJSONObject(i).optDouble("valor",0));
+            }
+
+            //fit the data into a bar
+            for (int i = 0; i < valueList.size(); i++) {
+                BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
+                entries.add(barEntry);
+            }
+
+            BarDataSet barDataSet = new BarDataSet(entries, title);
+            barDataSet.setColor(Color.parseColor("#10526f"));
+
+            BarData data = new BarData(barDataSet);
+            barchart1.setDrawValueAboveBar(false);
+            barchart1.getDescription().setEnabled(false);
+            barchart1.setData(data);
+            barchart1.invalidate();
         }
 
-        //fit the data into a bar
-        for (int i = 0; i < valueList.size(); i++) {
-            BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
-            entries.add(barEntry);
-        }
-
-        BarDataSet barDataSet = new BarDataSet(entries, title);
-        barDataSet.setColor(Color.parseColor("#10526f"));
-
-        BarData data = new BarData(barDataSet);
-        barchart1.setDrawValueAboveBar(false);
-        barchart1.getDescription().setEnabled(false);
-        barchart1.setData(data);
-        barchart1.invalidate();
     }
     private void showBarChart2(){
         JSONObject chart2 = funcs.getTotalSectionsSeconds();
@@ -201,48 +203,51 @@ public class Charts  extends Activity {
         ArrayList<BarEntry> entries = new ArrayList<>();
         String title = "";
 
-        BarEntry barEntry = new BarEntry(1,functions.getMinutesFromSeconds(chart2.optInt("1",0)));
-        entries.add(barEntry);
-        barEntry = new BarEntry(2,functions.getMinutesFromSeconds(chart2.optInt("2",0)));
-        entries.add(barEntry);
-        barEntry = new BarEntry(3,functions.getMinutesFromSeconds(chart2.optInt("3",0)));
-        entries.add(barEntry);
-        barEntry = new BarEntry(4,functions.getMinutesFromSeconds(chart2.optInt("4",0)));
-        entries.add(barEntry);
+        if (chart2 != null){
+            BarEntry barEntry = new BarEntry(1,functions.getMinutesFromSeconds(chart2.optInt("1",0)));
+            entries.add(barEntry);
+            barEntry = new BarEntry(2,functions.getMinutesFromSeconds(chart2.optInt("2",0)));
+            entries.add(barEntry);
+            barEntry = new BarEntry(3,functions.getMinutesFromSeconds(chart2.optInt("3",0)));
+            entries.add(barEntry);
+            barEntry = new BarEntry(4,functions.getMinutesFromSeconds(chart2.optInt("4",0)));
+            entries.add(barEntry);
 
-        final ArrayList<String> xLabel = new ArrayList<>();
-        xLabel.add("Dormir y relajarte");
-        xLabel.add("Crecimiento personal");
-        xLabel.add("Salud y bienestar");
-        xLabel.add("Foco y productividad");
+            final ArrayList<String> xLabel = new ArrayList<>();
+            xLabel.add("Dormir y relajarte");
+            xLabel.add("Crecimiento personal");
+            xLabel.add("Salud y bienestar");
+            xLabel.add("Foco y productividad");
 
 
-        BarDataSet barDataSet = new BarDataSet(entries, title);
-        barDataSet.setColors(new int[] {Color.parseColor("#10526f"),Color.parseColor("#f9c17c"),Color.parseColor("#93f4c3"), Color.parseColor("#7d95ff")});
-        barchart2.setDrawValueAboveBar(false);
-        //barchart2.getXAxis().setDrawLabels(false);
-        barchart2.getDescription().setEnabled(false);
-        XAxis xAxis = barchart2.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                String label = "";
-                if(value == 1)
-                    label = "Dormir y relajarte";
-                else if(value == 2)
-                    label = "Crecimiento personal";
-                else if(value == 3)
-                    label = "May";
-                else if(value == 4)
-                    label = "Foco y productividad";
-                return label;
-            }
-        });
-        BarData data = new BarData(barDataSet);
-        barchart2.setData(data);
-        barchart2.invalidate();
+            BarDataSet barDataSet = new BarDataSet(entries, title);
+            barDataSet.setColors(new int[] {Color.parseColor("#10526f"),Color.parseColor("#f9c17c"),Color.parseColor("#93f4c3"), Color.parseColor("#7d95ff")});
+            barchart2.setDrawValueAboveBar(false);
+            //barchart2.getXAxis().setDrawLabels(false);
+            barchart2.getDescription().setEnabled(false);
+            XAxis xAxis = barchart2.getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setDrawGridLines(false);
+            xAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getAxisLabel(float value, AxisBase axis) {
+                    String label = "";
+                    if(value == 1)
+                        label = "Dormir y relajarte";
+                    else if(value == 2)
+                        label = "Crecimiento personal";
+                    else if(value == 3)
+                        label = "May";
+                    else if(value == 4)
+                        label = "Foco y productividad";
+                    return label;
+                }
+            });
+            BarData data = new BarData(barDataSet);
+            barchart2.setData(data);
+            barchart2.invalidate();
+        }
+
     }
     public void setMenu(){
         menu_lateral = new SlidingMenu(Charts.this);

@@ -292,7 +292,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="visible">
+        android:visibility="gone">
         <fragment android:name="org.simo.medita.FragmentBottomMenu"
             android:id="@+id/id_fragment_bottom_menu"
             android:layout_width="match_parent"

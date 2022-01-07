@@ -18,7 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class Charts  extends Activity {
@@ -173,11 +175,13 @@ public class Charts  extends Activity {
         ArrayList<Double> valueList = new ArrayList<Double>();
         ArrayList<BarEntry> entries = new ArrayList<>();
         String title = "";
+        final ArrayList<String> xLabel = new ArrayList<>();
 
         if (chart1 != null){
             //input data
             for(int i = 0; i < chart1.length(); i++){
-                valueList.add(chart1.optJSONObject(i).optDouble("valor",0));
+                valueList.add(chart1.optJSONObject(i).optDouble("valor",0)/60);
+                xLabel.add("   " + chart1.optJSONObject(i).optString("fecha","--/--/--"));
             }
 
             //fit the data into a bar
@@ -188,12 +192,55 @@ public class Charts  extends Activity {
 
             BarDataSet barDataSet = new BarDataSet(entries, title);
             barDataSet.setColor(Color.parseColor("#10526f"));
+            barDataSet.setDrawValues(false);
 
             BarData data = new BarData(barDataSet);
             barchart1.setDrawValueAboveBar(false);
             barchart1.getDescription().setEnabled(false);
+            XAxis xAxis = barchart1.getXAxis();
+            //xAxis.setDrawLabels(false);
+            //xAxis.setEnabled(false);
+            xAxis.setLabelRotationAngle(-90);
             barchart1.setData(data);
+            barchart1.animateY(2000);
+
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setDrawGridLines(false);
+            xAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return xLabel.get((int)value);
+                }
+            });
+
+            barchart1.getAxisLeft().setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) Math.floor(value));
+                }
+            });
+            int max = findMaxYValue(entries); // figure out the max value in your dataset
+            barchart1.getAxisLeft().setLabelCount(max);
+            barchart1.getAxisRight().setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) Math.floor(value));
+                }
+            });
+            barchart1.getAxisLeft().setStartAtZero(true);
+            barchart1.getAxisRight().setStartAtZero(true);
+            barchart1.getAxisRight().setLabelCount(max);
+            barchart1.setScaleEnabled(false);
+            //barchart1.getLegend().setEnabled(false);
+
+            LegendEntry legendEntry = new LegendEntry();
+            legendEntry.label = "";
+            legendEntry.formColor = Color.WHITE;
+
+            barchart1.getLegend().setCustom(Arrays.asList(legendEntry));
+
             barchart1.invalidate();
+
         }
 
     }
@@ -213,22 +260,25 @@ public class Charts  extends Activity {
             barEntry = new BarEntry(4,functions.getMinutesFromSeconds(chart2.optInt("4",0)));
             entries.add(barEntry);
 
-            final ArrayList<String> xLabel = new ArrayList<>();
+            /*final ArrayList<String> xLabel = new ArrayList<>();
             xLabel.add("Dormir y relajarte");
             xLabel.add("Crecimiento personal");
             xLabel.add("Salud y bienestar");
-            xLabel.add("Foco y productividad");
+            xLabel.add("Foco y productividad");*/
 
 
             BarDataSet barDataSet = new BarDataSet(entries, title);
+            barDataSet.setDrawValues(false);
             barDataSet.setColors(new int[] {Color.parseColor("#10526f"),Color.parseColor("#f9c17c"),Color.parseColor("#93f4c3"), Color.parseColor("#7d95ff")});
             barchart2.setDrawValueAboveBar(false);
-            //barchart2.getXAxis().setDrawLabels(false);
+            barchart2.getXAxis().setDrawLabels(false);
             barchart2.getDescription().setEnabled(false);
             XAxis xAxis = barchart2.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setDrawLabels(false);
+            xAxis.setEnabled(false);
+           // xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setDrawGridLines(false);
-            xAxis.setValueFormatter(new ValueFormatter() {
+           /* xAxis.setValueFormatter(new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {
                     String label = "";
@@ -237,17 +287,82 @@ public class Charts  extends Activity {
                     else if(value == 2)
                         label = "Crecimiento personal";
                     else if(value == 3)
-                        label = "May";
+                        label = "Salud y bienestar";
                     else if(value == 4)
                         label = "Foco y productividad";
                     return label;
                 }
-            });
+            });*/
             BarData data = new BarData(barDataSet);
             barchart2.setData(data);
+            //barchart2.getAxisRight().mAxisMinimum = 0;
+            //barchart2.getAxisLeft().mAxisMinimum = 0;
+            barchart2.getAxisLeft().setStartAtZero(true);
+            barchart2.getAxisRight().setStartAtZero(true);
+            barchart2.getAxisLeft().setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) Math.floor(value));
+                }
+            });
+            int max = findMaxYValue(entries); // figure out the max value in your dataset
+            barchart2.getAxisLeft().setLabelCount(max);
+            barchart2.getAxisRight().setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) Math.floor(value));
+                }
+            });
+            barchart2.getAxisRight().setLabelCount(max);
+            barchart2.setScaleEnabled(false);
+            LegendEntry legendEntryA = new LegendEntry();
+            legendEntryA.label = "Dormir y relajarte";
+            legendEntryA.formColor = Color.parseColor("#10526f");
+            LegendEntry legendEntryB = new LegendEntry();
+            legendEntryB.label = "Crecimiento personal";
+            legendEntryB.formColor = Color.parseColor("#f9c17c");
+            LegendEntry legendEntryC = new LegendEntry();
+            legendEntryC.label = "Salud y bienestar";
+            legendEntryC.formColor = Color.parseColor("#93f4c3");
+            LegendEntry legendEntryD = new LegendEntry();
+            legendEntryD.label = "Foco y productividad";
+            legendEntryD.formColor = Color.parseColor("#7d95ff");
+
+            barchart2.getLegend().setCustom(Arrays.asList(legendEntryA, legendEntryB, legendEntryC, legendEntryD));
+
+            barchart2.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+            barchart2.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+            barchart2.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);
+            //barchart2.getLegend().mNeededHeight = 150;
+            //barchart2.getLegend().setStackSpace(0);
+            //barchart2.getLegend().mTextHeightMax = 75;
+            barchart2.getLegend().setFormToTextSpace(25);
+            barchart2.getLegend().setDrawInside(false);
+            //barchart2.getLegend().setForm(Legend.LegendForm.CIRCLE);
+            /*barchart2.getLegend().setXEntrySpace(7f);
+            barchart2.getLegend().setYEntrySpace(0f);
+            barchart2.getLegend().setYOffset(0f);
+            barchart2.getLegend().setWordWrapEnabled(true);
+            barchart2.getLegend().getCalculatedLineSizes();*/
+            barchart2.getLegend().setYOffset(30f);
+            barchart2.setExtraBottomOffset(30f);
+
+            // entry label styling
+            //barchart2.setEntryLabelTextSize(12f);
             barchart2.invalidate();
         }
 
+    }
+    public int findMaxYValue(ArrayList<BarEntry> entries){
+        int res = 0;
+        int aux = 0;
+        for (int i=0; i < entries.size(); i++){
+            if (entries.get(i).getY() > aux){
+                res = Math.round(entries.get(i).getY());
+            }
+        }
+
+        return res;
     }
     public void setMenu(){
         menu_lateral = new SlidingMenu(Charts.this);

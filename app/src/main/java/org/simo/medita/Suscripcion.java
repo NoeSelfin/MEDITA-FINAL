@@ -320,22 +320,40 @@ public class Suscripcion extends Activity{
         btMensual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Producto = listaSuscripciones.optJSONObject(0).optString("sku");
-                tryPurchase();
+                if(prefs.getBoolean(getString(R.string.registrado), false) == false){
+                    Intent i = new Intent(Suscripcion.this, LogIn.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Producto = listaSuscripciones.optJSONObject(0).optString("sku");
+                    tryPurchase();
+                }
             }
         });
         btSemestral.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Producto = listaSuscripciones.optJSONObject(1).optString("sku");
-                tryPurchase();
+                if(prefs.getBoolean(getString(R.string.registrado), false) == false){
+                    Intent i = new Intent(Suscripcion.this, LogIn.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Producto = listaSuscripciones.optJSONObject(1).optString("sku");
+                    tryPurchase();
+                }
             }
         });
         btAnual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Producto = listaSuscripciones.optJSONObject(2).optString("sku");
-                tryPurchase();
+                if(prefs.getBoolean(getString(R.string.registrado), false) == false){
+                    Intent i = new Intent(Suscripcion.this, LogIn.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Producto = listaSuscripciones.optJSONObject(2).optString("sku");
+                    tryPurchase();
+                }
             }
         });
     }

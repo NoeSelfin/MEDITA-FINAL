@@ -108,6 +108,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected MeditationFunctions funcs;
 	protected double total1 = 0;
 	Timer T;
+
+	public boolean cancelled = false;
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -162,20 +164,27 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onPrepared(MediaPlayer player) {
 				// Called when the MediaPlayer is ready to play
 				Log.i(Config.tag,"mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener()");
-				((AnimationDrawable) loading.getBackground()).stop();
-				loading.setVisibility(View.INVISIBLE);
-				Reproductor.play_block = false;
-				if (mp != null){
-					mp.seekTo((int)currentTime);
-				}
-				time.setText(""+utils.milliSecondsToTimer(currentTime));
-				time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
+				if(cancelled == false){
+					((AnimationDrawable) loading.getBackground()).stop();
+					loading.setVisibility(View.INVISIBLE);
+					Reproductor.play_block = false;
+					if (mp != null){
+						mp.seekTo((int)currentTime);
+					}
+					time.setText(""+utils.milliSecondsToTimer(currentTime));
+					time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
 
-				if(mpSoundLoaded){
-					play_block = false;
-					play.performClick();
+					if (bg_sound == 1){
+						if(mpSoundLoaded){
+							play_block = false;
+							play.performClick();
+						}
+					}else{
+						play_block = false;
+						play.performClick();
+					}
+					mpLoaded = true;
 				}
-				mpLoaded = true;
 
 			}
 		}); // Set callback for when prepareAsync() finishes
@@ -196,15 +205,18 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onPrepared(MediaPlayer player) {
 				// Called when the MediaPlayer is ready to play
 				Log.i(Config.tag,"mp_sound.setOnPreparedListener(new MediaPlayer.OnPreparedListener()");
-				if (mp_sound != null){
-					mp_sound.seekTo((int)currentTime);
+				if(cancelled == false){
+					if (mp_sound != null){
+						mp_sound.seekTo((int)currentTime);
+					}
+
+					if(mpLoaded){
+						play_block = false;
+						play.performClick();
+					}
+					mpSoundLoaded = true;
 				}
 
-				if(mpLoaded){
-					play_block = false;
-					play.performClick();
-				}
-				mpSoundLoaded = true;
 
 			}
 		}); // Set callback for when prepareAsync() finishes
@@ -548,6 +560,20 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						 if(mp_sound != null){
 							 mp_sound.stop();
 						 }
+						 cancelled = true;
+				/*Thread thread = new Thread(){
+					public void run(){
+						if(mp != null){
+							mp.release();
+							mp = null;
+						}
+						if(mp_sound != null){
+							mp_sound.release();
+							mp_sound = null;
+						}
+					}
+				};
+				thread.start();*/
 						 bitmap = null;
 						 Intent i = new Intent(Reproductor.this, Reproductor.class);  	    			
 						 i.putExtra("pack",pack.toString());	    			
@@ -597,6 +623,20 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 							 if(mp_sound != null){
 								 mp_sound.stop();
 							 }
+							 cancelled = true;
+				/*Thread thread = new Thread(){
+					public void run(){
+						if(mp != null){
+							mp.release();
+							mp = null;
+						}
+						if(mp_sound != null){
+							mp_sound.release();
+							mp_sound = null;
+						}
+					}
+				};
+				thread.start();*/
 							 time.setText("0:00");
 						     time_left.setText("0:00");
 							 bitmap = null;
@@ -871,6 +911,20 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						mp_sound.stop();
 					}
 				}
+				cancelled = true;
+				/*Thread thread = new Thread(){
+					public void run(){
+						if(mp != null){
+							mp. ;
+							mp = null;
+						}
+						if(mp_sound != null){
+							mp_sound.release();
+							mp_sound = null;
+						}
+					}
+				};
+				thread.start();*/
 
 				if(fromHome){
 					/*Intent i = new Intent(Reproductor.this, Home.class);
@@ -921,6 +975,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						prepareSong(file.getAbsolutePath(),file_sound.getAbsolutePath());
 						music.setVisibility(View.VISIBLE);
 					}else{
+						mpSoundLoaded = true;
 						prepareSong(file.getAbsolutePath(), null);
 						music.setVisibility(View.GONE);
 					}
@@ -1291,6 +1346,21 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			}
 
 		}
+		cancelled = true;
+				/*Thread thread = new Thread(){
+					public void run(){
+						if(mp != null){
+							mp.release();
+							mp = null;
+						}
+						if(mp_sound != null){
+							mp_sound.release();
+							mp_sound = null;
+						}
+					}
+				};
+				thread.start();*/
+
 
     	if (fromHome){
 			/*Intent i = new Intent(Reproductor.this, Home.class);

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +20,11 @@ import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.simo.medita.extras.Basics;
+import org.simo.medita.extras.HttpConnection;
 
 public class LogIn extends Activity {
 
@@ -107,7 +110,8 @@ public class LogIn extends Activity {
                                                 startActivity(i);
                                                 finish();
                                             }else{
-                                                menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                                                new hasExternSuscriptionLogIn().execute();
+                                                //menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
                                             }
 
                                         }else{
@@ -123,7 +127,6 @@ public class LogIn extends Activity {
                         });
             }
         });
-
         tvRecoverPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,8 +135,67 @@ public class LogIn extends Activity {
 //                finish();
             }
         });
-
         setMenu();
+    }
+    private class hasExternSuscriptionLogIn extends AsyncTask<String, Void, String> {
+        String id_user;
+        @Override
+        protected void onPreExecute() {
+            Log.i("medita_susc","Buscando suscripciones externas.");
+
+            id_user = prefs.getString("id_usuario", "");
+            Log.i("medita_susc",id_user);
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            String mac = Basics.getWifiMac(LogIn.this);
+            String result = null;
+            HttpConnection http = null;
+
+            if (Basics.checkConn(LogIn.this)){
+                try {
+                    http = new HttpConnection();
+
+                    JSONObject jo =  new JSONObject();
+                    jo.put("token",Config.token);
+                    jo.put("id_user",id_user);
+
+                    http = new HttpConnection();
+                    result = http.postData(Config.url_get_suscription_active, jo.toString());
+                    if (Config.log){
+                        if (result != null)
+                            Log.i("medita_susc",result);
+                    }
+                } catch (JSONException e) {
+                    Log.i("medita","Error descargando datos de suscripciones externas.");
+                }
+            }
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            if ((result != null) && (result.compareTo("") != 0)){
+                Log.i("medita_susc_result",result);
+                try{
+                    JSONArray ja = new JSONArray(result);
+                    if(ja.length() > 0){
+                        prefs.edit().putBoolean(LogIn.this.getString(R.string.suscrito_externo), true).commit();
+                        prefs.edit().putBoolean(LogIn.this.getString(R.string.suscrito), true).commit();
+
+                        Intent i = new Intent(getApplicationContext(), Home.class);
+                        startActivity(i);
+                        finish();
+
+                    }else{
+                        menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                    }
+                } catch (JSONException e) {
+                    menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                }
+            }else{
+                menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+            }
+        }
     }
 
     public void setMenu(){

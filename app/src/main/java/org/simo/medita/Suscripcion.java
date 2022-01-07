@@ -267,12 +267,12 @@ public class Suscripcion extends Activity{
                 }
             }
             // si hay nombre de suscripcion (ya sea de Google Play o de la DDBB)
-            if (tipoSuscripcion != null) {
+            if ((tipoSuscripcion != null) || (prefs.getBoolean(getString(R.string.suscrito), false))){
                 printLog("hay skus activos de tipo -> " + tipoSuscripcion);
-                String info_suscripcion = getString(R.string.suscripcion_activa);
+                String info_suscripcion = getString(R.string.suscripcion_activa2);
                 btn_suscripcion.setText(info_suscripcion);
-                tvNombreSuscripcion.setText(tipoSuscripcion);
-                tvNombreSuscripcion.setVisibility(View.VISIBLE);
+               // tvNombreSuscripcion.setText(tipoSuscripcion);
+                //tvNombreSuscripcion.setVisibility(View.VISIBLE);
                 infoLinearLayout.setVisibility(View.GONE);
                 // escondemos la lista de suscripciones
                 linearListaSuscripciones.setVisibility(View.GONE);

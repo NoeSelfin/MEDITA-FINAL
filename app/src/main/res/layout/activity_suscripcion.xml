@@ -53,6 +53,7 @@
             android:gravity="center_vertical"
             android:text="Cerrar sesión"
             android:textColor="#0c465e"
+            android:visibility="invisible"
             android:layout_marginEnd="16dp"/>
 
         <TextView

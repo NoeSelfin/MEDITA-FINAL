@@ -34,6 +34,7 @@
     <string name="bt_crear">Crear</string>
     <string name="cancel_suscription">Si deseas cancelar una suscripción puedes hacerlo desde <a href="https://play.google.com/store/account/subscriptions">Google Play</a>.</string>
     <string name="suscripcion_activa">Actualmente tienes activa la suscripción de tipo </string>
+    <string name="suscripcion_activa2">Actualmente estás suscrito a Medita! </string>
     <string name="suscripcion_no_activa">Actualmente no tienes ninguna suscripción activa.</string>
     <string name="text_recuperar_cuenta">Introduce el correo electrónico de la cuenta. Se te mandará un email donde podrás gestionar tu contraseña.</string>
     <string name="subscription_bad_account">Esta cuenta de usuario ya esta vinculada con otra cuenta de Google Play.</string>

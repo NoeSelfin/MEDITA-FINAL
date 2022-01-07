@@ -193,7 +193,6 @@ public class Downloader {
 				Toast.makeText(ctx, "No queda espacio en el dispositivo para guardar la meditación.", Toast.LENGTH_LONG).show();
 			}
 		}
-		
 		 
 	}
 	public void searchUpdates(){
@@ -694,7 +693,10 @@ public class Downloader {
 		String id_user;
 		@Override
 		protected void onPreExecute() {
+			Log.i("medita_susc","Buscando suscripciones externas.");
+
 			id_user = prefs.getString("id_usuario", "");
+			Log.i("medita_susc",id_user);
 		}
 		@Override
 		protected String doInBackground(String... params) {
@@ -730,7 +732,6 @@ public class Downloader {
 
 		@Override
 		protected void onPostExecute(String result) {
-
 			if ((result != null) && (result.compareTo("") != 0)){
 				Log.i("medita_susc_result",result);
 				try{
@@ -738,11 +739,13 @@ public class Downloader {
 				    if(ja.length() > 0){
                         prefs.edit().putBoolean(ctx.getString(R.string.suscrito_externo), true).commit();
 						prefs.edit().putBoolean(ctx.getString(R.string.suscrito), true).commit();
+                    }else{
+                        prefs.edit().putBoolean(ctx.getString(R.string.suscrito_externo), false).commit();
+                        prefs.edit().putBoolean(ctx.getString(R.string.suscrito), false).commit();
                     }
 
                 } catch (JSONException e) {
                 }
-
             }
 
 

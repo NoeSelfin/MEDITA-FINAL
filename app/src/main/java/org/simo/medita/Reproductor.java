@@ -97,6 +97,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected boolean fromMain = false;
 	protected boolean fromHome = false;
 
+	protected boolean mpLoaded = false;
+	protected boolean mpSoundLoaded = false;
+
 	FileInputStream fileInputStream;
 	FileInputStream fileInputStreamSound;
 
@@ -167,8 +170,12 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				}
 				time.setText(""+utils.milliSecondsToTimer(currentTime));
 				time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
-				play_block = false;
-				play.performClick();
+
+				if(mpSoundLoaded){
+					play_block = false;
+					play.performClick();
+				}
+				mpLoaded = true;
 
 			}
 		}); // Set callback for when prepareAsync() finishes
@@ -192,6 +199,12 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				if (mp_sound != null){
 					mp_sound.seekTo((int)currentTime);
 				}
+
+				if(mpLoaded){
+					play_block = false;
+					play.performClick();
+				}
+				mpSoundLoaded = true;
 
 			}
 		}); // Set callback for when prepareAsync() finishes
@@ -684,6 +697,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			public void onClick(View arg0) {
 				((AnimationDrawable) loading.getBackground()).start();
 				loading.setVisibility(View.VISIBLE);
+				mpLoaded = false;
+				mpSoundLoaded = false;
 				if (!play_block){
 					
 					prefs.edit().putLong("saveState_time", 0).commit();  

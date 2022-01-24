@@ -66,6 +66,15 @@
             android:textColor="#0c465e"
             android:textSize="19sp"
             android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Accede con tu usuario para obtener o recuperar los planes de suscripción y muchas más cosas en la comunidad de Medita. Si no tienes usuario puedes crearte uno con el acceso que hay más abajo."
+            android:paddingStart="8dp"
+            android:textColor="#0c465e"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/textView"

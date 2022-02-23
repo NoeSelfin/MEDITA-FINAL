@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -179,6 +180,23 @@ public class BillingHelper  implements PurchasesUpdatedListener {
             if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
                 suscriptions = true;
 
+                AcknowledgePurchaseParams acknowledgePurchaseParams =
+                        AcknowledgePurchaseParams.newBuilder()
+                                .setPurchaseToken(purchase.getPurchaseToken())
+                                .build();
+
+                AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = new AcknowledgePurchaseResponseListener() {
+                    @Override
+                    public void onAcknowledgePurchaseResponse(BillingResult billingResult) {
+
+                        Log.i("Medita","Purchase acknowledged");
+                    }
+
+                };
+
+                billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
+
+
                 /*if (!verifyValidSignature(purchase.getOriginalJson(), purchase.getSignature())) {
                     // Invalid purchase
                     // show error to user
@@ -207,6 +225,9 @@ public class BillingHelper  implements PurchasesUpdatedListener {
         if (suscriptions == true){
             prefs.edit().putBoolean(ctx.getString(R.string.suscrito),true).commit();
             printLog("Subscription -> HAY SUSCRIPCIONES.");
+
+
+            //Validamos la compra en Google Play
 
         } else{
             // marcamos que no está suscrito

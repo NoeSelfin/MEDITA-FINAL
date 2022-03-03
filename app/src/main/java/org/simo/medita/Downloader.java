@@ -221,8 +221,7 @@ public class Downloader {
 					   
 					   http = new HttpConnection();
 			           result = http.postData(Config.url_get_packs, jo.toString());
-			           if (Config.log)
-			        	   Log.i("medita",result);			           
+
 			         			           
 					} catch (JSONException e) {
 						Log.i("medita","Error descargando datos de los packs.");
@@ -235,8 +234,9 @@ public class Downloader {
 
 	        @Override
 	        protected void onPostExecute(String result) {
-	        	
-	        	if ((result != null) && (result.compareTo("") != 0)){	
+				if (Config.log)
+					Log.i("medita",result);
+				if ((result != null) && (result.compareTo("") != 0)){
 	        		try {
 						packs = new JSONArray(result);
 						MainActivity.packs = packs;
@@ -284,8 +284,7 @@ public class Downloader {
 					   
 					   http = new HttpConnection();
 			           result = http.postData(Config.url_get_meditaciones, jo.toString());
-			           if (Config.log)
-			        	   Log.i("medita",result);			           
+
 			         			           
 					} catch (JSONException e) {
 						Log.i("medita","Error descargando datos de los packs.");
@@ -298,8 +297,9 @@ public class Downloader {
 
 	        @Override
 	        protected void onPostExecute(String result) {
-	        	
-	        	if ((result != null) && (result.compareTo("") != 0)){	     
+				if (Config.log)
+					Log.i("medita",result);
+				if ((result != null) && (result.compareTo("") != 0)){
 	        		
 	        		JSONArray completadas = new JSONArray();
 	        		JSONArray meditaciones_aux = new JSONArray();
@@ -366,8 +366,7 @@ public class Downloader {
 
 					http = new HttpConnection();
 					result = http.postData(Config.url_get_config, jo.toString());
-					if (Config.log)
-						Log.i("medita",result);
+
 
 				} catch (JSONException e) {
 					Log.i("medita","Error descargando datos de configuración de la Home.");
@@ -380,7 +379,8 @@ public class Downloader {
 
 		@Override
 		protected void onPostExecute(String result) {
-
+			if (Config.log)
+				Log.i("medita",result);
 			if ((result != null) && (result.compareTo("") != 0)){
 				prefs.edit().putString("home_options",result).commit();
 

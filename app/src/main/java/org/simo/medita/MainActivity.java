@@ -193,7 +193,9 @@ public class MainActivity extends Activity {
 							adapterpacks.notifyDataSetChanged();
 
 							if (!prefs.contains("disclaimer")){
-								disclaimer();
+								if(!isFinishing()){
+									disclaimer();
+								}
 							} else {
 								printLog("checkpoint 1");
 								// si no esta suscrito
@@ -807,7 +809,10 @@ public class MainActivity extends Activity {
 				public void onClick(View v) {
 					prefs.edit().putBoolean("disclaimer", true).commit();
 					dialog.dismiss();
-					alert_meditaciones_nuevas();
+					if(!isFinishing()){
+						alert_meditaciones_nuevas();
+					}
+
 				}
 			});
 

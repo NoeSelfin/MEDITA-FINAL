@@ -1330,7 +1330,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	{
     	back = true;
     	AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		T.cancel();
+    	if (T != null){
+			T.cancel();
+		}
 		funcs.setTotalSecondsMed((int)total1);
 		funcs.setTotalDaySeconds((int)total1);
 		funcs.setTotalSectionsSeconds((int)total1, meditacion.optString("id_meditacion"));

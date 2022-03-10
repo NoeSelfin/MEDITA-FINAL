@@ -169,16 +169,24 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					loading.setVisibility(View.INVISIBLE);
 					Reproductor.play_block = false;
 					if (mp != null){
-						mp.seekTo((int)currentTime);
+						if (isIntro){
+							mp.seekTo(mp.getCurrentPosition());
+						}else{
+							mp.seekTo((int)currentTime);
+						}
+
 					}
 					time.setText(""+utils.milliSecondsToTimer(currentTime));
 					time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
-
 					if (bg_sound == 1){
 						if(mpSoundLoaded){
-							play_block = false;
+                            play_block = false;
 							play.performClick();
 						}
+						if (isIntro){
+                            play_block = false;
+                            play.performClick();
+                        }
 					}else{
 						play_block = false;
 						play.performClick();
@@ -661,7 +669,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				if (!play_block){
 					AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 					int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-					
+					Log.i("medita_reproductor", "Play inside!");
 					if (currentVolume == 0)
 						Toast.makeText(Reproductor.this, "El volumen está desactivado.", Toast.LENGTH_SHORT).show();
 					else if ((currentVolume == 1) || (currentVolume == 1))

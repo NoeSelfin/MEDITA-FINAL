@@ -3,7 +3,9 @@ package org.simo.medita.billing;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
@@ -28,8 +30,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 
 public class BillingHelper  implements PurchasesUpdatedListener {
@@ -39,6 +41,9 @@ public class BillingHelper  implements PurchasesUpdatedListener {
     List <String> skusList;
     private SharedPreferences prefs;
     AdapterPacks adapterpacks;
+    Button btMensual,btSemestral,btAnual;
+    protected Typeface font;
+    boolean fromSuscriptions = false;
 
     public BillingHelper(Context ctx, SharedPreferences prefs){
         this.ctx = ctx;
@@ -47,11 +52,17 @@ public class BillingHelper  implements PurchasesUpdatedListener {
         this.skusList.add("id_suscripcion_mensual");
         this.skusList.add("id_suscripcion_semestral");
         this.skusList.add("id_suscripcion_anual");
+        font = Typeface.createFromAsset(ctx.getAssets(), "tipo/Dosis-Regular.otf");
         billingClient = BillingClient.newBuilder(ctx).enablePendingPurchases().setListener(this).build();
     }
 
     //Read products
-    public void getProducts() {
+    public void getProducts(Button btMensual,Button btSemestral,Button btAnual, Boolean fromSuscriptions) {
+        this.btMensual = btMensual;
+        this.btSemestral = btSemestral;
+        this.btAnual = btAnual;
+        this.fromSuscriptions = fromSuscriptions;
+
         //check if service is already connected
         if (billingClient.isReady()) {
             Log.i("medita_","getProducts");
@@ -283,7 +294,21 @@ public class BillingHelper  implements PurchasesUpdatedListener {
                                         Log.i("medita_",skuDetails.getPriceCurrencyCode());
                                         Log.i("medita_",skuDetails.getPrice());
 
+                                        if (fromSuscriptions == true){
+                                            if(skuDetails.getSku().compareToIgnoreCase("id_suscripcion_mensual") == 0){
+                                                btMensual.setText("SUSCRIPCIÓN MENSUAL " + skuDetails.getPrice());
+                                                btMensual.setTypeface(font);
+                                            }else if(skuDetails.getSku().compareToIgnoreCase("id_suscripcion_semestral") == 0){
+                                                btSemestral.setText("SUSCRIPCIÓN SEMESTRAL " + skuDetails.getPrice());
+                                                btSemestral.setTypeface(font);
+                                            }else if(skuDetails.getSku().compareToIgnoreCase("id_suscripcion_anual") == 0){
+                                                btAnual.setText("SUSCRIPCIÓN ANUAL " + skuDetails.getPrice());
+                                                btAnual.setTypeface(font);
+                                            }
+                                        }
+
                                     }
+
                                 }
                             }
                             else{

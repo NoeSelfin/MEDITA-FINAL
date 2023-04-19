@@ -19,30 +19,38 @@
             android:id="@+id/id_menu1"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.20"
             android:src="@drawable/home"
             android:contentDescription="Option 1"/>
         <ImageView
             android:id="@+id/id_menu2"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.20"
             android:src="@drawable/heart"
             android:contentDescription="Option 2" />
         <ImageView
             android:id="@+id/id_menu3"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.20"
             android:src="@drawable/book"
             android:contentDescription="Option 3"/>
         <ImageView
             android:id="@+id/id_menu4"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.20"
             android:src="@drawable/profit"
             android:contentDescription="Option 4"/>
+        <ImageView
+            android:id="@+id/id_menu5"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="0.20"
+            android:src="@drawable/video_ico"
+            android:contentDescription="Option 5"/>
+
 
     </LinearLayout>
 

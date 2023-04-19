@@ -45,6 +45,27 @@ public class MeditationFunctions {
         } catch (JSONException e) {
         }
     }
+    public void deleteMeditationDownload(String id_meditation){
+        String download_string = prefs.getString("download_meds",null);
+        try {
+            JSONArray download = null;
+            JSONArray new_download = new JSONArray();
+
+            if(download_string != null){
+                download = new JSONArray(download_string);
+                boolean finded = false;
+                for (int i=0;i<download.length();i++){
+                    if (download.optString(i).compareTo(id_meditation) == 0){
+                    }else{
+                        new_download.put(download.optString(i));
+                    }
+                }
+                prefs.edit().putString("download_meds", new_download.toString()).commit();
+            }
+
+        } catch (JSONException e) {
+        }
+    }
     public JSONArray getMeditationDownload(){
         String download_string = prefs.getString("download_meds","");
         try {

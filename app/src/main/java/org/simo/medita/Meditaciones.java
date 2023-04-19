@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -36,6 +37,9 @@ import org.simo.medita.extras.Basics;
 import org.simo.medita.extras.FilterData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Meditaciones extends Activity{
 	protected SharedPreferences prefs;
@@ -49,6 +53,7 @@ public class Meditaciones extends Activity{
 	protected LinearLayout atras;
 	protected ImageView ico;
 	protected ImageView bg;
+	protected ImageView favs;
 	protected TextView titulo;
 	protected TextView disponibles;
 	protected TextView letrero;
@@ -94,7 +99,8 @@ public class Meditaciones extends Activity{
 		entendido_nl = (TextView)findViewById(R.id.id_meditaciones_entendido_newsletter);
 		letrero_nl = (TextView)findViewById(R.id.id_meditaciones_letrero_newsletter);
 		newsletter = (LinearLayout)findViewById(R.id.id_meditaciones_newsletter);
-		
+		favs = (ImageView)findViewById(R.id.id_packs_favoritos);
+
 		disponibles.setTypeface(font);
 		letrero.setTypeface(font);
 		letrero_nl.setTypeface(font);
@@ -145,8 +151,7 @@ public class Meditaciones extends Activity{
 		  	       else{
 		  	    	   //Error, no hay meditaciones.
 		  	       }
-		  	       
-		  	   
+
 
 				} catch (JSONException e) {
 					Log.i("medita","Meditaciones error.");
@@ -218,8 +223,8 @@ public class Meditaciones extends Activity{
 								
 							}
 		    			});
-		    		 listview_duraciones.startAnimation(animation);		
-
+		    		 listview_duraciones.startAnimation(animation);
+					favs.setVisibility(View.VISIBLE);
 		    		
 					
 				}
@@ -251,7 +256,7 @@ public class Meditaciones extends Activity{
 		((ImageView)findViewById(R.id.id_meditaciones_atras_ico)).setImageDrawable(draw);
 		
 	}
-	
+
 	public void setListView(){
 		adaptermeditaciones = new AdapterMeditaciones(this, meditaciones,pack);
 	    listview.setAdapter(adaptermeditaciones);
@@ -379,6 +384,8 @@ public class Meditaciones extends Activity{
 		    			 listview_duraciones.setVisibility(View.VISIBLE); 
 		    			 listview.setVisibility(View.INVISIBLE); 
 		    			 duraciones = true;
+
+						 favs.setVisibility(View.INVISIBLE);
 		    			 
 		    			 listview_duraciones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 		    		    	 @Override
@@ -401,7 +408,87 @@ public class Meditaciones extends Activity{
 	    	 }
 
         });
+
+		iniFavs();
 		
+	}
+
+	public void iniFavs(){
+		if (pack.optInt("pack_prioridad") == 0) {
+			favs.setBackgroundResource(R.drawable.favorite);
+		}else{
+			favs.setBackgroundResource(R.drawable.no_favorite_down);
+		}
+
+		favs.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				try {
+					JSONArray jsonArray = new JSONArray(prefs.getString("packs", ""));
+					JSONArray sortedJsonArray = new JSONArray();
+					if (pack.getInt("pack_prioridad") == 0){
+						favs.setBackgroundResource(R.drawable.no_favorite_down);
+						for(int i = 0; i < jsonArray.length(); i++) {
+							if (jsonArray.getJSONObject(i).optString("id_pack").compareToIgnoreCase(pack.getString("id_pack")) == 0){
+								jsonArray.getJSONObject(i).put("pack_prioridad",jsonArray.getJSONObject(i).optInt("pack_prioridad_old"));
+							}
+							sortedJsonArray.put(jsonArray.getJSONObject(i));
+						}
+						prefs.edit().putString("packs", sortedJsonArray.toString()).apply();
+					}else{
+						favs.setBackgroundResource(R.drawable.favorite);
+						//Agregar
+
+						List list = new ArrayList();
+						for(int i = 0; i < jsonArray.length(); i++) {
+							if (jsonArray.getJSONObject(i).optString("id_pack").compareToIgnoreCase(pack.getString("id_pack")) == 0){
+								jsonArray.getJSONObject(i).put("pack_prioridad_old",jsonArray.getJSONObject(i).optInt("pack_prioridad"));
+								jsonArray.getJSONObject(i).put("pack_prioridad",0);
+							}
+							list.add(jsonArray.getJSONObject(i));
+						}
+
+						Collections.sort( list, new Comparator<JSONObject>() {
+							//You can change "Name" with "ID" if you want to sort by ID
+							private static final String KEY_NAME = "pack_prioridad";
+
+							@Override
+							public int compare(JSONObject a, JSONObject b) {
+								String valA = new String();
+								String valB = new String();
+
+								try {
+									valA = (String) a.get(KEY_NAME).toString();
+									valB = (String) b.get(KEY_NAME).toString();
+								}
+								catch (JSONException e) {
+									//do something
+								}
+
+								return valA.compareTo(valB);
+								//if you want to change the sort order, simply use the following:
+								//return -valA.compareTo(valB);
+							}
+						});
+
+						for(int i = 0; i < jsonArray.length(); i++) {
+							sortedJsonArray.put(list.get(i));
+						}
+
+						//If exists in fav pack
+						//Save in list pack favs
+						//Or remove in fav packs
+						Log.i("medita_packss",prefs.getString("packs", ""));
+						prefs.edit().putString("packs", sortedJsonArray.toString()).apply();
+					}
+
+
+				} catch (JSONException e) {
+				}
+
+			}
+		});
 	}
 	
 	@Override

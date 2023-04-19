@@ -22,6 +22,15 @@
 		        android:layout_height="19dp"
 		        android:src="@drawable/atras_ico_blue"/>
     	 </LinearLayout>
+		<ImageView
+			android:id="@+id/id_packs_favoritos"
+			android:layout_width="35dp"
+			android:layout_height="35dp"
+			android:layout_marginBottom="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentBottom="true"
+			android:background="@drawable/fav_button"/>
     	<ImageView
     	     android:id="@+id/id_meditaciones_ico"
 	        android:layout_width="wrap_content"

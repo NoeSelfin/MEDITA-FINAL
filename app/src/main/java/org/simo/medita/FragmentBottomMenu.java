@@ -25,6 +25,7 @@ public class FragmentBottomMenu extends Fragment {
         ImageView menu2 = (ImageView) view.findViewById(R.id.id_menu2);
         ImageView menu3 = (ImageView) view.findViewById(R.id.id_menu3);
         ImageView menu4 = (ImageView) view.findViewById(R.id.id_menu4);
+        ImageView menu5 = (ImageView) view.findViewById(R.id.id_menu5);
 
         menu1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,14 @@ public class FragmentBottomMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), Charts.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
+        menu5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), Novedades.class);
                 startActivity(i);
                 getActivity().finish();
             }

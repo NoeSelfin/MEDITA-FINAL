@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:gravity="center"
-            android:text="COMUNIDAD"
+            android:text="LOGIN / REGISTRO"
             android:textColor="#0c465e"
             android:textSize="19sp"
             android:layout_gravity="center_vertical"/>
@@ -49,41 +49,43 @@
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:text="LOGIN"
             android:paddingStart="8dp"
+            android:text="LOGIN"
             android:textColor="#0c465e"
-            android:textSize="19sp"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="19sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
             android:layout_marginTop="10dp"
-            android:text="Accede con tu usuario para obtener o recuperar los planes de suscripción y muchas más cosas en la comunidad de Medita. Si no tienes usuario puedes crearte uno con el acceso que hay más abajo."
+            android:gravity="left"
             android:paddingStart="8dp"
+            android:text="Accede con tu usuario para obtener o recuperar los planes de suscripción y muchas más cosas en la comunidad de Medita. Si no tienes usuario puedes crearte uno con el acceso que hay más abajo."
             android:textColor="#0c465e"
-            android:textSize="16sp"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/et_tv_height"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="20dp"
-            android:paddingEnd="8dp"
             android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="@string/email" />
 
         <EditText
@@ -93,16 +95,16 @@
             android:background="@drawable/bt_crear_cuenta_background"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/et_tv_height"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:paddingEnd="8dp"
             android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="@string/password" />
 
         <EditText
@@ -112,8 +114,8 @@
             android:background="@drawable/bt_crear_cuenta_background"
             android:ems="10"
             android:inputType="textPassword"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <Button
             android:id="@+id/bt_iniciar"
@@ -150,9 +152,9 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:text="@string/sin_cuenta"
-            android:textStyle="bold"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/bt_crear_cuenta"
@@ -183,9 +185,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -205,7 +207,7 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:text="Pulsa aquí."
-            android:textColor="#0000EE"/>
+            android:textColor="#0000EE" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

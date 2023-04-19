@@ -33,7 +33,7 @@ public class MeditacionesHome extends Activity{
     MeditationFunctions med_funcs;
     protected AdapterMeditaciones adaptermeditaciones;
     protected AdapterMeditacionesHome adaptermeditacioneshome;
-    protected AdapterMeditacionesDuracion adaptermeditacionesduracion;
+    protected AdapterMeditacionesDuracionDownloads adaptermeditacionesduracion;
     protected ListView listview;
     protected ListView listview_duraciones;
     protected JSONObject pack;
@@ -268,9 +268,9 @@ public class MeditacionesHome extends Activity{
         }
 
         if (((meditacion.optInt("id_pack") == 1)) && (meditacion.optInt("orden") == 0))
-            adaptermeditacionesduracion = new AdapterMeditacionesDuracion(MeditacionesHome.this, durs,true,meditacion);
+            adaptermeditacionesduracion = new AdapterMeditacionesDuracionDownloads(MeditacionesHome.this, durs,true,meditacion);
         else
-            adaptermeditacionesduracion = new AdapterMeditacionesDuracion(MeditacionesHome.this, durs,false,meditacion);
+            adaptermeditacionesduracion = new AdapterMeditacionesDuracionDownloads(MeditacionesHome.this, durs,false,meditacion);
 
         listview_duraciones.setAdapter(adaptermeditacionesduracion);
 

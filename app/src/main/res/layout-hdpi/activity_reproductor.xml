@@ -47,14 +47,31 @@
 	        android:layout_marginRight="16dp"
 	        android:layout_alignParentRight="true"
 	        android:background="@drawable/fav_button"/>
-	<ImageView
-		android:id="@+id/id_reproductor_download"
-		android:layout_width="35dp"
+	<LinearLayout
+		android:layout_width="wrap_content"
 		android:layout_height="35dp"
-		android:layout_marginBottom="50dp"
+		android:layout_centerInParent="true"
 		android:layout_above="@+id/id_reproductor_dia"
-		android:layout_centerHorizontal="true"
-		android:src="@drawable/download"/>
+		android:layout_marginBottom="50dp"
+		android:orientation="horizontal" >
+		<ImageView
+			android:id="@+id/id_reproductor_download"
+			android:layout_width="35dp"
+			android:layout_height="35dp"
+			android:layout_marginBottom="50dp"
+			android:layout_above="@+id/id_reproductor_dia"
+			android:layout_centerHorizontal="true"
+			android:src="@drawable/download"/>
+		<ImageView
+			android:id="@+id/id_reproductor_music"
+			android:layout_width="35dp"
+			android:layout_height="35dp"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="20dp"
+			android:layout_toRightOf="@+id/id_reproductor_play_rigth"
+			android:background="@drawable/music"/>
+	</LinearLayout>
+
      
     <TextView
 	            android:id="@+id/id_reproductor_dia"
@@ -163,14 +180,7 @@
 			         android:layout_marginLeft="25dp"
 			        android:layout_toRightOf="@+id/id_reproductor_play"
 			        android:background="@drawable/btn_next" />
-				<ImageView
-					android:id="@+id/id_reproductor_music"
-					android:layout_width="20dp"
-					android:layout_height="20dp"
-					android:layout_centerVertical="true"
-					android:layout_marginLeft="20dp"
-					android:layout_toRightOf="@+id/id_reproductor_play_rigth"
-					android:background="@drawable/music"/>
+
 			</RelativeLayout>
 			
 	</LinearLayout>

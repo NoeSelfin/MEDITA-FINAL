@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp" >
+
+    <TextView
+        android:id="@+id/id_row_med_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="80dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10px"
+        android:text="·BUENAS NOCHES·"
+        android:textColor="#0c465e"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/id_row_med_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/play_mini_up2"/>
+
+    <ImageView
+        android:id="@+id/id_row_med_img_downloaded"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:layout_alignRight="@+id/id_row_med_img"
+        android:layout_marginRight="30dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/downloaded_arrow"/>
+
+    <ImageView
+        android:id="@+id/id_row_med_img_downloaded_deleted"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="visible"
+        android:layout_alignRight="@+id/id_row_med_img_downloaded"
+        android:layout_marginRight="50dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/delete"/>
+
+    <TextView
+        android:id="@+id/id_row_med_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_row_med_nombre"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="30dp"
+        android:textColor="#0c465e"
+        android:layout_marginRight="80dp"
+        android:visibility="invisible"
+        android:lineSpacingMultiplier="0.7"
+        android:maxLines="4"
+        android:gravity="center_vertical"
+        android:textSize="11sp"
+        android:text=""/>
+
+
+</RelativeLayout>

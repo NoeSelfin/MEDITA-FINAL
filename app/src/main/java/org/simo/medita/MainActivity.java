@@ -90,10 +90,10 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
-		firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+		/*firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 		Bundle bundle = new Bundle();
 		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "MainActivity");
-		firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+		firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);*/
 
 		font = Typeface.createFromAsset(getAssets(), "tipo/Dosis-Regular.otf");
 //		prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);

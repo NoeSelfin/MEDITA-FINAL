@@ -38,8 +38,10 @@ import org.simo.medita.extras.HttpConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Suscripcion extends Activity{
 
@@ -173,7 +175,7 @@ public class Suscripcion extends Activity{
         //inicializamos el helper para obtener las suscripciones de GP
         bh = new BillingHelper(this, prefs);
 
-        bh.getProducts();
+        bh.getProducts(btMensual,btSemestral,btAnual, true);
 
         if(functions.shouldShowMenu()){
             functions.showMenu();
@@ -212,20 +214,24 @@ public class Suscripcion extends Activity{
         final String[] skuIds = getResources().getStringArray(R.array.suscriptions_sku);
         String[] skuNames = getResources().getStringArray(R.array.suscriptions_type);
         try {
+            Locale defaultLocale = Locale.getDefault();
+            Currency currency = Currency.getInstance(defaultLocale);
+            String symbol = currency.getSymbol();
+
             JSONArray skuActivos = new JSONArray();
             JSONObject jo = new JSONObject();
             jo.put("sku","id_suscripcion_mensual");
             jo.put("title","SUSCRIPCIÓN MENSUAL");
-            jo.put("price","4,99 €");
+            jo.put("price","4,99 €.");
             skuActivos.put(jo);
             jo = new JSONObject();
             jo.put("sku","id_suscripcion_semestral");
             jo.put("title","SUSCRIPCIÓN SEMESTRAL");
-            jo.put("price","23,99 €");
+            jo.put("price","23,99 €.");
             skuActivos.put(jo);
             jo = new JSONObject();
             jo.put("sku","id_suscripcion_anual");
-            jo.put("title","SUSCRIPCIÓN ANUAL");
+            jo.put("title","SUSCRIPCIÓN ANUAL.");
             jo.put("price","35,99 €");
             skuActivos.put(jo);
             // inicializamos nombre de suscripcion a null

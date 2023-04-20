@@ -423,24 +423,21 @@ public class Meditaciones extends Activity{
 		favs.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
 				try {
 					JSONArray jsonArray = new JSONArray(prefs.getString("packs", ""));
 					JSONArray sortedJsonArray = new JSONArray();
+					List list = new ArrayList();
 					if (pack.getInt("pack_prioridad") == 0){
 						favs.setBackgroundResource(R.drawable.no_favorite_down);
 						for(int i = 0; i < jsonArray.length(); i++) {
 							if (jsonArray.getJSONObject(i).optString("id_pack").compareToIgnoreCase(pack.getString("id_pack")) == 0){
 								jsonArray.getJSONObject(i).put("pack_prioridad",jsonArray.getJSONObject(i).optInt("pack_prioridad_old"));
 							}
-							sortedJsonArray.put(jsonArray.getJSONObject(i));
+							list.add(jsonArray.getJSONObject(i));
 						}
-						prefs.edit().putString("packs", sortedJsonArray.toString()).apply();
 					}else{
 						favs.setBackgroundResource(R.drawable.favorite);
-						//Agregar
 
-						List list = new ArrayList();
 						for(int i = 0; i < jsonArray.length(); i++) {
 							if (jsonArray.getJSONObject(i).optString("id_pack").compareToIgnoreCase(pack.getString("id_pack")) == 0){
 								jsonArray.getJSONObject(i).put("pack_prioridad_old",jsonArray.getJSONObject(i).optInt("pack_prioridad"));
@@ -448,41 +445,36 @@ public class Meditaciones extends Activity{
 							}
 							list.add(jsonArray.getJSONObject(i));
 						}
-
-						Collections.sort( list, new Comparator<JSONObject>() {
-							//You can change "Name" with "ID" if you want to sort by ID
-							private static final String KEY_NAME = "pack_prioridad";
-
-							@Override
-							public int compare(JSONObject a, JSONObject b) {
-								String valA = new String();
-								String valB = new String();
-
-								try {
-									valA = (String) a.get(KEY_NAME).toString();
-									valB = (String) b.get(KEY_NAME).toString();
-								}
-								catch (JSONException e) {
-									//do something
-								}
-
-								return valA.compareTo(valB);
-								//if you want to change the sort order, simply use the following:
-								//return -valA.compareTo(valB);
-							}
-						});
-
-						for(int i = 0; i < jsonArray.length(); i++) {
-							sortedJsonArray.put(list.get(i));
-						}
-
-						//If exists in fav pack
-						//Save in list pack favs
-						//Or remove in fav packs
-						Log.i("medita_packss",prefs.getString("packs", ""));
-						prefs.edit().putString("packs", sortedJsonArray.toString()).apply();
 					}
 
+					Collections.sort( list, new Comparator<JSONObject>() {
+						//You can change "Name" with "ID" if you want to sort by ID
+						private static final String KEY_NAME = "pack_prioridad";
+
+						@Override
+						public int compare(JSONObject a, JSONObject b) {
+							int valA = 0;
+							int valB = 0;
+
+							valA = a.optInt(KEY_NAME);
+							valB = b.optInt(KEY_NAME);
+
+							if(valA == valB){
+								return 0;
+							}else if(valA < valB){
+								return -1;
+							}else{
+								return 1;
+							}
+						}
+					});
+
+					for(int i = 0; i < jsonArray.length(); i++) {
+						sortedJsonArray.put(list.get(i));
+					}
+
+					Log.i("medita_packss",prefs.getString("packs", ""));
+					prefs.edit().putString("packs", sortedJsonArray.toString()).apply();
 
 				} catch (JSONException e) {
 				}

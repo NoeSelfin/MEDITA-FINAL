@@ -157,8 +157,9 @@ public class Favoritos extends Activity{
 	    					 i.putExtra("pack",pack.toString());	    			
 	    					 i.putExtra("meditacion", meditacion.toString());	    			
 	    					 i.putExtra("duracion",meditacion.optString("duracion"));	    			
-	    					 i.putExtra("dur", 0);	  
-	    					 i.putExtra("intros", false);
+	    					 i.putExtra("dur", 0);
+							 i.putExtra("fromFavDown", true);
+							 i.putExtra("intros", false);
 	    					 startActivity(i);
 	    		    		 finish();
 	    			 } catch (JSONException e) {	    				 

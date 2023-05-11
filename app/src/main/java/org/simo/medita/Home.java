@@ -249,6 +249,7 @@ public class Home extends Activity {
                     i.putExtra("title", "Meditaciones descargadas");
                     i.putExtra("option", 3);
                     i.putExtra("meditations", meditations);
+                    i.putExtra("fromFavDown", true);
                     i.putExtra("fromHome", true);
                     startActivity(i);
                     finish();

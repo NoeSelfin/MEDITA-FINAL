@@ -54,6 +54,7 @@ public class MeditacionesHome extends Activity{
     protected Point size;
     protected  Animation animation;
     protected boolean onlyDurs = false;
+    protected boolean fromFavDown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,9 @@ public class MeditacionesHome extends Activity{
                         showDurs(new JSONObject(extras.getString("meditacion")),false);
                         Log.i("medita","onlydurs procesada");
                     }
-
+                    if (extras.containsKey("fromFavDown")){
+                        fromFavDown = extras.getBoolean("fromFavDown");
+                    }
 
 
                 } catch (JSONException e) {
@@ -299,6 +302,7 @@ public class MeditacionesHome extends Activity{
                 i.putExtra("meditacion", meditacion.toString());
                 i.putExtra("pack", pack.toString());
                 i.putExtra("duracion", durs.get(position));
+                i.putExtra("fromFavDown", fromFavDown);
                 i.putExtra("fromHome", true);
                 //i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
                 //startActivity(i);

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "org.simo.medita"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 578
-        versionName "5.78"
+        targetSdkVersion 31
+        versionCode 583
+        versionName "5.83"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -37,6 +37,11 @@ android {
     dexOptions {
         jumboMode true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '23.0.1'
 
 }
 
@@ -63,10 +68,10 @@ dependencies {
     implementation project(path: ':slideLibrary')
 
     apply plugin: 'com.google.gms.google-services'
-    implementation 'com.google.firebase:firebase-core:10.2.4'
-    implementation 'com.google.android.gms:play-services-tagmanager:10.2.4'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.android.gms:play-services-tagmanager:11.8.0'
 
-    implementation 'com.google.android.gms:play-services-analytics:10.2.4'
+    implementation 'com.google.android.gms:play-services-analytics:11.8.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 

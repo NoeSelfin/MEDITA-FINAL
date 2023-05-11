@@ -51,7 +51,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 	protected JSONObject meditacion;
 	protected JSONObject pack;
 	protected JSONArray meditaciones;
-	
+	protected boolean fromFavDown = false;
+
 	protected LinearLayout atras;
 	protected RelativeLayout bg;
 	protected ImageView bg_img;
@@ -165,21 +166,27 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 				// Called when the MediaPlayer is ready to play
 				Log.i(Config.tag,"mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener()");
 				if(cancelled == false){
+					Log.i(Config.tag,"paskis 1");
 					((AnimationDrawable) loading.getBackground()).stop();
 					loading.setVisibility(View.INVISIBLE);
 					Reproductor.play_block = false;
 					if (mp != null){
+						Log.i(Config.tag,"paskis 2");
 						if (isIntro){
 							mp.seekTo(mp.getCurrentPosition());
 						}else{
+							Log.i(Config.tag,"paskis 3");
 							mp.seekTo((int)currentTime);
 						}
 
 					}
+					Log.i(Config.tag,"paskis 4");
 					time.setText(""+utils.milliSecondsToTimer(currentTime));
 					time_left.setText(""+utils.milliSecondsToTimer(mp.getDuration()));
 					if (bg_sound == 1){
+						Log.i(Config.tag,"paskis 5");
 						if(mpSoundLoaded){
+							Log.i(Config.tag,"paskis 6");
                             play_block = false;
 							play.performClick();
 						}
@@ -188,10 +195,14 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
                             play.performClick();
                         }
 					}else{
+						Log.i(Config.tag,"paskis 7");
 						play_block = false;
+						Log.i(Config.tag,"paskis 8");
 						play.performClick();
 					}
 					mpLoaded = true;
+				}else{
+					//Log.i(Config.tag,"Not Cancelled");
 				}
 
 			}
@@ -199,6 +210,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 		mp.setOnErrorListener(new MediaPlayer.OnErrorListener(){
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
+				Log.i(Config.tag,"paskis 9");
+
 				//Toast.makeText(Reproductor.this, "Ha habido un error de conexión, intente conectarse más tarde.", Toast.LENGTH_LONG).show();
 
 				/*Intent i = new Intent(Reproductor.this, MainActivity.class);
@@ -212,15 +225,20 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			@Override
 			public void onPrepared(MediaPlayer player) {
 				// Called when the MediaPlayer is ready to play
-				Log.i(Config.tag,"mp_sound.setOnPreparedListener(new MediaPlayer.OnPreparedListener()");
+				Log.i(Config.tag,"paskis 10");
 				if(cancelled == false){
+					Log.i(Config.tag,"paskis 11");
 					if (mp_sound != null){
+						Log.i(Config.tag,"paskis 12");
 						mp_sound.seekTo((int)currentTime);
 					}
 
 					if(mpLoaded){
+						Log.i(Config.tag,"paskis 13");
 						play_block = false;
 						play.performClick();
+					}else{
+						Log.i(Config.tag,"paskis 14");
 					}
 					mpSoundLoaded = true;
 				}
@@ -258,8 +276,9 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 					fromMain = extras.getBoolean("fromMain", false);
 				if (extras.containsKey("fromHome"))
 					fromHome = extras.getBoolean("fromHome", false);
+				if (extras.containsKey("fromFavDown"))
+					fromFavDown = extras.getBoolean("fromFavDown", false);
 
-				
 				song_name.setText("· " + meditacion.optString("med_titulo").toUpperCase().trim() +" ·");
 				song_name.setTypeface(font);
 				
@@ -667,6 +686,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			@Override
 			public void onClick(View arg0) {
 				if (!play_block){
+					Log.i(Config.tag,"paskis 15");
 					AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 					int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
 					Log.i("medita_reproductor", "Play inside!");
@@ -676,8 +696,10 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						Toast.makeText(Reproductor.this, "El volumen está demasiado bajo.", Toast.LENGTH_SHORT).show();
 	
 					if (mp.isPlaying()){
+						Log.i(Config.tag,"paskis 16");
 						mp.pause();
 						if(mp_sound != null){
+							Log.i(Config.tag,"paskis 17");
 							mp_sound.pause();
 						}
 						play.setBackgroundResource(R.drawable.play_button);
@@ -691,8 +713,14 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						Log.i(Config.tag,String.valueOf(total1));
 						total1 = 0;
 
+						if (fromFavDown == true){
+							Log.i(Config.tag,"paskis 18");
+							play.performClick();
+							fromFavDown = false;
+						}
 					}
 					else{
+						Log.i(Config.tag,"paskis 19");
 						mp.start();
 						if(mp_sound != null){
 							mp_sound.start();
@@ -733,6 +761,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 								});
 							}
 						}, 1000, 1000);
+
+						//fromFavDown = false;
 					}					
 				}else{
 					Log.i("medita", "is bloqued.");
@@ -1354,8 +1384,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 			if(mp_sound != null){
 				mp_sound.stop();
 			}
-
 		}
+
 		cancelled = true;
 				/*Thread thread = new Thread(){
 					public void run(){

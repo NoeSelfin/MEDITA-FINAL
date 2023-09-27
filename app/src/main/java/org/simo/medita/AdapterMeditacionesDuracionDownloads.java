@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class AdapterMeditacionesDuracionDownloads extends BaseAdapter{
         ImageView img;
         TextView nombre;
         ImageView download_img;
-        ImageView delete_img;
+        RelativeLayout delete_img;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -56,7 +57,7 @@ public class AdapterMeditacionesDuracionDownloads extends BaseAdapter{
             holder.img =(ImageView)listView.findViewById(R.id.id_row_med_img);
             holder.nombre =(TextView)listView.findViewById(R.id.id_row_med_nombre);
             holder.download_img =(ImageView)listView.findViewById(R.id.id_row_med_img_downloaded);
-            holder.delete_img =(ImageView)listView.findViewById(R.id.id_row_med_img_downloaded_deleted);
+            holder.delete_img =(RelativeLayout)listView.findViewById(R.id.id_row_med_img_downloaded_deleted_ll);
             listView.setTag(holder);
 
         }

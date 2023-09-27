@@ -114,7 +114,7 @@ public class Novedades extends Activity{
         };
 
         mywebview.setWebViewClient(webViewClient);
-        mywebview.loadUrl("https://news.atentamente.net/");
+        mywebview.loadUrl("https://news.atentamente.net/?app");
 
         if(functions.shouldShowMenu()){
             functions.showMenu();

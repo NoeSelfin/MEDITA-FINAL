@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Display;
@@ -30,7 +31,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.billingclient.api.Purchase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.json.JSONArray;
@@ -83,12 +89,19 @@ public class MainActivity extends Activity {
 	private FirebaseAnalytics firebaseAnalytics;
 	private static final int CONTENT_VIEW_ID = 10101010;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+
+		String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+		Log.d("medita", "Token actualizado: " + refreshedToken);
+		FirebaseMessaging.getInstance().subscribeToTopic("Medita");
+		FirebaseMessaging.getInstance().subscribeToTopic("MeditaAndroid");
+
 
 		/*firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 		Bundle bundle = new Bundle();
@@ -144,6 +157,8 @@ public class MainActivity extends Activity {
 					} else {	// si se ha mostrado el tutorial, comprobamos los dias
 						boolean suscrito = prefs.getBoolean(getString(R.string.suscrito), false);
 						if (!suscrito){
+							FirebaseMessaging.getInstance().subscribeToTopic("MeditaAndroidNoSuscrito");
+							FirebaseMessaging.getInstance().subscribeToTopic("MeditaNOSuscritos");
 							// obtenemos la fecha que mostramos el tutorial
 							long fecha_tutorial = prefs.getLong("fecha_tutorial",0);
 							// obtenemos los boolean que marcan si se han mostrado los popup correspondiente
@@ -166,6 +181,9 @@ public class MainActivity extends Activity {
 										getString(R.string.subscribe_now),
 										getString(R.string.subscribe_not_now));
 							}
+						}else{
+							FirebaseMessaging.getInstance().subscribeToTopic("MeditaAndroidSuscrito");
+							FirebaseMessaging.getInstance().subscribeToTopic("MeditaSuscritos");
 						}
 					}
                     //printLog("Server version: "+prefs.getInt("server_version",0));

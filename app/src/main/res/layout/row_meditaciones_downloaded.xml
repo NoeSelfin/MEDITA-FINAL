@@ -35,15 +35,22 @@
         android:layout_centerVertical="true"
         android:src="@drawable/downloaded_arrow"/>
 
-    <ImageView
-        android:id="@+id/id_row_med_img_downloaded_deleted"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+    <RelativeLayout
+        android:id="@+id/id_row_med_img_downloaded_deleted_ll"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:visibility="visible"
         android:layout_alignRight="@+id/id_row_med_img_downloaded"
         android:layout_marginRight="50dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/delete"/>
+        android:layout_centerVertical="true">
+        <ImageView
+            android:id="@+id/id_row_med_img_downloaded_deleted"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="50dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/delete"/>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/id_row_med_description"

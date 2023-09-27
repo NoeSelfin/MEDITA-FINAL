@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="0.20"
-            android:src="@drawable/video_ico"
+            android:src="@drawable/icon_video"
             android:contentDescription="Option 5"/>
 
 

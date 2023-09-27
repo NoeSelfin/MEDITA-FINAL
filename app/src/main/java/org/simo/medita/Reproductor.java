@@ -241,6 +241,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 						Log.i(Config.tag,"paskis 14");
 					}
 					mpSoundLoaded = true;
+				}else{
 				}
 
 
@@ -717,6 +718,7 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 							Log.i(Config.tag,"paskis 18");
 							play.performClick();
 							fromFavDown = false;
+
 						}
 					}
 					else{
@@ -1147,7 +1149,8 @@ public class Reproductor extends Activity implements OnCompletionListener, SeekB
 
 					mp_sound.reset();
 					mp_sound.setDataSource(fileInputStreamSound.getFD());
-					mp_sound.prepareAsync();
+					//mp_sound.prepareAsync();
+					mp_sound.prepare();
 					//mp_sound.seekTo((int)currentTime);
 				}
 			}

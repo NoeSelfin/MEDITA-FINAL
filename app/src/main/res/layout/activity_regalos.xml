@@ -189,6 +189,18 @@
 	        android:textSize="18sp"
 	        android:textColor="#0c465e"
 	        android:text="REGALO 10"/>
+
+		<TextView
+			android:id="@+id/id_version"
+			android:layout_width="50dp"
+			android:layout_height="15dp"
+			android:gravity="center_vertical"
+			android:layout_marginTop="20dp"
+			android:layout_marginLeft="25dp"
+			android:textSize="10sp"
+			android:layout_gravity="right"
+			android:textColor="#0c465e"
+			android:text="1.0"/>
 	</LinearLayout>
 </ScrollView>
 <ImageView  android:id="@+id/id_regalos_img"

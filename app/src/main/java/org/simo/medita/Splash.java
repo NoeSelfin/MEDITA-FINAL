@@ -53,7 +53,7 @@ public class Splash extends Activity{
 		Calendar cal = Calendar.getInstance();
 		int month = cal.get(Calendar.MONTH);
 		
-		Bitmap bg = getBg(month);			
+		Bitmap bg = getBg(month);
 		background.setImageBitmap(bg);
 		
 //	    prefs = getSharedPreferences("Preferencias", Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);

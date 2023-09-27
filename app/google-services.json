@@ -28,8 +28,16 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "807858862246-964gpbfo98jvbpeg9l9lrggdjt8f7m92.apps.googleusercontent.com",
+              "client_id": "807858862246-3qdgg4m8oj5n4r3623c4v2i079037c3b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "807858862246-1k3h88n837hgtas07gjgqqa40gad8adg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.enriquesimo.Medita",
+                "app_store_id": "1143552897"
+              }
             }
           ]
         }

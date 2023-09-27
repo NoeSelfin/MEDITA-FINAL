@@ -29,6 +29,8 @@ public class Regalos extends Activity{
 	protected TextView regalo8;
 	protected TextView regalo9;
 	protected TextView regalo10;
+
+	protected TextView version;
 	protected View f1;
 	protected View f2;
 	protected View f3;
@@ -63,6 +65,7 @@ public class Regalos extends Activity{
 		regalo8 =  (TextView)findViewById(R.id.id_regalos_regalo8);
 		regalo9 =  (TextView)findViewById(R.id.id_regalos_regalo9);
 		regalo10 =  (TextView)findViewById(R.id.id_regalos_regalo10);
+		version =  (TextView)findViewById(R.id.id_version);
 		f1 =  (View)findViewById(R.id.id_regalos_view1);
 		f2=  (View)findViewById(R.id.id_regalos_view2);
 		f3=  (View)findViewById(R.id.id_regalos_view3);
@@ -454,6 +457,11 @@ public class Regalos extends Activity{
 				
 			}
 		});
+
+
+		int versionCode = BuildConfig.VERSION_CODE;
+		String versionName = BuildConfig.VERSION_NAME;
+		version.setText("v. " + versionName);
 		
 		
 		atras.setOnClickListener(new OnClickListener() {

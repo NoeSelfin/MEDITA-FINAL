@@ -39,7 +39,7 @@ public class Config {
 	protected final static String from_Meditaciones_Home = "MeditacionesHome";
 
 	protected static String url_condiciones_y_politica = "http://medita.atentamente.net/condiciones_y_politica.html";
-	protected static String url_nota_legal = "http://medita.atentamente.net/nota_legal.html";
+	protected static String url_nota_legal = "https://www.atentamente.net/aviso-legal/";
 
 	protected final static String url_login  = "https://app.atentamente.net/api/login";
 	protected final static String url_registrar  = "https://app.atentamente.net/api/setRegister";

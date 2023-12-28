@@ -103,10 +103,7 @@ public class Opciones extends Activity{
 		
 		new_alarm = (ImageView) findViewById(R.id.id_opciones_alarma_new);
 		alarma1_cerrar = (ImageView) findViewById(R.id.id_opciones_alarma1_cerrar);
-		alarma2_cerrar = (ImageView) findViewById(R.id.id_opciones_alarma2_cerrar);			
-		
-		
-		
+		alarma2_cerrar = (ImageView) findViewById(R.id.id_opciones_alarma2_cerrar);
 		
 		
 		if (!prefs.contains("opciones_nomolestar")){

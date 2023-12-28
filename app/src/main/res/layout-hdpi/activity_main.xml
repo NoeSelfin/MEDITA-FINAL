@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f2f2f2"
-    tools:context=".MainActivity">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:background="#f2f2f2"
+	tools:context=".MainActivity">
     <LinearLayout
         android:id="@+id/id_main_cabecera"
 	    android:layout_width="match_parent"
@@ -76,6 +77,16 @@
 	        android:src="@drawable/play_button"
 	        android:layout_marginRight="5dp"
 	        android:layout_alignParentRight="true"/>
+		 <com.airbnb.lottie.LottieAnimationView
+			 android:id="@+id/id_main_anime"
+			 android:layout_width="80dp"
+			 android:layout_height="80dp"
+			 app:lottie_rawRes="@raw/lottierespira"
+			 app:lottie_autoPlay="true"
+			 app:lottie_loop="true"
+			 android:layout_marginRight="0dp"
+			 android:layout_marginTop="0dp"
+			 android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 
@@ -98,8 +109,34 @@
 	    android:layout_height="35dp"
 	    android:layout_centerInParent="true"
 		android:background="@drawable/loading"
-		android:visibility = "visible">    
+		android:visibility = "gone">
 	</ImageView>
+	<RelativeLayout
+		android:id="@+id/id_loading_new"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="visible"
+		android:orientation="vertical"
+		android:layout_alignParentBottom="true">
+		<com.airbnb.lottie.LottieAnimationView
+			android:id="@+id/id_animation_loading"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			app:lottie_rawRes="@raw/lottiemeditationloading"
+			app:lottie_autoPlay="true"
+			app:lottie_loop="true"/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="75dp"
+			android:layout_centerHorizontal="true"
+			android:layout_alignParentBottom="true"
+			android:text="Actualizando contenidos..."
+			android:textColor="#098eaf"
+			android:textStyle="italic"
+			android:textSize="15sp" />
+	</RelativeLayout>
 	<LinearLayout
 		android:id="@+id/id_bottommenu"
 		android:layout_width="match_parent"

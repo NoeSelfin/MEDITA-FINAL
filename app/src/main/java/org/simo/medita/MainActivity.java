@@ -12,8 +12,8 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.billingclient.api.Purchase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -65,9 +66,11 @@ public class MainActivity extends Activity {
 	protected TextView inicio;
 	protected Typeface font;
 	protected ImageView play;
+	protected LottieAnimationView main_anime;
 	protected TextView song_name;
 	protected TextView song_continue;
 	protected ImageView loading;
+	protected RelativeLayout loading_new;
 	protected RelativeLayout reproducir;
 
 	protected SlidingMenu menu_lateral;
@@ -102,6 +105,10 @@ public class MainActivity extends Activity {
 		FirebaseMessaging.getInstance().subscribeToTopic("Medita");
 		FirebaseMessaging.getInstance().subscribeToTopic("MeditaAndroid");
 
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		int height = displayMetrics.heightPixels;
+		int width = displayMetrics.widthPixels;
 
 		/*firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 		Bundle bundle = new Bundle();
@@ -118,13 +125,18 @@ public class MainActivity extends Activity {
 		inicio = (TextView)findViewById(R.id.id_main_inicio);
 		inicio.setTypeface(font);
 		play = (ImageView)findViewById(R.id.id_main_play);
+		main_anime = (LottieAnimationView)findViewById(R.id.id_main_anime);
 		song_name = (TextView)findViewById(R.id.id_main_titulo);
 		song_name.setTypeface(font);
 		song_continue = (TextView)findViewById(R.id.id_main_continuar);
 		song_continue.setTypeface(font);
-		loading = (ImageView)findViewById(R.id.id_loading);
+		loading = (ImageView) findViewById(R.id.id_loading);
+		loading_new = (RelativeLayout)findViewById(R.id.id_loading_new);
 		listview  = (ListView)findViewById(R.id.id_listview);
 		reproducir  = (RelativeLayout)findViewById(R.id.id_main_reproducir);
+
+		song_name.getLayoutParams().width = width/2 ;
+		song_name.requestLayout();
 
 		/*if (Reproductor.mp != null){
 			if (Reproductor.mp.isPlaying())
@@ -136,11 +148,10 @@ public class MainActivity extends Activity {
 
 		Intent i = getIntent();
 
-		if (i.getBooleanExtra("fromSuscription",false) == true){
-			alertNewsletter();
-		}
-
 		if(i != null) {
+			if (i.getBooleanExtra("fromSuscription",false) == true){
+				alertNewsletter();
+			}
 			if (prefs.contains("packs")){
 				printLog("contains packs");
 				if (prefs.contains("version")){
@@ -191,8 +202,9 @@ public class MainActivity extends Activity {
 					if (prefs.getInt("server_version",0) > prefs.getInt("version",0)){
 						//if (prefs.contains("isNoFirstTime")){
 
-							new Downloader(this,prefs,loading,1).downloadData(reproducir, adapterpacks, listview, prefs.getInt("server_version",0));
-							printLog("update 1");
+							//main_anime.setVisibility(View.INVISIBLE);
+							new DownloaderIni(this,prefs,loading_new).downloadData(reproducir, adapterpacks, listview, prefs.getInt("server_version",0));
+							printLog("medita_downloader update 1");
 						//}
 						//else{
 							prefs.edit().putInt("version", prefs.getInt("server_version",0)).commit();
@@ -205,6 +217,7 @@ public class MainActivity extends Activity {
 						try {
 							packs = new JSONArray(prefs.getString("packs", ""));
 				           	loading.setVisibility(View.INVISIBLE);
+							loading_new.setVisibility(View.INVISIBLE);
 				           	reproducir.setVisibility(View.VISIBLE);
 				           	adapterpacks = new AdapterPacks(this, packs);
 							listview.setAdapter(adapterpacks);
@@ -279,8 +292,9 @@ public class MainActivity extends Activity {
 
 
 						} catch (JSONException e) {
-							new Downloader(this,prefs,loading,1).downloadData(reproducir, adapterpacks, listview);
-							printLog("update 2");
+							//main_anime.setVisibility(View.INVISIBLE);
+							new DownloaderIni(this,prefs,loading_new).downloadData(reproducir, adapterpacks, listview);
+							printLog("medita_downloader update 2");
 						}
 
 					}
@@ -290,6 +304,7 @@ public class MainActivity extends Activity {
 						prefs.edit().putInt("version", prefs.getInt("server_version",0)).commit();
 						packs = new JSONArray(prefs.getString("packs", ""));
 			           	loading.setVisibility(View.INVISIBLE);
+						loading_new.setVisibility(View.INVISIBLE);
 			           	reproducir.setVisibility(View.VISIBLE);
 			           	adapterpacks = new AdapterPacks(this, packs);
 						listview.setAdapter(adapterpacks);
@@ -305,15 +320,17 @@ public class MainActivity extends Activity {
 							}
 						}
 					} catch (JSONException e) {
-						new Downloader(this,prefs,loading,1).downloadData(reproducir, adapterpacks, listview);
-						printLog("update 3");
+						//main_anime.setVisibility(View.INVISIBLE);
+						new DownloaderIni(this,prefs,loading_new).downloadData(reproducir, adapterpacks, listview);
+						printLog("medita_downloader update 3");
 					}
 				}
 			}
 			else{
 				if (Basics.checkConn(this)){
-					new Downloader(this,prefs,loading,1).downloadData(reproducir, adapterpacks, listview);
-					printLog("update 4");
+					//main_anime.setVisibility(View.INVISIBLE);
+					new DownloaderIni(this,prefs,loading_new).downloadData(reproducir, adapterpacks, listview);
+					printLog("medita_downloader update 4");
 				}
 				else
 					alert("No hay conexión a Internet.");
@@ -327,6 +344,7 @@ public class MainActivity extends Activity {
 				song_name.setVisibility(View.INVISIBLE);
 				song_continue.setText("Hola, elige la meditación que quieres escuchar.");
 				play.setVisibility(View.INVISIBLE);
+				main_anime.setVisibility(View.VISIBLE);
 			}
 			else{
 				try {
@@ -341,6 +359,7 @@ public class MainActivity extends Activity {
 					song_name.setVisibility(View.VISIBLE);
 					song_continue.setVisibility(View.VISIBLE);
 					play.setVisibility(View.VISIBLE);
+					//main_anime.setVisibility(View.INVISIBLE);
 					// comprobamos si el pack es el 1 (21 dias gratuito) y si NO esta suscrito
 					if (med.optString("id_pack").compareToIgnoreCase("1") == 0 &&
 							!prefs.getBoolean(getString(R.string.suscrito), false)){
@@ -380,6 +399,7 @@ public class MainActivity extends Activity {
 					song_name.setVisibility(View.INVISIBLE);
 					song_continue.setText("Hola, elige la meditación que quieres escuchar.");
 					play.setVisibility(View.INVISIBLE);
+					main_anime.setVisibility(View.VISIBLE);
 					song_name.setText(" - ");
 				}
 			}
@@ -387,6 +407,7 @@ public class MainActivity extends Activity {
 			song_name.setVisibility(View.INVISIBLE);
 			song_continue.setText("Hola, elige la meditación que quieres escuchar.");
 			play.setVisibility(View.INVISIBLE);
+			main_anime.setVisibility(View.VISIBLE);
 			song_name.setText(" - ");
 		}
 
@@ -477,6 +498,10 @@ public class MainActivity extends Activity {
 
         if(functions.shouldShowMenu()){
 			functions.showMenu();
+		}
+
+		if (loading_new.getVisibility() == View.VISIBLE){
+			main_anime.setVisibility(View.INVISIBLE);
 		}
     }
 	public void setBottomMenu(){
@@ -1009,11 +1034,11 @@ public class MainActivity extends Activity {
 					if (isEmailValid(email.getText().toString())){
 						if (isNameValid(name.getText().toString())){
 							if (Basics.checkConn(MainActivity.this)){
-								new Downloader.setNewsletter(Basics.checkConn(MainActivity.this),
+								new DownloaderIni.setNewsletter(Basics.checkConn(MainActivity.this),
 										email.getText().toString(),
 										name.getText().toString(),
 										Basics.getWifiMac(MainActivity.this),
-										new Downloader.setNewsletter.AsyncResponse() {
+										new DownloaderIni.setNewsletter.AsyncResponse() {
 											@Override
 											public void processFinish(String respuesta) {
 												if (respuesta!=null){

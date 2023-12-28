@@ -837,6 +837,7 @@ public class Basics {
 	public static void toastCentered( Activity activity, String message, int duration){
 		if (activity != null){
 			Toast toast = Toast.makeText( activity, message, duration);
+
 			TextView tv = toast.getView().findViewById(android.R.id.message);
 			if( tv != null) tv.setGravity( Gravity.CENTER );
 			toast.show();

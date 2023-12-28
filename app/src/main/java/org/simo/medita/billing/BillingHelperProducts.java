@@ -3,8 +3,8 @@ package org.simo.medita.billing;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+//import android.support.annotation.NonNull;
+//import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +25,8 @@ import org.simo.medita.MainActivity;
 import java.io.IOException;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 public class BillingHelperProducts  implements PurchasesUpdatedListener {

@@ -30,8 +30,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+//import .support.annotation.NonNull;
+//import android.support.annotation.Nullable;
 
 
 public class BillingHelper  implements PurchasesUpdatedListener {
@@ -333,11 +336,11 @@ public class BillingHelper  implements PurchasesUpdatedListener {
         //if item already purchased then check and reflect changes
         else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
             Log.i("medita_","Is buyed!");
-            Purchase.PurchasesResult queryAlreadyPurchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
-            List<Purchase> alreadyPurchases = queryAlreadyPurchasesResult.getPurchasesList();
-            if(alreadyPurchases!=null){
+            //Purchase.PurchasesResult queryAlreadyPurchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
+            //List<Purchase> alreadyPurchases = queryAlreadyPurchasesResult.getPurchasesList();
+            //if(alreadyPurchases!=null){
                 //handlePurchase(alreadyPurchases);
-            }
+            //}
         }
         //if purchase cancelled
         else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {

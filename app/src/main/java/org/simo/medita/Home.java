@@ -10,8 +10,8 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+//import android.support.v7.widget.LinearLayoutManager;
+//import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class Home extends Activity {
@@ -164,6 +167,7 @@ public class Home extends Activity {
 
         recyclerView_more_contents.addItemDecoration(new ItemOffsetDecoration(getApplicationContext(), R.dimen.grid_horizontal_spacing));
         recyclerView_needs.addItemDecoration(new ItemOffsetDecoration(getApplicationContext(), R.dimen.grid_horizontal_spacing));
+
 
         recyclerView_more_contents.setAdapter(adapterHomeMoreContents);
         recyclerView_needs.setAdapter(adapterHomeNeeds);

@@ -139,7 +139,7 @@ public class Tutorial extends Activity{
 		        if (i==(imagenes+1)){
 		        	Intent i = new Intent(Tutorial.this, MainActivity.class);   
 	       			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	       	   		startActivity(i);
+					startActivity(i);
 	       	   		finish();
 		        }
 		    }
@@ -183,7 +183,7 @@ public class Tutorial extends Activity{
 				dialog.dismiss();
 				Intent i = new Intent(Tutorial.this, MainActivity.class);   
        			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-       	   		startActivity(i);
+				startActivity(i);
        	   		finish();
 			}
 		});

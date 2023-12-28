@@ -415,11 +415,16 @@ public class Downloader {
 		        	   JSONArray ja = packs;
 					   Bitmap ico= null;
 					   for(int i=0; i<ja.length();i++){
-						   http = new HttpConnection();
-						   ico = http.getBitmap(Config.url_iconos + ja.optJSONObject(i).optString("pack_icono"));
+						   if (ja.optJSONObject(i).optInt("local", 0) == 1){
+							   ico = loadBitmapFromAsset("iconos/" + ja.optJSONObject(i).optString("pack_icono"));
+						   }else{
+							   http = new HttpConnection();
+							   ico = http.getBitmap(Config.url_iconos + ja.optJSONObject(i).optString("pack_icono"));
+						   }
 						   //Basics.saveBitmapSD(ja.optJSONObject(i).optString("pack_icono"), "Medita", ico);
 						   Basics.saveBitmapToInternalStorage(ctx,ico,"iconos",ja.optJSONObject(i).optString("pack_icono"));
 					   }
+					   ico = null;
 		           }			   
 	  
 		           return result;
@@ -449,18 +454,26 @@ public class Downloader {
 	           
 	           if (Basics.checkConn(ctx)){
 	        	   JSONArray ja = packs;
-				   Bitmap fondo= null;
+				   Bitmap fondo1= null;
+				   Bitmap fondo2= null;
 				   for(int i=0; i<ja.length();i++){
-					   http = new HttpConnection();
-					   fondo = http.getBitmap(Config.url_fondos + ja.optJSONObject(i).optString("pack_fondo_med"));
-					   //Basics.saveBitmapSD(ja.optJSONObject(i).optString("pack_fondo_med"), "Medita", fondo);
-					   Basics.saveBitmapToInternalStorage(ctx,fondo,"fondos",ja.optJSONObject(i).optString("pack_fondo_med"));
-					   http = new HttpConnection();
-					   fondo = http.getBitmap(Config.url_fondos + ja.optJSONObject(i).optString("pack_fondo_rep"));
-					   //Basics.saveBitmapSD(ja.optJSONObject(i).optString("pack_fondo_rep"), "Medita", fondo);
-					   Basics.saveBitmapToInternalStorage(ctx,fondo,"fondos",ja.optJSONObject(i).optString("pack_fondo_rep"));
+					   if (ja.optJSONObject(i).optInt("local", 0) == 1){
+						   fondo1 = loadBitmapFromAsset("bg/" + ja.optJSONObject(i).optString("pack_fondo_med"));
+						   fondo2 = loadBitmapFromAsset("bg/" + ja.optJSONObject(i).optString("pack_fondo_rep"));
+					   }else{
+						   http = new HttpConnection();
+						   fondo1 = http.getBitmap(Config.url_fondos + ja.optJSONObject(i).optString("pack_fondo_med"));
+						   //Basics.saveBitmapSD(ja.optJSONObject(i).optString("pack_fondo_med"), "Medita", fondo);
+						   http = new HttpConnection();
+						   fondo2 = http.getBitmap(Config.url_fondos + ja.optJSONObject(i).optString("pack_fondo_rep"));
+						   //Basics.saveBitmapSD(ja.optJSONObject(i).optString("pack_fondo_rep"), "Medita", fondo);
+					   }
+					   Basics.saveBitmapToInternalStorage(ctx,fondo1,"fondos",ja.optJSONObject(i).optString("pack_fondo_med"));
+					   Basics.saveBitmapToInternalStorage(ctx,fondo2,"fondos",ja.optJSONObject(i).optString("pack_fondo_rep"));
 				   }
-	           }			   
+				   fondo1 = null;
+				   fondo2 = null;
+	           }
  
 	           return result;
 	        }

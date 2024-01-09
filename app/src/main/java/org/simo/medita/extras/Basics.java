@@ -838,13 +838,19 @@ public class Basics {
 		if (activity != null){
 			Toast toast = Toast.makeText( activity, message, duration);
 
-			TextView tv = toast.getView().findViewById(android.R.id.message);
-			if( tv != null) tv.setGravity( Gravity.CENTER );
-			toast.show();
+			if (toast.getView() !=null){
+				TextView tv = toast.getView().findViewById(android.R.id.message);
+				if( tv != null) {
+					tv.setGravity( Gravity.CENTER );
+					toast.show();
+				}
+			}else{
+				Toast.makeText(activity,message,duration).show();
+			}
+
 		}
 
 	}
-
 	/** Añade los dias marcados a la fecha indicada
 	 *
 	 * @param fecha fecha a comprobar

@@ -9,7 +9,9 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +40,8 @@ public class LogIn extends Activity {
     private EditText etPassword;
     private TextView tvRecoverPass;
     private TextView tvTitulo;
+
+    protected boolean btnBusy = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,51 +84,66 @@ public class LogIn extends Activity {
         btIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Downloader(LogIn.this, prefs)
-                        .login(Basics.checkConn(LogIn.this), etEmail.getText().toString(),
-                                etPassword.getText().toString(), new Downloader.Login.AsyncResponse() {
-                            @Override
-                            public void processFinish(String respuesta) {
-                                if (respuesta!=null){
-                                    Log.i("medita", "login respuesta: " + respuesta);
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(respuesta);
-                                        if (jsonObject.optBoolean("logeado")){
-                                            JSONObject usuario = new JSONObject();
-                                            // {"registrado":true,"id_usuario":"8","plataforma":"android"}
-                                            usuario.put(getString(R.string.email_usuario), etEmail.getText().toString());
-                                            usuario.put(getString(R.string.id_usuario), jsonObject.optString("id_usuario"));
-                                            usuario.put(getString(R.string.plataforma), jsonObject.optString("plataforma"));
+                if(btnBusy == false){
+                    if(!TextUtils.isEmpty(etEmail.getText().toString()) && Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()){
+                        if (etPassword.getText().toString().length() < 4){
+                            Basics.toastCentered(LogIn.this, "Password incorrecto.", Toast.LENGTH_LONG);
+                        }else{
+                            btnBusy = true;
+                            new Downloader(LogIn.this, prefs)
+                                    .login(Basics.checkConn(LogIn.this), etEmail.getText().toString(),
+                                            etPassword.getText().toString(), new Downloader.Login.AsyncResponse() {
+                                                @Override
+                                                public void processFinish(String respuesta) {
+                                                    if (respuesta!=null){
+                                                        Log.i("medita", "login respuesta: " + respuesta);
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(respuesta);
+                                                            if (jsonObject.optBoolean("logeado")){
+                                                                JSONObject usuario = new JSONObject();
+                                                                // {"registrado":true,"id_usuario":"8","plataforma":"android"}
+                                                                usuario.put(getString(R.string.email_usuario), etEmail.getText().toString());
+                                                                usuario.put(getString(R.string.id_usuario), jsonObject.optString("id_usuario"));
+                                                                usuario.put(getString(R.string.plataforma), jsonObject.optString("plataforma"));
 
-                                            prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
-                                            Log.i(Config.tag,"usuario guardado en sharedpref: " + usuario.toString());
-                                            prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
-                                            prefs.edit().putString("id_usuario", jsonObject.optString("id_usuario")).commit();
-                                            prefs.edit().putString("nombre_usuario", jsonObject.optString("nombre_usuario")).commit();
+                                                                prefs.edit().putString(getString(R.string.user_info),usuario.toString()).commit();
+                                                                Log.i(Config.tag,"usuario guardado en sharedpref: " + usuario.toString());
+                                                                prefs.edit().putBoolean(getString(R.string.registrado), true).commit();
+                                                                prefs.edit().putString("id_usuario", jsonObject.optString("id_usuario")).commit();
+                                                                prefs.edit().putString("nombre_usuario", jsonObject.optString("nombre_usuario")).commit();
 
-                                            prefs.edit().putBoolean("Premios_8", true).commit();
+                                                                prefs.edit().putBoolean("Premios_8", true).commit();
 
-                                            //Si está suscrito voy a la home y si no a la pantalla de suscripción.
-                                            if(prefs.getBoolean(getString(R.string.suscrito), false)){
-                                                Intent i = new Intent(getApplicationContext(), Home.class);
-                                                startActivity(i);
-                                                finish();
-                                            }else{
-                                                new hasExternSuscriptionLogIn().execute();
-                                                //menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
-                                            }
+                                                                //Si está suscrito voy a la home y si no a la pantalla de suscripción.
+                                                                if(prefs.getBoolean(getString(R.string.suscrito), false)){
+                                                                    Intent i = new Intent(getApplicationContext(), Home.class);
+                                                                    startActivity(i);
+                                                                    finish();
+                                                                }else{
+                                                                    new hasExternSuscriptionLogIn().execute();
+                                                                    //menu_lateral.findViewById(R.id.id_menu_suscription_ll).performClick();
+                                                                }
 
-                                        }else{
-                                            Basics.toastCentered(LogIn.this, "Error en el usuario o contraseña.", Toast.LENGTH_LONG);
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }else{
-                                    Basics.toastCentered(LogIn.this, "Error en la respuesta del servidor.", Toast.LENGTH_LONG);
-                                }
-                            }
-                        });
+                                                            }else{
+                                                                Basics.toastCentered(LogIn.this, "Error en el usuario o contraseña.", Toast.LENGTH_LONG);
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            //e.printStackTrace();
+                                                            Basics.toastCentered(LogIn.this, "Error en el usuario o contraseña.", Toast.LENGTH_LONG);
+                                                        }
+                                                    }else{
+                                                        Basics.toastCentered(LogIn.this, "Error en la respuesta del servidor.", Toast.LENGTH_LONG);
+                                                    }
+                                                    btnBusy = false;
+                                                }
+                                            });
+                        }
+                    }else{
+                        Basics.toastCentered(LogIn.this, "Email incorrecto.", Toast.LENGTH_LONG);
+                    }
+
+                }
+
             }
         });
         tvRecoverPass.setOnClickListener(new View.OnClickListener() {

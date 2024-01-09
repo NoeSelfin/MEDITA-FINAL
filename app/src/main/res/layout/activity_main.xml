@@ -36,7 +36,7 @@
 	    android:layout_marginTop="20dp"
 	    android:layout_marginLeft="16dp"
 	    android:layout_marginRight="16dp"
-	    android:visibility="invisible"
+	    android:visibility="visible"
 	    android:layout_below="@+id/id_main_cabecera">
 
         <RelativeLayout
@@ -56,13 +56,21 @@
                 android:text="@string/continuar"
                 android:textColor="#0c465e"
                 android:textSize="15sp" />
-
+			<ImageView
+				android:id="@+id/id_main_play"
+				android:layout_width="30dp"
+				android:layout_height="30dp"
+				android:src="@drawable/play_button"
+				android:layout_below="@+id/id_main_continuar"
+				android:layout_marginLeft="5dp"
+				android:layout_marginTop="-8dp"
+				android:layout_alignParentLeft="true"/>
 			<TextView
 				android:id="@+id/id_main_titulo"
 				android:layout_width="wrap_content"
 				android:layout_height="45dp"
 				android:layout_below="@+id/id_main_continuar"
-				android:layout_marginLeft="15dp"
+				android:layout_marginLeft="40dp"
 				android:layout_marginTop="-15dp"
 				android:gravity="center"
 				android:lineSpacingMultiplier="0.7"
@@ -70,13 +78,6 @@
 				android:textColor="#098eaf"
 				android:textSize="16sp" />
         </RelativeLayout>
-    	<ImageView
-    	    android:id="@+id/id_main_play"
-	        android:layout_width="70dp"
-	        android:layout_height="70dp"
-	        android:src="@drawable/play_button"
-	        android:layout_marginRight="5dp"
-	        android:layout_alignParentRight="true"/>
 		 <com.airbnb.lottie.LottieAnimationView
 			 android:id="@+id/id_main_anime"
 			 android:layout_width="80dp"
@@ -148,5 +149,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"/>
 	</LinearLayout>
+
 
 </RelativeLayout>

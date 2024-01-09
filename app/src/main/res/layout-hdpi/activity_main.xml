@@ -56,41 +56,30 @@
                 android:text="@string/continuar"
                 android:textColor="#0c465e"
                 android:textSize="12sp" />
+			<ImageView
+				android:id="@+id/id_main_play"
+				android:layout_width="30dp"
+				android:layout_height="30dp"
+				android:src="@drawable/play_button"
+				android:layout_below="@+id/id_main_continuar"
+				android:layout_marginLeft="5dp"
+				android:layout_marginTop="-8dp"
+				android:layout_alignParentLeft="true"/>
             <TextView
                 android:id="@+id/id_main_titulo"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_below="@+id/id_main_continuar"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="-15dp"
+				android:layout_marginLeft="40dp"
+				android:layout_marginTop="-15dp"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="5dp"
 				android:lineSpacingMultiplier="0.8"
                 android:text="MEDITANDO EN LA OFICINA"
                 android:textColor="#098eaf"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
-    	<ImageView
-    	    android:id="@+id/id_main_play"
-	        android:layout_width="50dp"
-	        android:layout_height="50dp"
-	        android:src="@drawable/play_button"
-	        android:layout_marginRight="5dp"
-	        android:layout_alignParentRight="true"/>
-		 <com.airbnb.lottie.LottieAnimationView
-			 android:id="@+id/id_main_anime"
-			 android:layout_width="80dp"
-			 android:layout_height="80dp"
-			 app:lottie_rawRes="@raw/lottierespira"
-			 app:lottie_autoPlay="true"
-			 app:lottie_loop="true"
-			 android:layout_marginRight="0dp"
-			 android:layout_marginTop="0dp"
-			 android:layout_alignParentRight="true"/>
-
     </RelativeLayout>
-
-    
     <ListView
       android:id="@+id/id_listview"
       android:layout_width="match_parent"
@@ -118,14 +107,15 @@
 		android:visibility="visible"
 		android:orientation="vertical"
 		android:layout_alignParentBottom="true">
+
 		<com.airbnb.lottie.LottieAnimationView
 			android:id="@+id/id_animation_loading"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerInParent="true"
-			app:lottie_rawRes="@raw/lottiemeditationloading"
 			app:lottie_autoPlay="true"
-			app:lottie_loop="true"/>
+			app:lottie_loop="true"
+			app:lottie_rawRes="@raw/lottiemeditationloading" />
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -148,5 +138,15 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"/>
 	</LinearLayout>
+	<com.airbnb.lottie.LottieAnimationView
+		android:id="@+id/id_main_anime"
+		android:layout_width="100dp"
+		android:layout_height="100dp"
+		app:lottie_rawRes="@raw/lottierespira"
+		app:lottie_autoPlay="true"
+		app:lottie_loop="true"
+		android:layout_marginRight="0dp"
+		android:layout_marginTop="60dp"
+		android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

@@ -56,10 +56,13 @@ public class DownloaderIni {
     protected boolean error = false;
     protected ImageView play;
 
+    protected Functions functions;
+
     public DownloaderIni(Context ctx, SharedPreferences prefs,RelativeLayout loading){
         this.ctx = ctx;
         this.prefs = prefs;
         this.loading = loading;
+        this.functions = new Functions(ctx);
     }
 
 
@@ -73,6 +76,7 @@ public class DownloaderIni {
         this.reproducir = reproducir;
         this.adapterpacks = adapterpacks;
         this.listview = listview;
+        functions.hideMenu();
         //prefs.edit().clear().commit();
         rebootData();
 
@@ -476,6 +480,7 @@ public class DownloaderIni {
 
             loading.setVisibility(View.INVISIBLE);
             reproducir.setVisibility(View.VISIBLE);
+            functions.showMenu();
 
             if (!prefs.contains("firstTime")){
                 Intent i = new Intent ((Activity)ctx, Tutorial.class);

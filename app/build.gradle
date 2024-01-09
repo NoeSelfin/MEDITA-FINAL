@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "org.simo.medita"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 583
-        versionName "5.83"
+        targetSdkVersion 33
+        versionCode 593
+        versionName "5.93"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -62,25 +62,29 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.7.1'
 
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
-    compile 'org.apache.httpcomponents:httpclient:4.5'
+    implementation 'org.apache.httpcomponents:httpclient:4.5'
 
     implementation 'com.android.support:exifinterface:27.1.1'
     implementation project(path: ':slideLibrary')
 
     apply plugin: 'com.google.gms.google-services'
     implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
     implementation 'com.google.android.gms:play-services-tagmanager:11.8.0'
 
     implementation 'com.google.android.gms:play-services-analytics:11.8.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
-    compile 'com.amazonaws:aws-android-sdk-core:2.1.+'
-    compile 'com.amazonaws:aws-android-sdk-s3:2.1.+'
+    implementation 'com.amazonaws:aws-android-sdk-core:2.1.+'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.1.+'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    implementation("com.android.billingclient:billing:4.0.0")
+    implementation("com.android.billingclient:billing:5.0.0")
+
+    implementation "com.airbnb.android:lottie:5.1.0"
+
 
 }
 repositories {

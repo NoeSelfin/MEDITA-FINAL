@@ -15,7 +15,9 @@ import android.widget.Toast;
 import org.simo.medita.extras.Basics;
 
 public class FragmentBottomMenu extends Fragment {
-    protected SharedPreferences prefs;
+    protected Functions functions;
+    protected Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,20 +35,17 @@ public class FragmentBottomMenu extends Fragment {
         ImageView menu4 = (ImageView) view.findViewById(R.id.id_menu4);
         ImageView menu5 = (ImageView) view.findViewById(R.id.id_menu5);
 
-        prefs = getActivity().getSharedPreferences(getString(R.string.sharedpref_name), Context.MODE_PRIVATE);
+        functions = new Functions(getActivity());
         menu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(prefs.getBoolean(getString(R.string.suscrito), false) == false){
-                    boolean suscrito = prefs.getBoolean(getString(R.string.suscrito), false);
+                if (functions.shouldShowMenuHome()){
                     Intent i = new Intent(getActivity(), Home.class);
                     startActivity(i);
                     getActivity().finish();
                 }else{
                     Basics.toastCentered(getActivity(), "Contenido disponible con suscripción.", Toast.LENGTH_LONG);
                 }
-
             }
         });
         menu2.setOnClickListener(new View.OnClickListener() {

@@ -114,7 +114,12 @@ public class Novedades extends Activity{
         };
 
         mywebview.setWebViewClient(webViewClient);
-        mywebview.loadUrl("https://news.atentamente.net/?app");
+
+        if(prefs.getBoolean(getString(R.string.suscrito), false) == false){
+            mywebview.loadUrl("https://news.atentamente.net/index.php/lite/");
+        }else{
+            mywebview.loadUrl("https://news.atentamente.net/?app");
+        }
 
         if(functions.shouldShowMenu()){
             functions.showMenu();
@@ -206,7 +211,7 @@ public class Novedades extends Activity{
         inicio.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if(functions.shouldShowMenu()){
+                if(functions.shouldShowMenuHome()){
                     Intent i = new Intent(Novedades.this, Home.class);
                     startActivity(i);
                     finish();

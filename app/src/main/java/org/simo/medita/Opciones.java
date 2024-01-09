@@ -885,7 +885,7 @@ public class Opciones extends Activity{
 		inicio.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if(functions.shouldShowMenu()){
+				if(functions.shouldShowMenuHome()){
 					Intent i = new Intent(Opciones.this, Home.class);
 					startActivity(i);
 					finish();

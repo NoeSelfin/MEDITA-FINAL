@@ -501,7 +501,7 @@ public class Suscripcion extends Activity{
         inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if(functions.shouldShowMenu()){
+                if(functions.shouldShowMenuHome()){
                     Intent i = new Intent(Suscripcion.this, Home.class);
                     startActivity(i);
                     finish();

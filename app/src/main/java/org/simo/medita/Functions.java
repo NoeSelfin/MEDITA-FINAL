@@ -26,7 +26,37 @@ public class Functions {
         LinearLayout menu_container = (LinearLayout)((Activity)ctx).findViewById(R.id.id_bottommenu);
         menu_container.setVisibility(View.VISIBLE);
     }
+    public void hideMenu(){
+        LinearLayout menu_container = (LinearLayout)((Activity)ctx).findViewById(R.id.id_bottommenu);
+        menu_container.setVisibility(View.GONE);
+    }
     public boolean shouldShowMenu(){
+        boolean show = false;
+        //Registrado
+        //Suscrito internamente
+        //Promocionado
+        //Suscrito externamente
+        /*if(prefs.getBoolean(ctx.getString(R.string.registrado), false)){
+            show = true;
+        }*/
+        if(prefs.getBoolean(ctx.getString(R.string.suscrito), false)){
+            show = true;
+        }
+        String p = prefs.getString("promo",null);
+        if ( p!=null ){
+            try{
+                JSONObject jo = new JSONObject(p);
+                if(validateCode(jo)){
+                    show = true;
+                }
+            } catch (JSONException e) {
+            }
+
+        }
+        //return show;
+        return true;
+    }
+    public boolean shouldShowMenuHome(){
         boolean show = false;
         //Registrado
         //Suscrito internamente

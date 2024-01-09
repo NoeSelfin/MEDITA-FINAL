@@ -496,12 +496,12 @@ public class MainActivity extends Activity {
         }
 
 
-        if(functions.shouldShowMenu()){
-			functions.showMenu();
-		}
-
 		if (loading_new.getVisibility() == View.VISIBLE){
 			main_anime.setVisibility(View.INVISIBLE);
+		}else{
+			if(functions.shouldShowMenu()){
+				functions.showMenu();
+			}
 		}
     }
 	public void setBottomMenu(){
@@ -594,7 +594,7 @@ public class MainActivity extends Activity {
 		inicio.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if(functions.shouldShowMenu()){
+				if(functions.shouldShowMenuHome()){
 					Intent i = new Intent(MainActivity.this, Home.class);
 					startActivity(i);
 					finish();

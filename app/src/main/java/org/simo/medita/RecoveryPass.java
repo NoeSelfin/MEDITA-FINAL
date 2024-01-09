@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,26 +43,31 @@ public class RecoveryPass extends Activity {
         btRecuperar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Downloader.RecuperarPass(Basics.checkConn(RecoveryPass.this),
-                        etEmail.getText().toString(), new Downloader.RecuperarPass.AsyncResponse() {
-                    @Override
-                    public void processFinish(String respuesta) {
-                        if (respuesta!=null){
-                            try {
-                                JSONObject object = new JSONObject(respuesta);
-                                if (object.optBoolean("respuesta") && !object.optBoolean("error")){
-                                    alert(getString(R.string.recovery_pass_peticion));
-                                } else if (!object.optBoolean("respuesta") && !object.optBoolean("error")) {
-                                    alert(getString(R.string.recovery_pass_wrong_email));
-                                } else {
-                                    alert(getString(R.string.error_respuesta_servidor));
+                if(!TextUtils.isEmpty(etEmail.getText().toString()) && Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()){
+                    new Downloader.RecuperarPass(Basics.checkConn(RecoveryPass.this),
+                            etEmail.getText().toString(), new Downloader.RecuperarPass.AsyncResponse() {
+                        @Override
+                        public void processFinish(String respuesta) {
+                            if (respuesta!=null){
+                                try {
+                                    JSONObject object = new JSONObject(respuesta);
+                                    if (object.optBoolean("respuesta") && !object.optBoolean("error")){
+                                        alert(getString(R.string.recovery_pass_peticion));
+                                    } else if (!object.optBoolean("respuesta") && !object.optBoolean("error")) {
+                                        alert(getString(R.string.recovery_pass_wrong_email));
+                                    } else {
+                                        alert(getString(R.string.error_respuesta_servidor));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
                         }
-                    }
-                }).execute();
+                    }).execute();
+                }else{
+                    Basics.toastCentered(RecoveryPass.this, "Email incorrecto.", Toast.LENGTH_LONG);
+                }
+
             }
         });
     }

@@ -1,37 +1,21 @@
 -- Merging decision tree log ---
 manifest
-ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-10:12
+ADDED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:1-9:12
 	package
-		ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:3:5-50
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:5:5-30
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:4:5-30
 	xmlns:android
-		ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:4:5-28
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:3:5-28
 uses-sdk
-ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
+ADDED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:6:5-7:41
+INJECTED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:6:5-7:41
+INJECTED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:6:5-7:41
 	android:targetSdkVersion
-		ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:8:9-38
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		ADDED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:9-38
+		INJECTED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
-		ADDED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml:7:5-8:41
-		INJECTED from H:\Proyectos Android Pro\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\User\Desktop\IDESOFTBCN\MEDITA FINAL\slideLibrary\src\main\AndroidManifest.xml

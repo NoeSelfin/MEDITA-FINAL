@@ -173,6 +173,6 @@
         <item>Pack escuchados</item>
         <item>Meditación más larga</item>
     </string-array>
-
+    <string name="prueba">PRUEBA</string>
 
 </resources>

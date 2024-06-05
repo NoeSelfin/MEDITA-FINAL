@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MEDITA FINAL.iml" filepath="$PROJECT_DIR$/MEDITA FINAL.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/slideLibrary/slideLibrary.iml" filepath="$PROJECT_DIR$/slideLibrary/slideLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MEDITA_FINAL.iml" filepath="$PROJECT_DIR$/.idea/modules/MEDITA_FINAL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MEDITA_FINAL.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.main.iml" filepath="$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/slideLibrary/MEDITA_FINAL.slideLibrary.unitTest.iml" />
     </modules>
   </component>
 </project>

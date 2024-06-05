@@ -1,5 +1,7 @@
 package org.simo.medita;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -30,13 +32,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.billingclient.api.Purchase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -100,10 +105,32 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
-		String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-		Log.d("medita", "Token actualizado: " + refreshedToken);
+		/*String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+		Log.d("medita", "Token actualizado: " + refreshedToken);*/
+		// Obtener el token de Firebase usando FirebaseMessaging
+		FirebaseMessaging.getInstance().getToken()
+				.addOnCompleteListener(new OnCompleteListener<String>() {
+					@Override
+					public void onComplete(@NonNull Task<String> task) {
+						if (!task.isSuccessful()) {
+							Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+							return;
+						}
+
+						// Obtener el token de registro de FCM
+						String token = task.getResult();
+
+						// Log y Toast
+						String msg = "Token: " + token;
+						Log.d(TAG, msg);
+						Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+					}
+				});
+
+		// Suscripción a temas
 		FirebaseMessaging.getInstance().subscribeToTopic("Medita");
 		FirebaseMessaging.getInstance().subscribeToTopic("MeditaAndroid");
+
 
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -425,12 +452,17 @@ public class MainActivity extends Activity {
 			    		 i.putExtra("pack", packs.optJSONObject(position).toString());
 			    		 startActivity(i);
 			    		 finish();
-		    		 }
-		    		 else{
+		    		 }else{
 
 	    			 	if (prefs.getBoolean(getString(R.string.suscrito), false) || checkComprado(String.valueOf(packs.optJSONObject(position).optInt("id_pack"))) || checkpromo()){
 							Intent i = new Intent(MainActivity.this, Meditaciones.class);
 							i.putExtra("pack", packs.optJSONObject(position).toString());
+							startActivity(i);
+							finish();
+						}else if (packs.optJSONObject(position).optInt("prueba") == 1){
+							Intent i = new Intent(MainActivity.this, Meditaciones.class);
+							i.putExtra("pack", packs.optJSONObject(position).toString());
+							i.putExtra("fromPrueba", true);
 							startActivity(i);
 							finish();
 						}else{

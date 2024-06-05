@@ -2,6 +2,7 @@ package org.simo.medita;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -51,6 +52,7 @@ public class AdapterPacks extends BaseAdapter {
 	        TextView nuevo;
 	        TextView precio;
 	        TextView prox;
+			TextView prueba;
 	        LinearLayout contenedor;
 	        
 	    }
@@ -69,14 +71,14 @@ public class AdapterPacks extends BaseAdapter {
 			holder.precio =(TextView)listView.findViewById(R.id.id_row_main_precio);
 			holder.prox =(TextView)listView.findViewById(R.id.id_row_main_proximamente);
 			holder.contenedor = (LinearLayout)listView.findViewById(R.id.id_row_main_bg);
-			    
+			holder.prueba = (TextView)listView.findViewById(R.id.id_row_main_prueba);
+
 			listView.setTag(holder);
  
 		} else {
 			holder = (Holder) listView.getTag();
 		}
-		
-		
+
 		  try {
 	        	holder.nombre.setText("· "+data.getJSONObject(position).getString("pack_titulo")+" ·");
 	        	holder.nombre.setTypeface(font);    	
@@ -87,12 +89,15 @@ public class AdapterPacks extends BaseAdapter {
 	        		holder.prox.setVisibility(View.VISIBLE);
 	        		holder.precio.setVisibility(View.GONE);
 	        		holder.nuevo.setVisibility(View.GONE);
-	        	}
-	        	
-	        	else{
+					holder.prueba.setVisibility(View.GONE);
+	        	}else{
 	        		holder.prox.setVisibility(View.GONE);
-
-		        	if (data.getJSONObject(position).getString("pack_precio").compareToIgnoreCase("0") != 0){	   
+					holder.prueba.setVisibility(View.GONE);
+					if(data.getJSONObject(position).optInt("prueba") == 1 && !checkSuscrito()){
+						holder.prueba.setVisibility(View.VISIBLE);
+						holder.prueba.setTypeface(font);
+						holder.precio.setVisibility(View.GONE);
+					}else if (data.getJSONObject(position).getString("pack_precio").compareToIgnoreCase("0") != 0){
 		        		
 		        		if (!checkSuscrito()){
 //		        		if (checkSuscrito()){
